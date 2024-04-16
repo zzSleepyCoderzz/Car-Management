@@ -1,3 +1,4 @@
+import 'package:car_management/components/LoginorRegister.dart';
 import 'package:car_management/pages/Login.dart';
 import 'package:car_management/pages/Home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,11 +15,11 @@ class Auth extends StatelessWidget {
         builder: (context, snapshot){
           //logged in
           if(snapshot.hasData){
-            return Homepage();
+            return HomePage();
           }
           //not logged in
           else{
-            return LoginPage();
+            return LoginorRegisterPage();
           }
         },
       ),
