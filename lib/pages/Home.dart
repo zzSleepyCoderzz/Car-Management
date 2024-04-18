@@ -19,7 +19,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   int currentIndex = 2;
-  PageController _pageController = PageController();
+  PageController _pageController = PageController(initialPage: 2  );
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +58,8 @@ class _HomePageState extends State<HomePage> {
         onPageChanged: (value) {
           setState(() {
             currentIndex = value;
+            print ("Value ${value}");
+            print("Value ${currentIndex}");
           });
         },
         children: const [
