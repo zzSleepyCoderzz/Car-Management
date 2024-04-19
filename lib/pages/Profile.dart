@@ -1,5 +1,7 @@
+import 'dart:ffi';
+
+import 'package:car_management/components/profile_list_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -14,9 +16,36 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
         body: Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('Profile Page'),
+          Padding(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.1,
+              bottom: MediaQuery.of(context).size.height * 0.05,
+            ),
+            child: Container(
+              width: 100.0,
+              height: 100.0,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blue,
+              ),
+              child: Center(
+                child: Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                  size: 50.0,
+                ),
+              ),
+            ),
+          ),
+          //Name
+          Profile_List_Tile(tileName: "Name"),
+
+          //Age
+          Profile_List_Tile(tileName: "Age"),
+
+          //Age
+          Profile_List_Tile(tileName: "Gender"),
         ],
       ),
     ));
