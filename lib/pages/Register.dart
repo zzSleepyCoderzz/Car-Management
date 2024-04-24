@@ -1,4 +1,5 @@
 import 'package:car_management/components/auth_google.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/my_button.dart';
@@ -15,8 +16,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  
   // text editing controllers
+  final _auth = FirebaseAuth.instance;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmedPasswordController = TextEditingController();
@@ -33,48 +34,56 @@ class _RegisterPageState extends State<RegisterPage> {
     //try creating user
     try {
       //check if password is confirmed
-      if (passwordController.text == confirmedPasswordController.text ){
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      }
-      else{
+      if (passwordController.text == confirmedPasswordController.text) {
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        )
+            .then((value) {
+          postDetailsToFirestore();
+          Navigator.popAndPushNamed(context, '/login');
+        });
+      } else {
+        Navigator.pop(context);
         ErrorMsg("Passwords do not match");
       }
 
-      //Pop Loading Circle
-      Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-
-      //Pop Loading Circle
-      Navigator.pop(context);
       
+
+    } on FirebaseAuthException catch (e) {
       //Wrong email
-      if (e.code == "user-not-found"){
+      if (e.code == "user-not-found") {
+        ErrorMsg(e.code);
+      }
+      //Wrong pass
+      else if (e.code == "wrong-password") {
+        ErrorMsg(e.code);
+      } else {
         ErrorMsg(e.code);
       }
 
-      //Wrong pass 
-      else if (e.code == "wrong-password"){
-        ErrorMsg(e.code);
-      }
-
-      else{
-        ErrorMsg(e.code);
-      }
+      //Pop Loading Circle
+      Navigator.pop(context);
     }
   }
 
-  void ErrorMsg(String msg){
+  //Create record in firestore
+  void postDetailsToFirestore() {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    var user = _auth.currentUser;
+    CollectionReference ref = FirebaseFirestore.instance.collection('users');
+    ref.doc(user!.uid).set({'email': emailController.text, 'user': 'user'});
+  }
+
+  void ErrorMsg(String msg) {
     showDialog(
-      context: context,
-      builder: (context){
-        return AlertDialog(
-          title: Text(msg),
-        );
-      }
-    );
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(msg),
+          );
+        });
   }
 
   @override
@@ -87,15 +96,15 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 25),
-        
+
               // logo
               const Icon(
                 Icons.lock,
                 size: 70,
               ),
-        
+
               const SizedBox(height: 25),
-        
+
               // welcome back, you've been missed!
               Text(
                 'Let\'s create an account for you!',
@@ -104,44 +113,44 @@ class _RegisterPageState extends State<RegisterPage> {
                   fontSize: 16,
                 ),
               ),
-        
+
               const SizedBox(height: 25),
-        
+
               // email textfield
               MyTextField(
                 controller: emailController,
                 hintText: 'Email',
                 obscureText: false,
               ),
-        
+
               const SizedBox(height: 10),
-        
+
               // password textfield
               MyTextField(
                 controller: passwordController,
                 hintText: 'Password',
                 obscureText: true,
               ),
-        
+
               const SizedBox(height: 10),
-        
+
               // confirm password textfield
               MyTextField(
                 controller: confirmedPasswordController,
                 hintText: 'Confirm Password',
                 obscureText: true,
               ),
-        
+
               const SizedBox(height: 50),
-        
+
               // sign in button
               MyButton(
                 text: "Sign Up",
-                onTap: signUserUp ,
+                onTap: signUserUp,
               ),
-        
+
               const SizedBox(height: 25),
-        
+
               // or continue with
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -162,9 +171,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
               ),
-        
+
               const SizedBox(height: 25),
-        
+
               // not a member? register now
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

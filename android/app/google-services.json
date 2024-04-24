@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "837519824608-2dfttgd79cqueketer94o8kok4rqard6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.car_management",
+            "certificate_hash": "d56b4c6a51a692b3923cc28c48331de75d5205db"
+          }
+        },
+        {
+          "client_id": "837519824608-2s4d0bnsppjc78o9vps7ksu0niu62sbi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.car_management",
+            "certificate_hash": "6e7e4985ac5fd751f92fd57c9336bff5f3d10a8c"
+          }
+        },
+        {
           "client_id": "837519824608-rhunvb8j5polhqeig4gcgkamcvib06hm.apps.googleusercontent.com",
           "client_type": 3
         }
