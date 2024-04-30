@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 import 'package:car_management/components/appbar.dart';
+import 'package:car_management/components/globals.dart' as globals;
 import 'package:car_management/pages/Maintenance.dart';
 import 'package:car_management/pages/Profile.dart';
 import 'package:car_management/pages/Tracking.dart';
 import 'package:car_management/pages/Tuning.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +20,25 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   int currentIndex = 2;
-  PageController _pageController = PageController(initialPage: 2  );
+  PageController _pageController = PageController(initialPage: 2);
 
+  //User details
+  var userData;
+  final _auth = FirebaseAuth.instance;
+  
   @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    var user = _auth.currentUser;
+    CollectionReference ref = firebaseFirestore.collection('users');
+    var temp = ref.doc(user!.uid).get();
+    temp.then((snapshot) {
+      userData = snapshot.data();
+      globals.userData = userData;
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(),
@@ -45,11 +63,10 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-            icon: Icon(IconData(0xe9db, fontFamily: 'MaterialIcons')), 
-            label: 'Tuning'),
+              icon: Icon(IconData(0xe9db, fontFamily: 'MaterialIcons')),
+              label: 'Tuning'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_rounded), 
-            label: 'Profile'),
+              icon: Icon(Icons.person_rounded), label: 'Profile'),
         ],
       ),
       body: PageView(
@@ -57,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         onPageChanged: (value) {
           setState(() {
             currentIndex = value;
-            print ("Value ${value}");
+            print("Value ${value}");
             print("Value ${currentIndex}");
           });
         },

@@ -1,4 +1,8 @@
+import 'package:car_management/pages/Profile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:car_management/components/globals.dart' as globals;
 
 class Profile_List_Tile extends StatefulWidget {
   const Profile_List_Tile({super.key, required this.tileName});
@@ -11,20 +15,32 @@ class Profile_List_Tile extends StatefulWidget {
 
 class _Profile_List_TileState extends State<Profile_List_Tile> {
   @override
-
   final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
+  var _currentValue;
 
-  var _currentName;
+  //update records in firestore
+  void postDetailsToFirestore(String key, String value) {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    var user = _auth.currentUser;
+    CollectionReference ref = FirebaseFirestore.instance.collection('users');
+    ref.doc(user!.uid).update({key: value});
+  }
 
-  
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(widget.tileName == "Name" ? Icons.person: widget.tileName == "Age" ? Icons.info_outline: Icons.male, color: Colors.blueGrey[800]),
+      leading: Icon(
+          widget.tileName == "Name"
+              ? Icons.person
+              : widget.tileName == "Age"
+                  ? Icons.info_outline
+                  : Icons.male,
+          color: Colors.blueGrey[800]),
       title: Text(
         widget.tileName,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      subtitle: Text(widget.tileName),
+      subtitle: Text(globals.userData[widget.tileName]),
       trailing: IconButton(
         icon: Icon(Icons.edit),
         onPressed: () {
@@ -55,20 +71,37 @@ class _Profile_List_TileState extends State<Profile_List_Tile> {
                           Padding(
                             padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0.0),
                             child: TextFormField(
-                              initialValue: widget.tileName,
+                              initialValue: globals.userData[widget.tileName],
                               decoration: InputDecoration(
                                 hintText: widget.tileName,
                                 hintStyle: TextStyle(color: Colors.black),
                               ),
-                              validator: (val) =>
-                                  val?.length == 0 ? "Please enter a name" : null,
+                              validator: (val) => val?.length == 0
+                                  ? "Please enter a name"
+                                  : null,
                               onChanged: (val) {
                                 setState(() {
-                                  _currentName = val;
+                                  _currentValue = val;
                                 });
                               },
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 20.0),
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    postDetailsToFirestore(
+                                        widget.tileName, _currentValue);
+                                    Navigator.pop(context);
+                                  }
+                                  setState(() {
+                                    globals.userData[widget.tileName] =
+                                        _currentValue;
+                                  });
+                                },
+                                child: const Text('Update')),
+                          )
                         ],
                       ),
                     ),

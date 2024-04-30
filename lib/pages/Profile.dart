@@ -1,6 +1,7 @@
 import 'dart:ffi';
-
 import 'package:car_management/components/profile_list_tile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -10,8 +11,10 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
+ 
+
 class _ProfilePageState extends State<ProfilePage> {
-  @override
+
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
@@ -39,13 +42,13 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           //Name
-          Profile_List_Tile(tileName: "Name"),
+          Profile_List_Tile(tileName: "Name",),
 
           //Age
-          Profile_List_Tile(tileName: "Age"),
+          Profile_List_Tile(tileName: "Age",),
 
           //Age
-          Profile_List_Tile(tileName: "Gender"),
+          Profile_List_Tile(tileName: "Gender",),
         ],
       ),
     ));
