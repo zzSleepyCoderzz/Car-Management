@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 import 'package:car_management/components/appbar.dart';
-import 'package:car_management/components/globals.dart' as globals;
 import 'package:car_management/pages/Maintenance.dart';
 import 'package:car_management/pages/Profile.dart';
 import 'package:car_management/pages/Tracking.dart';
@@ -9,6 +8,8 @@ import 'package:car_management/pages/Tuning.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:car_management/components/globals.dart' as globals;
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,22 +23,6 @@ class _HomePageState extends State<HomePage> {
   int currentIndex = 2;
   PageController _pageController = PageController(initialPage: 2);
 
-  //User details
-  var userData;
-  final _auth = FirebaseAuth.instance;
-  
-  @override
-  void initState() {
-    super.initState();
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    var user = _auth.currentUser;
-    CollectionReference ref = firebaseFirestore.collection('users');
-    var temp = ref.doc(user!.uid).get();
-    temp.then((snapshot) {
-      userData = snapshot.data();
-      globals.userData = userData;
-    });
-  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,12 +86,20 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('Welcome to Car Management'),
-        ],
+        body: Padding(
+      padding: EdgeInsets.only(top: 50),
+      child: Center(
+        child: Column(
+          children: [
+            Text(
+              'Welcome, ${globals.userData['Name']}!',
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
+            ),
+          ],
+        ),
       ),
     ));
   }

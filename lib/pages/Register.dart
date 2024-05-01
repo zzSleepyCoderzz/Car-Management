@@ -2,8 +2,8 @@ import 'package:car_management/components/auth_google.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:car_management/components/my_button.dart';
-import 'package:car_management/components/my_textfield.dart';
+import 'package:car_management/components/button.dart';
+import 'package:car_management/components/textfield.dart';
 import 'package:car_management/components/square_tile.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -117,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 25),
 
               // email textfield
-              MyTextField(
+              Textfield(
                 controller: emailController,
                 hintText: 'Email',
                 obscureText: false,
@@ -126,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 10),
 
               // password textfield
-              MyTextField(
+              Textfield(
                 controller: passwordController,
                 hintText: 'Password',
                 obscureText: true,
@@ -135,7 +135,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 10),
 
               // confirm password textfield
-              MyTextField(
+              Textfield(
                 controller: confirmedPasswordController,
                 hintText: 'Confirm Password',
                 obscureText: true,
@@ -144,7 +144,7 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 50),
 
               // sign in button
-              MyButton(
+              LoginButton(
                 text: "Sign Up",
                 onTap: signUserUp,
               ),

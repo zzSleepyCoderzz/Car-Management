@@ -4,8 +4,8 @@ import 'package:car_management/pages/Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:car_management/components/my_button.dart';
-import 'package:car_management/components/my_textfield.dart';
+import 'package:car_management/components/button.dart';
+import 'package:car_management/components/textfield.dart';
 import 'package:car_management/components/square_tile.dart';
 import 'package:flutter/widgets.dart';
 
@@ -147,7 +147,7 @@ class _LoginPageState extends State<LoginPage>
                     const SizedBox(height: 25),
 
                     // email textfield
-                    MyTextField(
+                    Textfield(
                       controller: emailController,
                       hintText: 'Email',
                       obscureText: false,
@@ -156,7 +156,7 @@ class _LoginPageState extends State<LoginPage>
                     const SizedBox(height: 10),
 
                     // password textfield
-                    MyTextField(
+                    Textfield(
                       controller: passwordController,
                       hintText: 'Password',
                       obscureText: true,
@@ -230,7 +230,7 @@ class _LoginPageState extends State<LoginPage>
                     const SizedBox(height: 25),
 
                     // sign in button
-                    MyButton(
+                    LoginButton(
                       text: "Sign In",
                       onTap: signUserIn,
                     ),

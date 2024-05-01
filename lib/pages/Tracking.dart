@@ -12,13 +12,27 @@ class TrackingPage extends StatefulWidget {
 
 class _TrackingPageState extends State<TrackingPage> {
   late GoogleMapController mapController;
-  final LatLng _center = const LatLng(45.521563, -122.677433);
+  Set<Marker> _markers = {};
+  final LatLng _center = const LatLng(3.056648475066696, 101.7005614);
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
 
   @override
+
+  //Have to initialize markers in initState otherwise will ctrash the app
+  void initState() {
+    super.initState();
+    _markers.add(
+      Marker(
+        markerId: MarkerId('1'),
+        position: LatLng(3.056648475066696, 101.7005614),
+        infoWindow: InfoWindow(title: 'Car Location'),
+      ),
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
@@ -39,16 +53,7 @@ class _TrackingPageState extends State<TrackingPage> {
               myLocationButtonEnabled: true,
               myLocationEnabled: true,
               zoomControlsEnabled: true,
-              markers: {
-                const Marker(
-                  markerId: MarkerId('1'),
-                  position: LatLng(45.521563, -122.677433),
-                  infoWindow: InfoWindow(
-                    title: 'Portland, OR',
-                    snippet: '5 Star Rating',
-                  ),
-                ),
-              },
+              markers: _markers,
             ),
           ),
         ],
