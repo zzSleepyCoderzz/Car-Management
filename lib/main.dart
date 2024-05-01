@@ -9,11 +9,11 @@ import 'package:car_management/pages/Simple_Diagnostic.dart';
 import 'package:car_management/pages/Tracking.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:car_management/components/globals.dart' as globals;
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +30,16 @@ void main() async {
     userData = snapshot.data();
     globals.userData = userData;
   });
+
+  try {
+    final firestoreURL = FirebaseStorage.instance
+        .ref()
+        .child('users/${FirebaseAuth.instance.currentUser!.uid}.png');
+    String url = await firestoreURL.getDownloadURL();
+    globals.profilePath = url;
+  } catch (e) {
+    print(e);
+  }
 
   runApp(const MyApp());
 }

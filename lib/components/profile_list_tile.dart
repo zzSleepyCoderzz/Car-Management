@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/globals.dart' as globals;
+import 'package:flutter/services.dart';
 
 class Profile_List_Tile extends StatefulWidget {
   const Profile_List_Tile({super.key, required this.tileName});
@@ -71,6 +72,9 @@ class _Profile_List_TileState extends State<Profile_List_Tile> {
                           Padding(
                             padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0.0),
                             child: TextFormField(
+                              keyboardType: widget.tileName == "Age"
+                                  ? TextInputType.number
+                                  : TextInputType.text, 
                               initialValue: globals.userData[widget.tileName],
                               decoration: InputDecoration(
                                 hintText: widget.tileName,
