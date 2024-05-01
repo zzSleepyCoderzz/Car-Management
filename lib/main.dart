@@ -19,28 +19,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  //User details
-  var userData;
-  final _auth = FirebaseAuth.instance;
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  var user = _auth.currentUser;
-  CollectionReference ref = firebaseFirestore.collection('users');
-  var temp = ref.doc(user!.uid).get();
-  temp.then((snapshot) {
-    userData = snapshot.data();
-    globals.userData = userData;
-  });
-
-  try {
-    final firestoreURL = FirebaseStorage.instance
-        .ref()
-        .child('users/${FirebaseAuth.instance.currentUser!.uid}.png');
-    String url = await firestoreURL.getDownloadURL();
-    globals.profilePath = url;
-  } catch (e) {
-    print(e);
-  }
-
   runApp(const MyApp());
 }
 

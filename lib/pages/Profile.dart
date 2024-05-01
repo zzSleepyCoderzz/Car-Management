@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
 
+import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/globals.dart';
 import 'package:car_management/components/profile_list_tile.dart';
 import 'package:car_management/main.dart';
@@ -30,6 +31,7 @@ Future<void> uploadProfilePicture() async {
       print(e);
     }
   }
+  await Auth().userDetails();
 }
 
 class ProfilePage extends StatefulWidget {
@@ -53,7 +55,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: GestureDetector(
               onTap: () async {
                 await uploadProfilePicture();
-                main();
+
                 setState(() {});
               },
               child: Container(
