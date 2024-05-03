@@ -28,8 +28,6 @@ class _LoginPageState extends State<LoginPage>
 
   // sign user in method
   void signUserIn() async {
-    //loading
-
     //try sign in
     try {
       setState(() {

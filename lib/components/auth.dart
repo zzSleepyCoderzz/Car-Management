@@ -12,18 +12,21 @@ class Auth extends StatelessWidget {
   const Auth({super.key});
 
   Future<void> userDetails() async {
-    try {
-      var userData;
-      final _auth = FirebaseAuth.instance;
-      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-      var user = _auth.currentUser;
-      CollectionReference ref = firebaseFirestore.collection('users');
-      var temp = ref.doc(user!.uid).get();
-      temp.then((snapshot) {
-        userData = snapshot.data();
-        globals.userData = userData;
-      });
+    var userData;
+    final _auth = FirebaseAuth.instance;
 
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    var user = _auth.currentUser;
+    CollectionReference ref = firebaseFirestore.collection('users');
+    
+    //adding user data to global variable
+    var temp = ref.doc(user!.uid).get();
+    temp.then((snapshot) {
+      userData = snapshot.data();
+      globals.userData = userData;
+    });
+    
+    try {
       final firestoreURL = FirebaseStorage.instance
           .ref()
           .child('users/${FirebaseAuth.instance.currentUser!.uid}.png');
