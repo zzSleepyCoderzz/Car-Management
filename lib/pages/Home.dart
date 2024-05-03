@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 import 'package:car_management/components/appbar.dart';
+import 'package:car_management/components/home_card.dart';
 import 'package:car_management/pages/Maintenance.dart';
 import 'package:car_management/pages/Profile.dart';
 import 'package:car_management/pages/Tracking.dart';
@@ -9,7 +10,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/globals.dart' as globals;
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,7 +22,6 @@ class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   int currentIndex = 2;
   PageController _pageController = PageController(initialPage: 2);
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,8 +58,6 @@ class _HomePageState extends State<HomePage> {
         onPageChanged: (value) {
           setState(() {
             currentIndex = value;
-            print("Value ${value}");
-            print("Value ${currentIndex}");
           });
         },
         children: const [
@@ -98,6 +95,20 @@ class _HomeBodyState extends State<HomeBody> {
                 fontSize: 30,
               ),
             ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            globals.userData['Name'] == 'User'
+                ? const Text(
+                    'Please update your profile to get started!',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 255, 0, 0),
+                      fontSize: 14,
+                    ),
+                  )
+                : Container(),
+           HomeCard(),
+           HomeCard(),
+           HomeCard(),
+            
           ],
         ),
       ),

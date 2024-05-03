@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage>
       'email': emailController.text,
       'user': 'user',
       'Age': '0',
-      'Name': 'Name',
+      'Name': 'User',
       'Gender': 'Non-binary'
     });
   }
