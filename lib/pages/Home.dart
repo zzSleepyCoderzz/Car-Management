@@ -81,7 +81,7 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
 
-  var carList = ['Perodua Alza', 'Proton Satria', 'Perodua Myvi'];
+  var carList = ['Perodua Alza', 'Proton Satria', 'Car'];
 
   @override
   Widget build(BuildContext context) {

@@ -13,7 +13,7 @@ class HomeCard extends StatefulWidget {
 class _HomeCardState extends State<HomeCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return widget.carName != "Car" ? InkWell(
       onTap: () {
         
       },
@@ -66,6 +66,6 @@ class _HomeCardState extends State<HomeCard> {
           ]),
         ),
       ),
-    );
+    ) : Text("ADD A CAR");
   }
 }
