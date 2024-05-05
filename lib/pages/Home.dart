@@ -80,6 +80,9 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
+
+  var carList = ['Perodua Alza', 'Proton Satria', 'Perodua Myvi'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,9 +108,13 @@ class _HomeBodyState extends State<HomeBody> {
                     ),
                   )
                 : Container(),
-           HomeCard(),
-           HomeCard(),
-           HomeCard(),
+           HomeCard(carName: carList[0],),
+           SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+
+           HomeCard(carName: carList[1],),
+           SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+
+           HomeCard(carName: carList[2],),
             
           ],
         ),
