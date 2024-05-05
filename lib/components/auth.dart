@@ -13,27 +13,41 @@ class Auth extends StatelessWidget {
 
   Future<void> userDetails() async {
     var userData;
+    var carData;
     final _auth = FirebaseAuth.instance;
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref = firebaseFirestore.collection('users');
-    
+    CollectionReference ref1 = firebaseFirestore.collection('cars');
+
     //adding user data to global variable
     var temp = ref.doc(user!.uid).get();
     temp.then((snapshot) {
       userData = snapshot.data();
       globals.userData = userData;
     });
-    
+
+    //adding car data to global variable
+    var temp1 = ref1.doc(user.uid).get();
+    temp1.then((snapshot) {
+      carData = snapshot.data();
+      globals.carData = carData;
+    });
+
+    //Ensure no error thrown when user has no profile picture
     try {
-      final firestoreURL = FirebaseStorage.instance
-          .ref()
-          .child('users/${FirebaseAuth.instance.currentUser!.uid}.png');
-      String url = await firestoreURL.getDownloadURL();
-      globals.profilePath = url;
+      try {
+        final firestoreURL = FirebaseStorage.instance
+            .ref()
+            .child('users/${FirebaseAuth.instance.currentUser!.uid}.png');
+        String url = await firestoreURL.getDownloadURL();
+        globals.profilePath = url;
+      } catch (e) {
+        print("Error: $e");
+      }
     } catch (e) {
-      print(e);
+      print("Error: $e");
     }
   }
 

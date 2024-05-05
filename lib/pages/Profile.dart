@@ -28,7 +28,7 @@ Future<void> uploadProfilePicture() async {
           .putFile(file);
     } on FirebaseException catch (e) {
       // e.g, e.code == 'canceled'
-      print(e);
+      print("Error: $e");
     }
   }
   await Auth().userDetails();

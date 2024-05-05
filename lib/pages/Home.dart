@@ -6,7 +6,6 @@ import 'package:car_management/pages/Maintenance.dart';
 import 'package:car_management/pages/Profile.dart';
 import 'package:car_management/pages/Tracking.dart';
 import 'package:car_management/pages/Tuning.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/globals.dart' as globals;
@@ -81,8 +80,6 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
 
-  var carList = ['Perodua Alza', 'Proton Satria', 'Car'];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,23 +95,26 @@ class _HomeBodyState extends State<HomeBody> {
                 fontSize: 30,
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
             globals.userData['Name'] == 'User'
-                ? const Text(
-                    'Please update your profile to get started!',
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 255, 0, 0),
-                      fontSize: 14,
+                ? const Padding(
+                  padding: EdgeInsets.only(bottom: 10),
+                  child:  Text(
+                      'Please update your profile to get started!',
+                      style: TextStyle(
+                        color: Color.fromARGB(255, 255, 0, 0),
+                        fontSize: 14,
+                      ),
                     ),
-                  )
+                )
                 : Container(),
-           HomeCard(carName: carList[0],),
+           HomeCard(carName: globals.carData['Car1']['Name'],),
            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
-           HomeCard(carName: carList[1],),
+           HomeCard(carName: globals.carData['Car2']['Name'],),
            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
-           HomeCard(carName: carList[2],),
+           HomeCard(carName: globals.carData['Car3']['Name'],),
             
           ],
         ),

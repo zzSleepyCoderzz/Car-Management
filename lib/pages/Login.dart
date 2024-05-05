@@ -76,8 +76,8 @@ class _LoginPageState extends State<LoginPage>
   Future forgotPassword({required String email}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (err) {
-      print(err.toString());
+    } on FirebaseAuthException catch (e) {
+      print("Error: $e");
     } catch (err) {
       throw Exception(err.toString());
     }
