@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   int currentIndex = 2;
   PageController _pageController = PageController(initialPage: 2);
+  
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,13 +109,13 @@ class _HomeBodyState extends State<HomeBody> {
                     ),
                 )
                 : Container(),
-           HomeCard(carName: globals.carData['Car1']['Name'],),
+           HomeCard(carNumber: "Car1",),
            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
-           HomeCard(carName: globals.carData['Car2']['Name'],),
+           HomeCard(carNumber: "Car2",),
            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
 
-           HomeCard(carName: globals.carData['Car3']['Name'],),
+           HomeCard(carNumber: "Car3",),
             
           ],
         ),

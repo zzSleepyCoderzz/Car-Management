@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:car_management/components/globals.dart' as globals;
 
 class HomeCard extends StatefulWidget {
-  const HomeCard({super.key, required this.carName});
+  const HomeCard({super.key, required this.carNumber});
 
-  final String carName;
+  final String carNumber;
 
   @override
   State<HomeCard> createState() => _HomeCardState();
@@ -14,10 +14,11 @@ class HomeCard extends StatefulWidget {
 class _HomeCardState extends State<HomeCard> {
   @override
   Widget build(BuildContext context) {
-    return widget.carName.contains("Car")
+    print(globals.carData[widget.carNumber]["Pic"]);
+    return globals.carData[widget.carNumber]["Car Model"].contains("Car")
         ? InkWell(
           onTap: (){
-             Navigator.pushNamed(context, '/add_car', arguments: widget.carName);
+             Navigator.pushNamed(context, '/add_car', arguments: widget.carNumber);
           },
           
           child: Container(
@@ -36,9 +37,9 @@ class _HomeCardState extends State<HomeCard> {
             ),
         )
         : InkWell(
-            onTap: () {
-             
-            },
+            onTap: (){
+             Navigator.pushNamed(context, '/add_car', arguments: widget.carNumber);
+          },
             overlayColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
                 if (states.contains(MaterialState.pressed)) {
@@ -48,7 +49,6 @@ class _HomeCardState extends State<HomeCard> {
                 }
                 // Return null to fallback to the default ripple color
                 return Colors.grey.withOpacity(0.5);
-                ;
               },
             ),
             child: Container(
@@ -57,7 +57,7 @@ class _HomeCardState extends State<HomeCard> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
-                  image: NetworkImage(globals.carData[widget.carName]['Pic']),
+                  image: NetworkImage(globals.carData[widget.carNumber]['Pic']),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -75,7 +75,7 @@ class _HomeCardState extends State<HomeCard> {
                         child: Container(
                           color: Colors.black.withOpacity(0.5),
                           child: Text(
-                            widget.carName,
+                            globals.carData[widget.carNumber]['Car Model'],
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,

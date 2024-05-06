@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/globals.dart';
-import 'package:car_management/components/profile_list_tile.dart';
+import 'package:car_management/components/list_tile.dart';
 import 'package:car_management/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,22 +30,22 @@ Future<void> uploadCarPicture(String data) async {
 
     // Upload to Firebase
     try {
+      // Upload file
       await FirebaseStorage.instance
           .ref('cars/${FirebaseAuth.instance.currentUser!.uid}${data}.png')
           .putFile(file);
 
+      // Get url
       final firestoreURL = FirebaseStorage.instance
           .ref()
           .child('cars/${FirebaseAuth.instance.currentUser!.uid}${data}.png');
-
       String url = await firestoreURL.getDownloadURL();
-      ref.doc(user!.uid).update({
-        data: {
-          'Name' : data,
-          'Number Plate': globals.carData[data]['Number Plate'],
-          'Pic': url}
-      });
+
+      //Set the globals variable to the url
       globals.carData[data]['Pic'] = url;
+
+      // Update Firebase
+      ref.doc(user!.uid).update({data: globals.carData[data]});
 
     } on FirebaseException catch (e) {
       // e.g, e.code == 'canceled'
@@ -64,6 +64,7 @@ class Add_CarPage extends StatefulWidget {
 
 class _Add_CarPageState extends State<Add_CarPage> {
   Widget build(BuildContext context) {
+
     final data = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
@@ -112,6 +113,9 @@ class _Add_CarPageState extends State<Add_CarPage> {
                   ),
                 ),
               ),
+
+              Add_Car_ListTile(tileName: "Car Model", carModel: data.toString(),),
+              Add_Car_ListTile(tileName: "Number Plate", carModel: data.toString(),),
             ],
           ),
         ));

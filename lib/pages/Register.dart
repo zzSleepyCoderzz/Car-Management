@@ -84,9 +84,9 @@ class _RegisterPageState extends State<RegisterPage>
     
     CollectionReference ref1 = FirebaseFirestore.instance.collection('cars');
     ref1.doc(user.uid).set({
-      'Car1': {'Name': 'Car1', 'Pic': 'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Number Plate': 'LIG 6969 MA'},
-      'Car2': {'Name': 'Car1', 'Pic': 'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Number Plate': 'LIG 6969 MA'},
-      'Car3': {'Name': 'Car1', 'Pic': 'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Number Plate': 'LIG 6969 MA'},
+      'Car1': {'Car Model': 'Car1', 'Pic': 'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Number Plate': 'LIG 6969 MA'},
+      'Car2': {'Car Model': 'Car2', 'Pic': 'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Number Plate': 'LIG 6969 MA'},
+      'Car3': {'Car Model': 'Car3', 'Pic': 'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Number Plate': 'LIG 6969 MA'},
     });
   }
 

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/globals.dart';
-import 'package:car_management/components/profile_list_tile.dart';
+import 'package:car_management/components/list_tile.dart';
 import 'package:car_management/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -76,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               fit: BoxFit.cover,
                             ),
                           )
-                        : Icon(
+                        : const Icon(
                             Icons.person,
                             size: 50.0,
                             color: Colors.white,
