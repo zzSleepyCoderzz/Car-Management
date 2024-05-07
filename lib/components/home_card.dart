@@ -14,7 +14,7 @@ class HomeCard extends StatefulWidget {
 class _HomeCardState extends State<HomeCard> {
   @override
   Widget build(BuildContext context) {
-    print(globals.carData[widget.carNumber]["Pic"]);
+    
     return globals.carData[widget.carNumber]["Car Model"].contains("Car")
         ? InkWell(
           onTap: (){

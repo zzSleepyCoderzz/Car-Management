@@ -46,7 +46,6 @@ Future<void> uploadCarPicture(String data) async {
 
       // Update Firebase
       ref.doc(user!.uid).update({data: globals.carData[data]});
-
     } on FirebaseException catch (e) {
       // e.g, e.code == 'canceled'
       print("Error: $e");
@@ -64,11 +63,21 @@ class Add_CarPage extends StatefulWidget {
 
 class _Add_CarPageState extends State<Add_CarPage> {
   Widget build(BuildContext context) {
-
     final data = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
-        appBar: DefaultAppBar(),
+        appBar: AppBar(
+          title: const Text('Tune Up Garage'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MyApp()),
+              );
+            },
+          ),
+        ),
         body: Center(
           child: Column(
             children: [
@@ -80,9 +89,12 @@ class _Add_CarPageState extends State<Add_CarPage> {
                 ),
                 child: GestureDetector(
                   onTap: () async {
-                    await uploadCarPicture(data.toString());
-
-                    setState(() {});
+                    try {
+                      await uploadCarPicture(data.toString())
+                          .then((value) => {setState(() {})});
+                    } catch (e) {
+                      print("Error ${e}");
+                    }
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.7,
@@ -114,8 +126,14 @@ class _Add_CarPageState extends State<Add_CarPage> {
                 ),
               ),
 
-              Add_Car_ListTile(tileName: "Car Model", carModel: data.toString(),),
-              Add_Car_ListTile(tileName: "Number Plate", carModel: data.toString(),),
+              Add_Car_ListTile(
+                tileName: "Car Model",
+                carModel: data.toString(),
+              ),
+              Add_Car_ListTile(
+                tileName: "Number Plate",
+                carModel: data.toString(),
+              ),
             ],
           ),
         ));

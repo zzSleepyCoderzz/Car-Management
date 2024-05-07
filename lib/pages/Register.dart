@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/button.dart';
 import 'package:car_management/components/textfield.dart';
+import 'package:flutter/widgets.dart';
+
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:typed_data';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -41,9 +46,18 @@ class _RegisterPageState extends State<RegisterPage>
           postDetailsToFirestore();
         });
 
-        setState(() {
-          _isLoading = false;
-        });
+        //Choose profile image
+        // Load default image from assets
+        ByteData byteData = await rootBundle.load('assets/images/profile.jpg');
+        Uint8List imageData = byteData.buffer.asUint8List();
+
+        await FirebaseStorage.instance
+            .ref('users/${FirebaseAuth.instance.currentUser!.uid}.png')
+            .putData(imageData);
+
+         //Throwing error
+        _isLoading = false;
+
       } else {
         setState(() {
           _isLoading = false;
@@ -81,12 +95,27 @@ class _RegisterPageState extends State<RegisterPage>
       'Name': 'User',
       'Gender': 'Non-binary',
     });
-    
+
     CollectionReference ref1 = FirebaseFirestore.instance.collection('cars');
     ref1.doc(user.uid).set({
-      'Car1': {'Car Model': 'Car1', 'Pic': 'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Number Plate': 'LIG 6969 MA'},
-      'Car2': {'Car Model': 'Car2', 'Pic': 'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Number Plate': 'LIG 6969 MA'},
-      'Car3': {'Car Model': 'Car3', 'Pic': 'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Number Plate': 'LIG 6969 MA'},
+      'Car1': {
+        'Car Model': 'Car1',
+        'Pic':
+            'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Number Plate': 'LIG 6969 MA'
+      },
+      'Car2': {
+        'Car Model': 'Car2',
+        'Pic':
+            'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Number Plate': 'LIG 6969 MA'
+      },
+      'Car3': {
+        'Car Model': 'Car3',
+        'Pic':
+            'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'Number Plate': 'LIG 6969 MA'
+      },
     });
   }
 

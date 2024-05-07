@@ -9,6 +9,7 @@ class MaintenancePage extends StatefulWidget {
 }
 
 class _MaintenancePageState extends State<MaintenancePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,12 +32,14 @@ class _MaintenancePageState extends State<MaintenancePage> {
                 MaintenanceButton(
                     onTap: () {
                       Navigator.pushNamed(context, '/service_history');
-                    }, text: 'Service History'),
+                    },
+                    text: 'Service History'),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 MaintenanceButton(
                     onTap: () {
                       Navigator.pushNamed(context, '/simple_diagnostics');
-                    }, text: 'Simple Diagnostics'),
+                    },
+                    text: 'Simple Diagnostics'),
               ],
             ),
           ],

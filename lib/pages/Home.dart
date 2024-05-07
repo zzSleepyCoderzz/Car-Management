@@ -21,7 +21,6 @@ class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   int currentIndex = 2;
   PageController _pageController = PageController(initialPage: 2);
-  
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,12 +79,11 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-      padding: EdgeInsets.only(top: 50),
+      padding: EdgeInsets.only(top: 30),
       child: Center(
         child: Column(
           children: [
@@ -99,24 +97,27 @@ class _HomeBodyState extends State<HomeBody> {
             SizedBox(height: MediaQuery.of(context).size.height * 0.01),
             globals.userData['Name'] == 'User'
                 ? const Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child:  Text(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: Text(
                       'Please update your profile to get started!',
                       style: TextStyle(
                         color: Color.fromARGB(255, 255, 0, 0),
                         fontSize: 14,
                       ),
                     ),
-                )
+                  )
                 : Container(),
-           HomeCard(carNumber: "Car1",),
-           SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-
-           HomeCard(carNumber: "Car2",),
-           SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-
-           HomeCard(carNumber: "Car3",),
-            
+            HomeCard(
+              carNumber: "Car1",
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            HomeCard(
+              carNumber: "Car2",
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            HomeCard(
+              carNumber: "Car3",
+            ),
           ],
         ),
       ),
