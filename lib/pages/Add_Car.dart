@@ -63,6 +63,7 @@ class Add_CarPage extends StatefulWidget {
 
 class _Add_CarPageState extends State<Add_CarPage> {
   Widget build(BuildContext context) {
+    //Getting data from Navigator
     final data = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(

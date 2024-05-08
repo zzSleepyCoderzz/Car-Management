@@ -10,7 +10,6 @@ class MaintenancePage extends StatefulWidget {
 }
 
 class _MaintenancePageState extends State<MaintenancePage> {
-
   //Dropdown to choose car
   String dropdownValue = globals.carData['Car1']['Car Model'];
 
@@ -33,9 +32,10 @@ class _MaintenancePageState extends State<MaintenancePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+
                 //Dropdown to choose car
-                Text('Choose a car:')
-,                DropdownButton<String>(
+                Text('Choose a car:'),
+                DropdownButton<String>(
                   value: dropdownValue,
                   icon: const Icon(Icons.arrow_downward),
                   iconSize: 24,
@@ -50,8 +50,11 @@ class _MaintenancePageState extends State<MaintenancePage> {
                       dropdownValue = newValue!;
                     });
                   },
-                  items: <String>[globals.carData['Car1']['Car Model'], globals.carData['Car2']['Car Model'], globals.carData['Car3']['Car Model']]
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: <String>[
+                    globals.carData['Car1']['Car Model'],
+                    globals.carData['Car2']['Car Model'],
+                    globals.carData['Car3']['Car Model']
+                  ].map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -59,17 +62,18 @@ class _MaintenancePageState extends State<MaintenancePage> {
                   }).toList(),
                 ),
 
-
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 MaintenanceButton(
                     onTap: () {
-                      Navigator.pushNamed(context, '/service_history');
+                      Navigator.pushNamed(context, '/service_history',
+                          arguments: dropdownValue);
                     },
                     text: 'Service History'),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 MaintenanceButton(
                     onTap: () {
-                      Navigator.pushNamed(context, '/simple_diagnostics');
+                      Navigator.pushNamed(context, '/simple_diagnostics',
+                          arguments: dropdownValue);
                     },
                     text: 'Simple Diagnostics'),
               ],
