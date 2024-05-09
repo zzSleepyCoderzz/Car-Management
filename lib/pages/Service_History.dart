@@ -2,6 +2,7 @@ import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/service_history_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:car_management/components/globals.dart' as globals;
 
 
 class Service_HistoryPage extends StatefulWidget {
@@ -16,22 +17,30 @@ class _Service_HistoryPageState extends State<Service_HistoryPage> {
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments;
 
+    print((data as Map?)?['index']);
     return Scaffold(
       appBar: DefaultAppBar(),
       body: Center(
         child: Column(
           children: [
             SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-            Container(
-              child: Text("Service History for ${data}",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+             const Text(
+              "Service History for Car Model: ",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+            Text(
+              (data as Map?)?['dropdownValue'],
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-            Service_History_Container(title: "Mileage", value: "Kilometers: 10000"),
-            Service_History_Container(title: "Engine Oil", value: "Last Changed: 2021-10-01"),
-            Service_History_Container(title: "Break Pads", value: "Last Changed: 2021-10-01"),
-            Service_History_Container(title: "Air Filter", value: "Last Changed: 2021-10-01"),
-            Service_History_Container(title: "Alignment", value: "Last Serviced: 2024-10-10"),
+            Service_History_Container(title: "Mileage", value: "Kilometers: ${globals.serviceData[(data as Map?)?['index']][0]['Mileage']}"),
+            Service_History_Container(title: "Engine Oil", value: "Last Changed: ${globals.serviceData[(data as Map?)?['index']][1]['Engine Oil']}"),
+            Service_History_Container(title: "Break Pads", value: "Last Changed: ${globals.serviceData[(data as Map?)?['index']][2]['Break Pads']}"),
+            Service_History_Container(title: "Air Filter", value: "Last Changed: ${globals.serviceData[(data as Map?)?['index']][3]['Air Filter']}"),
+            Service_History_Container(title: "Alignment", value: "Last Serviced: ${globals.serviceData[(data as Map?)?['index']][4]['Alignment']}"),
           ],
         ),
       ),

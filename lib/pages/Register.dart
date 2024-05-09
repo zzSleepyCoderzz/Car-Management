@@ -117,6 +117,46 @@ class _RegisterPageState extends State<RegisterPage>
         'Number Plate': 'LIG 6969 MA'
       },
     });
+
+    CollectionReference ref2 = FirebaseFirestore.instance.collection('service');
+    ref2.doc(user.uid).set({
+      'Car1': {
+       {'Mileage' : 0},
+        {'Engine Oil' : 0},
+        {'Break Pads' : 0},
+        {'Air Filter' : 0},
+        {'Alignment' : 0},
+        {'Battery' : 0},
+        {'Coolant' : 0},
+        {'Spark Plugs' : 0},
+        {'Tyres' : 0},
+        {'Transmission Fluid' : 0},
+      },
+      'Car2': {
+       {'Mileage' : 0},
+        {'Engine Oil' : 0},
+        {'Break Pads' : 0},
+        {'Air Filter' : 0},
+        {'Alignment' : 0},
+        {'Battery' : 0},
+        {'Coolant' : 0},
+        {'Spark Plugs' : 0},
+        {'Tyres' : 0},
+        {'Transmission Fluid' : 0},
+      },
+      'Car3': {
+       {'Mileage' : 0},
+        {'Engine Oil' : 0},
+        {'Break Pads' : 0},
+        {'Air Filter' : 0},
+        {'Alignment' : 0},
+        {'Battery' : 0},
+        {'Coolant' : 0},
+        {'Spark Plugs' : 0},
+        {'Tyres' : 0},
+        {'Transmission Fluid' : 0},
+      },
+    });
   }
 
   void ErrorMsg(String msg) {

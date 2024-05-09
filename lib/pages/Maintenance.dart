@@ -11,7 +11,13 @@ class MaintenancePage extends StatefulWidget {
 
 class _MaintenancePageState extends State<MaintenancePage> {
   //Dropdown to choose car
+  List<String> dropdownItems = [
+    globals.carData['Car1']['Car Model'],
+    globals.carData['Car2']['Car Model'],
+    globals.carData['Car3']['Car Model'],
+  ];
   String dropdownValue = globals.carData['Car1']['Car Model'];
+  int index = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +54,12 @@ class _MaintenancePageState extends State<MaintenancePage> {
                   onChanged: (String? newValue) {
                     setState(() {
                       dropdownValue = newValue!;
+                      index =
+                          dropdownItems.indexWhere((item) => item == newValue) + 1;
                     });
                   },
-                  items: <String>[
-                    globals.carData['Car1']['Car Model'],
-                    globals.carData['Car2']['Car Model'],
-                    globals.carData['Car3']['Car Model']
-                  ].map<DropdownMenuItem<String>>((String value) {
+                  items: dropdownItems
+                      .map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -65,15 +70,25 @@ class _MaintenancePageState extends State<MaintenancePage> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 MaintenanceButton(
                     onTap: () {
-                      Navigator.pushNamed(context, '/service_history',
-                          arguments: dropdownValue);
+                      Navigator.pushNamed(
+                        context,
+                        '/service_history',
+                        arguments: {
+                          'dropdownValue': dropdownValue,
+                          'index': "Car" + index.toString(),
+                        },
+                      );
+                      print('Selected index: $index');
                     },
                     text: 'Service History'),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 MaintenanceButton(
                     onTap: () {
                       Navigator.pushNamed(context, '/simple_diagnostics',
-                          arguments: dropdownValue);
+                          arguments: {
+                          'dropdownValue': dropdownValue,
+                          'index': "Car" + index.toString(),
+                        },);
                     },
                     text: 'Simple Diagnostics'),
               ],

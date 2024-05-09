@@ -14,12 +14,14 @@ class Auth extends StatelessWidget {
   Future<void> userDetails() async {
     var userData;
     var carData;
+    var serviceData;
     final _auth = FirebaseAuth.instance;
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref = firebaseFirestore.collection('users');
     CollectionReference ref1 = firebaseFirestore.collection('cars');
+    CollectionReference ref2 = firebaseFirestore.collection('service');
 
     //adding user data to global variable
     var temp = ref.doc(user!.uid).get();
@@ -33,6 +35,13 @@ class Auth extends StatelessWidget {
     temp1.then((snapshot) {
       carData = snapshot.data();
       globals.carData = carData;
+    });
+
+    //adding service data to global variable
+    var temp2 = ref2.doc(user.uid).get();
+    temp2.then((snapshot) {
+      serviceData = snapshot.data();
+      globals.serviceData = serviceData;
     });
 
     //Ensure no error thrown when user has no profile picture

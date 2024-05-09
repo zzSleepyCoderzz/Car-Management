@@ -11,7 +11,6 @@ class Simple_DiagnosticPage extends StatefulWidget {
 class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
   @override
   Widget build(BuildContext context) {
-
     final data = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
@@ -20,9 +19,16 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
         child: Column(
           children: [
             SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-            Container(
-              child: Text("Simple Diagnostics for Car Model: ${data}",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text(
+              "Simple Diagnostics for Car Model: ",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+            Text(
+              (data as Map?)?['dropdownValue'],
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
