@@ -55,7 +55,8 @@ class _MaintenancePageState extends State<MaintenancePage> {
                     setState(() {
                       dropdownValue = newValue!;
                       index =
-                          dropdownItems.indexWhere((item) => item == newValue) + 1;
+                          dropdownItems.indexWhere((item) => item == newValue) +
+                              1;
                     });
                   },
                   items: dropdownItems
@@ -84,13 +85,29 @@ class _MaintenancePageState extends State<MaintenancePage> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.05),
                 MaintenanceButton(
                     onTap: () {
-                      Navigator.pushNamed(context, '/simple_diagnostics',
-                          arguments: {
+                      Navigator.pushNamed(
+                        context,
+                        '/simple_diagnostics',
+                        arguments: {
                           'dropdownValue': dropdownValue,
                           'index': "Car" + index.toString(),
-                        },);
+                        },
+                      );
                     },
                     text: 'Simple Diagnostics'),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                MaintenanceButton(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/schedule_service',
+                        arguments: {
+                          'dropdownValue': dropdownValue,
+                          'index': "Car" + index.toString(),
+                        },
+                      );
+                    },
+                    text: 'Schedule Service'),
               ],
             ),
           ],

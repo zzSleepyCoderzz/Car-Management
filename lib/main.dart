@@ -3,19 +3,14 @@ import 'package:car_management/components/auth.dart';
 import 'package:car_management/pages/Add_Car.dart';
 import 'package:car_management/pages/Admin/Admin_Chat.dart';
 import 'package:car_management/pages/Home.dart';
-import 'package:car_management/pages/Login.dart';
 import 'package:car_management/pages/Maintenance.dart';
 import 'package:car_management/pages/Profile.dart';
+import 'package:car_management/pages/Schedule_Service.dart';
 import 'package:car_management/pages/Service_History.dart';
 import 'package:car_management/pages/Simple_Diagnostic.dart';
-import 'package:car_management/pages/Tracking.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:car_management/components/globals.dart' as globals;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/maintenance': (context) => const MaintenancePage(),
         '/service_history': (context) => const Service_HistoryPage(),
         '/simple_diagnostics': (context) => const Simple_DiagnosticPage(),
+        '/schedule_service': (context) => const Schedule_ServicePage(),
         '/add_car': (context) => const Add_CarPage(),
         '/admin_chat': (context) => const Admin_ChatPage(),
       },
