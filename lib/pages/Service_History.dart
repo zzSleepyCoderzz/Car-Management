@@ -19,7 +19,7 @@ class _Service_HistoryPageState extends State<Service_HistoryPage> {
 
     print((data as Map?)?['index']);
     return Scaffold(
-      appBar: DefaultAppBar(),
+      appBar: DefaultAppBar(title: 'Service History',),
       body: Center(
         child: Column(
           children: [

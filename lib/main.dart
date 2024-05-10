@@ -1,6 +1,7 @@
 import 'package:car_management/components/LoginorRegister.dart';
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/pages/Add_Car.dart';
+import 'package:car_management/pages/Admin/Admin_Chat.dart';
 import 'package:car_management/pages/Home.dart';
 import 'package:car_management/pages/Login.dart';
 import 'package:car_management/pages/Maintenance.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/service_history': (context) => const Service_HistoryPage(),
         '/simple_diagnostics': (context) => const Simple_DiagnosticPage(),
         '/add_car': (context) => const Add_CarPage(),
+        '/admin_chat': (context) => const Admin_ChatPage(),
       },
       debugShowCheckedModeBanner: false,
     );

@@ -10,16 +10,18 @@ class DefaultAppBar extends PreferredSize {
   final List<Widget>? actions;
   final Widget? leading;
   final bool centerTitle;
+  final String title; 
 
   DefaultAppBar({
     super.key,
     this.actions,
     this.leading,
     this.centerTitle = true,
+    required this.title,
   }) : super(
           preferredSize: const Size.fromHeight(56),
           child: AppBar(
-            title: const Text('Tune Up Garage'),
+            title: Text(title),
             actions: const [
               IconButton(onPressed: signUserOut, icon: Icon(Icons.logout))
             ],

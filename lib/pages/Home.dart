@@ -5,7 +5,7 @@ import 'package:car_management/components/home_card.dart';
 import 'package:car_management/pages/Maintenance.dart';
 import 'package:car_management/pages/Profile.dart';
 import 'package:car_management/pages/Tracking.dart';
-import 'package:car_management/pages/Tuning.dart';
+import 'package:car_management/pages/Chat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/globals.dart' as globals;
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(),
+      appBar: DefaultAppBar(title: 'Tune Up Garage',),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.purple[800],
         unselectedItemColor: Colors.blueGrey[800],
@@ -46,8 +46,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
-              icon: Icon(IconData(0xe9db, fontFamily: 'MaterialIcons')),
-              label: 'Tuning'),
+              icon: Icon(Icons.headset_mic), label: 'Live Chat'),
           BottomNavigationBarItem(
               icon: Icon(Icons.person_rounded), label: 'Profile'),
         ],
@@ -63,7 +62,7 @@ class _HomePageState extends State<HomePage> {
           TrackingPage(),
           MaintenancePage(),
           HomeBody(),
-          TuningPage(),
+          ChatPage(),
           ProfilePage(),
         ],
       ),

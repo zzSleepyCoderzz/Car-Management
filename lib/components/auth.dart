@@ -1,4 +1,5 @@
 import 'package:car_management/components/LoginorRegister.dart';
+import 'package:car_management/pages/Admin/Admin.dart';
 import 'package:car_management/pages/Login.dart';
 import 'package:car_management/pages/Home.dart';
 import 'package:car_management/pages/Mechanic.dart';
@@ -83,12 +84,17 @@ class Auth extends StatelessWidget {
                     return Text('Error: ${snapshot.error}');
                   } else {
                     //send normal user to User Interface
+                    //Cant run userDetails here since it takes time to complete
                     if (snapshot.data!['user'] == "user") {
                       return const HomePage();
-
-                      //send Mechanic ro mechanic Interface
-                    } else if (snapshot.data!['user'] == "mechanic") {
+                    }
+                    //send Mechanic to mechanic Interface
+                    else if (snapshot.data!['user'] == "mechanic") {
                       return const MechanicPage();
+                    }
+                    //send Admin to Admin Interface
+                    else if (snapshot.data!['user'] == "admin") {
+                      return const AdminPage();
                     } else {
                       return const LoginorRegisterPage();
                     }

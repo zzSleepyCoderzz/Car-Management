@@ -13,7 +13,7 @@ class _MechanicPageState extends State<MechanicPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(),
+      appBar: DefaultAppBar(title: 'Mechanic Page',),
       body: const Center(
         child: Text("Mechanic Page"),
       )

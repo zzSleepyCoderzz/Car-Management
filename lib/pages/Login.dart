@@ -39,9 +39,12 @@ class _LoginPageState extends State<LoginPage>
         password: passwordController.text,
       );
 
-      setState(() {
-        _isLoading = false;
-      });
+      //check if widget has been disoseed yet
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     } on FirebaseAuthException catch (e) {
       setState(() {
         _isLoading = false;
