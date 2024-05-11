@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:car_management/components/globals.dart' as globals;
 
 class TrackingPage extends StatefulWidget {
   const TrackingPage({super.key});
@@ -13,8 +14,8 @@ class TrackingPage extends StatefulWidget {
 class _TrackingPageState extends State<TrackingPage> {
   late GoogleMapController mapController;
   Set<Marker> _markers = {};
-  final LatLng _center = const LatLng(3.056648475066696, 101.7005614);
-
+  final LatLng _center =  LatLng(3.056648475066696, 101.7005614);
+  
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
   }
@@ -27,8 +28,24 @@ class _TrackingPageState extends State<TrackingPage> {
     _markers.add(
       Marker(
         markerId: MarkerId('1'),
-        position: LatLng(3.056648475066696, 101.7005614),
-        infoWindow: InfoWindow(title: 'Car Location'),
+        position: LatLng(globals.locationData["Car1"]![0],globals.locationData["Car1"]![1]),
+        infoWindow: InfoWindow(title: 'Car1 Location'),
+      ),
+    );
+
+    _markers.add(
+      Marker(
+        markerId: MarkerId('2'),
+        position: LatLng(globals.locationData["Car2"]![0],globals.locationData["Car2"]![1]),
+        infoWindow: InfoWindow(title: 'Car2 Location'),
+      ),
+    );
+
+    _markers.add(
+      Marker(
+        markerId: MarkerId('3'),
+        position: LatLng(globals.locationData["Car3"]![0],globals.locationData["Car3"]![1]),
+        infoWindow: InfoWindow(title: 'Car3 Location'),
       ),
     );
   }

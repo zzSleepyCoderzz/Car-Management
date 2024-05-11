@@ -26,6 +26,14 @@ class _ChatPageState extends State<ChatPage> {
     }
   }
 
+  void emergency(String location) async {
+    if (_controller.text.isNotEmpty) {
+      await _chatService.sendMessage(
+          "wlmE1WgP4FWWoJBGMAuW2v2tsN53", location);
+      _controller.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
