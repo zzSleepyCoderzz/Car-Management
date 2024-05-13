@@ -1,6 +1,5 @@
 import 'package:car_management/components/LoginorRegister.dart';
 import 'package:car_management/pages/Admin/Admin.dart';
-import 'package:car_management/pages/Login.dart';
 import 'package:car_management/pages/Home.dart';
 import 'package:car_management/pages/Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,6 +15,7 @@ class Auth extends StatelessWidget {
     var userData;
     var carData;
     var serviceData;
+    var fuelData;
     final _auth = FirebaseAuth.instance;
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -23,6 +23,7 @@ class Auth extends StatelessWidget {
     CollectionReference ref = firebaseFirestore.collection('users');
     CollectionReference ref1 = firebaseFirestore.collection('cars');
     CollectionReference ref2 = firebaseFirestore.collection('service');
+    CollectionReference ref3 = firebaseFirestore.collection('fuel');
 
     //adding user data to global variable
     var temp = ref.doc(user!.uid).get();
@@ -44,6 +45,14 @@ class Auth extends StatelessWidget {
       serviceData = snapshot.data();
       globals.serviceData = serviceData;
     });
+
+    //adding fuel data to global variable
+    var temp3 = ref3.doc(user.uid).get();
+    temp3.then((snapshot) {
+      fuelData = snapshot.data();
+      globals.fuelData = fuelData;
+    });
+
 
     //Ensure no error thrown when user has no profile picture
     try {

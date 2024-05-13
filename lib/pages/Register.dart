@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:car_management/components/button.dart';
 import 'package:car_management/components/textfield.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 
@@ -55,9 +54,8 @@ class _RegisterPageState extends State<RegisterPage>
             .ref('users/${FirebaseAuth.instance.currentUser!.uid}.png')
             .putData(imageData);
 
-         //Throwing error
+        //Throwing error
         _isLoading = false;
-
       } else {
         setState(() {
           _isLoading = false;
@@ -121,40 +119,62 @@ class _RegisterPageState extends State<RegisterPage>
     CollectionReference ref2 = FirebaseFirestore.instance.collection('service');
     ref2.doc(user.uid).set({
       'Car1': {
-       {'Mileage' : 0},
-        {'Engine Oil' : 0},
-        {'Break Pads' : 0},
-        {'Air Filter' : 0},
-        {'Alignment' : 0},
-        {'Battery' : 0},
-        {'Coolant' : 0},
-        {'Spark Plugs' : 0},
-        {'Tyres' : 0},
-        {'Transmission Fluid' : 0},
+        {'Mileage': 0},
+        {'Engine Oil': 0},
+        {'Break Pads': 0},
+        {'Air Filter': 0},
+        {'Alignment': 0},
+        {'Battery': 0},
+        {'Coolant': 0},
+        {'Spark Plugs': 0},
+        {'Tyres': 0},
+        {'Transmission Fluid': 0},
       },
       'Car2': {
-       {'Mileage' : 0},
-        {'Engine Oil' : 0},
-        {'Break Pads' : 0},
-        {'Air Filter' : 0},
-        {'Alignment' : 0},
-        {'Battery' : 0},
-        {'Coolant' : 0},
-        {'Spark Plugs' : 0},
-        {'Tyres' : 0},
-        {'Transmission Fluid' : 0},
+        {'Mileage': 0},
+        {'Engine Oil': 0},
+        {'Break Pads': 0},
+        {'Air Filter': 0},
+        {'Alignment': 0},
+        {'Battery': 0},
+        {'Coolant': 0},
+        {'Spark Plugs': 0},
+        {'Tyres': 0},
+        {'Transmission Fluid': 0},
       },
       'Car3': {
-       {'Mileage' : 0},
-        {'Engine Oil' : 0},
-        {'Break Pads' : 0},
-        {'Air Filter' : 0},
-        {'Alignment' : 0},
-        {'Battery' : 0},
-        {'Coolant' : 0},
-        {'Spark Plugs' : 0},
-        {'Tyres' : 0},
-        {'Transmission Fluid' : 0},
+        {'Mileage': 0},
+        {'Engine Oil': 0},
+        {'Break Pads': 0},
+        {'Air Filter': 0},
+        {'Alignment': 0},
+        {'Battery': 0},
+        {'Coolant': 0},
+        {'Spark Plugs': 0},
+        {'Tyres': 0},
+        {'Transmission Fluid': 0},
+      },
+    });
+
+    CollectionReference ref3 = FirebaseFirestore.instance.collection('fuel');
+    ref3.doc(user.uid).set({
+      'Car1': {
+        'Odometer Reading': {0},
+        'Fuel Pumped': {0},
+        'Price per Litre': {3.00},
+        'Timestamp': {'0'}
+      },
+      'Car2': {
+        'Odometer Reading': {0},
+        'Fuel Pumped': {0},
+        'Price per Litre': {3.00},
+        'Timestamp': {'0'}
+      },
+      'Car3': {
+        'Odometer Reading': {0},
+        'Fuel Pumped': {0},
+        'Price per Litre': {3.00},
+        'Timestamp': {'0'}
       },
     });
   }
