@@ -100,14 +100,14 @@ class _MaintenancePageState extends State<MaintenancePage> {
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        '/schedule_service',
+                        '/fuel_consumption',
                         arguments: {
                           'dropdownValue': dropdownValue,
                           'index': "Car" + index.toString(),
                         },
                       );
                     },
-                    text: 'Schedule Service'),
+                    text: 'Fuel Consumption'),
               ],
             ),
           ],

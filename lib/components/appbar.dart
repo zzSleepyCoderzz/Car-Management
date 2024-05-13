@@ -10,7 +10,7 @@ class DefaultAppBar extends PreferredSize {
   final List<Widget>? actions;
   final Widget? leading;
   final bool centerTitle;
-  final String title; 
+  final String title;
 
   DefaultAppBar({
     super.key,
@@ -23,7 +23,7 @@ class DefaultAppBar extends PreferredSize {
           child: AppBar(
             title: Text(title),
             actions: const [
-              IconButton(onPressed: signUserOut, icon: Icon(Icons.logout))
+              IconButton(onPressed: signUserOut, icon: Icon(Icons.logout)),
             ],
           ),
         );

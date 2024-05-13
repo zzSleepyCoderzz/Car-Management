@@ -14,12 +14,12 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
     final data = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
-      appBar: DefaultAppBar(title: 'Schedule Service'),
+      appBar: DefaultAppBar(title: 'Schedule Service',),
       body: Center(
         child: Column(
           children: [
             SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-            Text(
+            const Text(
               "Scheduling Service for Car Model: ",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
