@@ -16,6 +16,7 @@ class Auth extends StatelessWidget {
     var carData;
     var serviceData;
     var fuelData;
+    var scheduledService;
     final _auth = FirebaseAuth.instance;
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -24,6 +25,7 @@ class Auth extends StatelessWidget {
     CollectionReference ref1 = firebaseFirestore.collection('cars');
     CollectionReference ref2 = firebaseFirestore.collection('service');
     CollectionReference ref3 = firebaseFirestore.collection('fuel');
+    CollectionReference ref4 = firebaseFirestore.collection('scheduled_service');
 
     //adding user data to global variable
     var temp = ref.doc(user!.uid).get();
@@ -51,6 +53,13 @@ class Auth extends StatelessWidget {
     temp3.then((snapshot) {
       fuelData = snapshot.data();
       globals.fuelData = fuelData;
+    });
+
+    //adding scheduledService data to global variable
+    var temp4 = ref4.doc(user.uid).get();
+    temp4.then((snapshot) {
+      scheduledService = snapshot.data();
+      globals.scheduledService = scheduledService;
     });
 
 

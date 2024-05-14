@@ -4,7 +4,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/button.dart';
 import 'package:car_management/components/textfield.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'dart:typed_data';
 
@@ -175,6 +174,25 @@ class _RegisterPageState extends State<RegisterPage>
         'Fuel Pumped': {0},
         'Price per Litre': {3.00},
         'Timestamp': {'0'}
+      },
+    });
+
+    CollectionReference ref4 = FirebaseFirestore.instance.collection('scheduled_service');
+    ref4.doc(user.uid).set({
+      'Car1': {
+        'Date': '',
+        'Timeslot': '',
+        'Remarks': '',
+      },
+      'Car2': {
+        'Date': '',
+        'Timeslot': '',
+        'Remarks': '',
+      },
+      'Car3': {
+        'Date': '',
+        'Timeslot': '',
+        'Remarks': '',
       },
     });
   }
