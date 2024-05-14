@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:car_management/components/globals.dart' as globals;
 
+import 'package:car_management/components/auth.dart';
+
 class Fuel_ConsumptionPage extends StatefulWidget {
   const Fuel_ConsumptionPage({super.key});
 
@@ -28,24 +30,17 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments;
 
-    List<_FuelData> chartData = [
-      _FuelData(
-          globals.fuelData[(data as Map?)?['dropdownValue']]['Timestamp'][0],
-          globals.fuelData[(data as Map?)?['dropdownValue']]
-              ['Fuel Pumped'][0].toDouble()),
-      _FuelData(
-          globals.fuelData[(data as Map?)?['dropdownValue']]['Timestamp'][1],
-          globals.fuelData[(data as Map?)?['dropdownValue']]
-              ['Fuel Pumped'][2].toDouble()),
-      _FuelData(
-          globals.fuelData[(data as Map?)?['dropdownValue']]['Timestamp'][2],
-          globals.fuelData[(data as Map?)?['dropdownValue']]
-              ['Fuel Pumped'][2].toDouble()),
-      _FuelData(
-          globals.fuelData[(data as Map?)?['dropdownValue']]['Timestamp'][3],
-          globals.fuelData[(data as Map?)?['dropdownValue']]
-              ['Fuel Pumped'][3].toDouble()),
-    ];
+    List<_FuelData> chartData = [];
+
+    while (chartData.length < globals.fuelData[(data as Map?)?['dropdownValue']]
+        ['Odometer Reading']
+        .length) {
+      chartData.add(_FuelData(
+          globals.fuelData[(data as Map?)?['dropdownValue']]['Timestamp']
+              [chartData.length],
+          globals.fuelData[(data as Map?)?['dropdownValue']]['Fuel Pumped']
+              [chartData.length].toDouble()));
+    }
 
     //Controllers for the textfields
     TextEditingController _controller = TextEditingController();
@@ -186,7 +181,7 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                   Padding(
                                     padding: EdgeInsets.only(top: 20.0),
                                     child: ElevatedButton(
-                                        onPressed: () {
+                                        onPressed: () async {
                                           globals.fuelData[(data as Map?)?[
                                                       'dropdownValue']]
                                                   ['Odometer Reading']
@@ -195,7 +190,8 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                           globals.fuelData[(data as Map?)?[
                                                       'dropdownValue']]
                                                   ['Fuel Pumped']
-                                              .add(int.parse(_controller1.text));
+                                              .add(
+                                                  int.parse(_controller1.text));
 
                                           globals.fuelData[(data as Map?)?[
                                                       'dropdownValue']]
@@ -210,6 +206,9 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
 
                                           postDetailsToFirestore(
                                               globals.fuelData);
+
+                                          //Run Auth to get the updated details
+                                          await const Auth().userDetails();
                                           Navigator.pop(context);
                                         },
                                         child: const Text('Upload')),

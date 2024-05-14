@@ -1,18 +1,15 @@
-import 'dart:ffi';
 import 'dart:io';
-
-import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/auth.dart';
-import 'package:car_management/components/globals.dart';
 import 'package:car_management/components/list_tile.dart';
 import 'package:car_management/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart' as Path;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:car_management/components/globals.dart' as globals;
+
+
 
 Future<void> uploadCarPicture(String data) async {
   final _auth = FirebaseAuth.instance;
