@@ -226,28 +226,24 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                           onPressed: () {
                                             postDetailsToFirestore(
                                                 globals.scheduledService);
-
-                                            showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: Text(
-                                                        "Service Scheduled"),
-                                                    content: Text(
-                                                        "Service has been scheduled successfully"),
-                                                    actions: [
-                                                      TextButton(
-                                                          onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Text("OK"))
-                                                    ],
-                                                  );
-                                                });
+                                            Navigator.pop(context);
+                                              showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                title: Text("Service Scheduled"),
+                                                content: Text("Service has been scheduled successfully"),
+                                                actions: [
+                                                  TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text("OK"),
+                                                  ),
+                                                ],
+                                                );
+                                              },
+                                              );
                                           },
                                           child: Text("Submit")),
                                     ],
