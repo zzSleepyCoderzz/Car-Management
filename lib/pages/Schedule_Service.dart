@@ -28,7 +28,9 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
 
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments;
-
+    print(data);
+    print(
+        "Data here ${globals.scheduledService[(data as Map?)?['index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Date']}");
     var datePicked;
 
     //Text Controller
@@ -62,6 +64,39 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
               (data as Map?)?['dropdownValue'],
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  children: [
+                    Text(
+                      "NEXT SERVICE ON: ${globals.scheduledService[(data as Map?)?['index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Date']}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "TIME: ${globals.scheduledService[(data as Map?)?['index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Timeslot']}",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                        "Remarks to Mechanic: \n ${globals.scheduledService[(data as Map?)?['index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Remarks']}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ),
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.05),
             MaintenanceButton(
@@ -119,11 +154,10 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                                                   .split(
                                                                       ' ')[0],
                                                           setState(() {
-                                                            globals.scheduledService[(data
-                                                                        as Map?)?[
-                                                                    'dropdownValue']]
-                                                                [
-                                                                'Date'] = datePicked;
+                                                            globals
+                                                                .scheduledService[(data
+                                                                    as Map?)?[
+                                                                'index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Date'] = datePicked;
                                                           })
                                                         },
                                                         monthViewSettings:
@@ -152,7 +186,7 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                                 });
                                           },
                                           child: Text(
-                                              "Set Date: ${globals.scheduledService[(data as Map?)?['dropdownValue']]['Date']}")),
+                                              "Set Date: ${globals.scheduledService[(data as Map?)?['index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Date']}")),
 
                                       SizedBox(
                                           height: MediaQuery.of(context)
@@ -176,19 +210,18 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                           hint: Text("Select a Time Slot"),
                                           value: globals.scheduledService[
                                                           (data as Map?)?[
-                                                              'dropdownValue']]
-                                                      ['Timeslot'] ==
+                                                              'index']]
+                                                      [globals.scheduledService[(data as Map?)?['index']].length - 1]['Timeslot'] ==
                                                   ''
                                               ? null
                                               : globals.scheduledService[(data
                                                       as Map?)?[
-                                                  'dropdownValue']]['Timeslot'],
+                                                  'index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Timeslot'],
                                           onChanged: (value) {
                                             setState(() {
-                                              globals.scheduledService[
-                                                      (data as Map?)?[
-                                                          'dropdownValue']]
-                                                  ['Timeslot'] = value!;
+                                              globals.scheduledService[(data
+                                                      as Map?)?[
+                                                  'index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Timeslot'] = value!;
                                             });
                                           },
                                           items: timeSlots
@@ -209,10 +242,9 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                           child: TextField(
                                             controller: _controller,
                                             onChanged: (value) => {
-                                              globals.scheduledService[
-                                                      (data as Map?)?[
-                                                          'dropdownValue']]
-                                                  ['Remarks'] = value
+                                              globals.scheduledService[(data
+                                                      as Map?)?[
+                                                  'index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Remarks'] = value
                                             },
                                             decoration: InputDecoration(
                                               border: OutlineInputBorder(),
@@ -224,26 +256,33 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
 
                                       ElevatedButton(
                                           onPressed: () {
+                                            //Setting Car Model based on previous page
+                                             globals.scheduledService[(data
+                                                      as Map?)?[
+                                                  'index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Car Model'] = (data as Map?)?['dropdownValue'];
+                                              
                                             postDetailsToFirestore(
                                                 globals.scheduledService);
                                             Navigator.pop(context);
-                                              showDialog(
+                                            showDialog(
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
-                                                title: Text("Service Scheduled"),
-                                                content: Text("Service has been scheduled successfully"),
-                                                actions: [
-                                                  TextButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text("OK"),
-                                                  ),
-                                                ],
+                                                  title:
+                                                      Text("Service Scheduled"),
+                                                  content: Text(
+                                                      "Service has been scheduled successfully"),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Text("OK"),
+                                                    ),
+                                                  ],
                                                 );
                                               },
-                                              );
+                                            );
                                           },
                                           child: Text("Submit")),
                                     ],

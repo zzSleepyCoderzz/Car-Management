@@ -177,22 +177,41 @@ class _RegisterPageState extends State<RegisterPage>
       },
     });
 
-    CollectionReference ref4 = FirebaseFirestore.instance.collection('scheduled_service');
+    CollectionReference ref4 =
+        FirebaseFirestore.instance.collection('scheduled_service');
     ref4.doc(user.uid).set({
       'Car1': {
-        'Date': '',
-        'Timeslot': '',
-        'Remarks': '',
+        {
+          'userID' : user.uid,
+          'Car Model' : '',
+          'Date': '',
+          'Timeslot': '',
+          'Remarks': '',
+          'Mechanic': '',
+          'Invoice': '',
+        }
       },
       'Car2': {
-        'Date': '',
-        'Timeslot': '',
-        'Remarks': '',
+        {
+          'userID' : user.uid,
+          'Car Model' : '',
+          'Date': '',
+          'Timeslot': '',
+          'Remarks': '',
+          'Mechanic': '',
+          'Invoice': '',
+        }
       },
       'Car3': {
-        'Date': '',
-        'Timeslot': '',
-        'Remarks': '',
+        {
+          'userID' : user.uid,
+          'Car Model' : '',
+          'Date': '',
+          'Timeslot': '',
+          'Remarks': '',
+          'Mechanic': '',
+          'Invoice': '',
+        }
       },
     });
   }
