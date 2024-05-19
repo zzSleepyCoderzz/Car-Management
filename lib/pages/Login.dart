@@ -1,6 +1,6 @@
 import 'package:car_management/components/auth_google.dart';
 import 'package:car_management/pages/Home.dart';
-import 'package:car_management/pages/Mechanic.dart';
+import 'package:car_management/pages/Mechanic/Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

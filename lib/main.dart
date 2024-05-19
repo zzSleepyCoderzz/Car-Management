@@ -5,6 +5,7 @@ import 'package:car_management/pages/Admin/Admin_Chat.dart';
 import 'package:car_management/pages/Fuel_Consumption.dart';
 import 'package:car_management/pages/Home.dart';
 import 'package:car_management/pages/Maintenance.dart';
+import 'package:car_management/pages/Mechanic/Maintenance_Details.dart';
 import 'package:car_management/pages/Profile.dart';
 import 'package:car_management/pages/Schedule_Service.dart';
 import 'package:car_management/pages/Service_History.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/fuel_consumption': (context) => const Fuel_ConsumptionPage(),
         '/add_car': (context) => const Add_CarPage(),
         '/admin_chat': (context) => const Admin_ChatPage(),
+        '/maintenance_details': (context) => const Maintenance_DetailsPage(),
       },
       debugShowCheckedModeBanner: false,
     );

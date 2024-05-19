@@ -187,7 +187,7 @@ class _RegisterPageState extends State<RegisterPage>
           'Date': '',
           'Timeslot': '',
           'Remarks': '',
-          'Mechanic': '',
+          'mechanicID': '',
           'Invoice': '',
         }
       },
@@ -198,7 +198,7 @@ class _RegisterPageState extends State<RegisterPage>
           'Date': '',
           'Timeslot': '',
           'Remarks': '',
-          'Mechanic': '',
+          'mechanicID': '',
           'Invoice': '',
         }
       },
@@ -209,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage>
           'Date': '',
           'Timeslot': '',
           'Remarks': '',
-          'Mechanic': '',
+          'mechanicID': '',
           'Invoice': '',
         }
       },

@@ -1,7 +1,7 @@
 import 'package:car_management/components/LoginorRegister.dart';
 import 'package:car_management/pages/Admin/Admin.dart';
 import 'package:car_management/pages/Home.dart';
-import 'package:car_management/pages/Mechanic.dart';
+import 'package:car_management/pages/Mechanic/Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
