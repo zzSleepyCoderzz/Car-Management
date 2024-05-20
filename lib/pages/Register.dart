@@ -183,6 +183,7 @@ class _RegisterPageState extends State<RegisterPage>
       'Car1': {
         {
           'userID' : user.uid,
+          'Car Number' : 'Car1',
           'Car Model' : '',
           'Date': '',
           'Timeslot': '',
@@ -194,6 +195,7 @@ class _RegisterPageState extends State<RegisterPage>
       'Car2': {
         {
           'userID' : user.uid,
+          'Car Number' : 'Car2',
           'Car Model' : '',
           'Date': '',
           'Timeslot': '',
@@ -205,6 +207,7 @@ class _RegisterPageState extends State<RegisterPage>
       'Car3': {
         {
           'userID' : user.uid,
+          'Car Number' : 'Car2',
           'Car Model' : '',
           'Date': '',
           'Timeslot': '',

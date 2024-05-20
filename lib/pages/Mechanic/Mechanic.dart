@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:car_management/components/appbar.dart';
+import 'package:car_management/components/button.dart';
 import 'package:car_management/components/globals.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,7 +44,6 @@ class _MechanicPageState extends State<MechanicPage> {
                 for (var document in data!) {
                   for (var value in document.data().entries) {
                     combinedData.add(value);
-                    print(combinedData);
                   }
                 }
 
@@ -73,7 +73,7 @@ class _MechanicPageState extends State<MechanicPage> {
                                             ['Car Model'] ==
                                         ''
                                     ? combinedData[index].key
-                                    : combinedData[index].value[0]['']),
+                                    : combinedData[index].value[0]['Car Model']),
                               ),
                             ),
                           ),
