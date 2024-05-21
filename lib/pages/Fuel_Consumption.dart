@@ -32,13 +32,13 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
 
     List<_FuelData> chartData = [];
 
-    while (chartData.length < globals.fuelData[(data as Map?)?['dropdownValue']]
+    while (chartData.length < globals.fuelData[(data as Map?)?['index']]
         ['Odometer Reading']
         .length) {
       chartData.add(_FuelData(
-          globals.fuelData[(data as Map?)?['dropdownValue']]['Timestamp']
+          globals.fuelData[(data as Map?)?['index']]['Timestamp']
               [chartData.length],
-          globals.fuelData[(data as Map?)?['dropdownValue']]['Fuel Pumped']
+          globals.fuelData[(data as Map?)?['index']]['Fuel Pumped']
               [chartData.length].toDouble()));
     }
 
@@ -183,23 +183,23 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                     child: ElevatedButton(
                                         onPressed: () async {
                                           globals.fuelData[(data as Map?)?[
-                                                      'dropdownValue']]
+                                                      'index']]
                                                   ['Odometer Reading']
                                               .add(_controller.text);
 
                                           globals.fuelData[(data as Map?)?[
-                                                      'dropdownValue']]
+                                                      'index']]
                                                   ['Fuel Pumped']
                                               .add(
                                                   int.parse(_controller1.text));
 
                                           globals.fuelData[(data as Map?)?[
-                                                      'dropdownValue']]
+                                                      'index']]
                                                   ['Price per Litre']
                                               .add(_controller2.text);
 
                                           globals.fuelData[(data as Map?)?[
-                                                  'dropdownValue']]['Timestamp']
+                                                  'index']]['Timestamp']
                                               .add(DateTime.now()
                                                   .toString()
                                                   .split(" ")[0]);

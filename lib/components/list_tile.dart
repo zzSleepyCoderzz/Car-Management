@@ -240,10 +240,11 @@ class _Add_Car_ListTileState extends State<Add_Car_ListTile> {
 
 class Update_Maintenance_List_Tile extends StatefulWidget {
   const Update_Maintenance_List_Tile(
-      {super.key, required this.tileName, required this.value});
+      {super.key, required this.tileName, required this.value, required this.userID});
 
   final String tileName;
   final String value;
+  final String userID;
 
   @override
   State<Update_Maintenance_List_Tile> createState() =>
@@ -252,6 +253,15 @@ class Update_Maintenance_List_Tile extends StatefulWidget {
 
 class _Update_Maintenance_List_TileState
     extends State<Update_Maintenance_List_Tile> {
+
+  //update records in firestore
+  void updateServiceHistory(var serviceHistory, var userID) {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    var user = _auth.currentUser;
+    CollectionReference ref = FirebaseFirestore.instance.collection('service');
+    ref.doc(userID).update(serviceHistory);
+  }
+
   final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
   var _currentValue;
@@ -259,42 +269,26 @@ class _Update_Maintenance_List_TileState
   @override
   Widget build(BuildContext context) {
     var initialValue = widget.tileName == "Mileage"
-        ? globals.serviceHistory[widget.value][0][widget.tileName].toString()
+        ? 0
         : widget.tileName == "Engine Oil"
-            ? globals.serviceHistory[widget.value][1][widget.tileName]
-                .toString()
+            ? 1
             : widget.tileName == "Break Pads"
-                ? globals.serviceHistory[widget.value][2][widget.tileName]
-                    .toString()
+                ? 2
                 : widget.tileName == "Air Filter"
-                    ? globals.serviceHistory[widget.value][3][widget.tileName]
-                        .toString()
+                    ? 3
                     : widget.tileName == "Alignment"
-                        ? globals.serviceHistory[widget.value][4]
-                                [widget.tileName]
-                            .toString()
+                        ? 4
                         : widget.tileName == "Battery"
-                            ? globals.serviceHistory[widget.value][5]
-                                    [widget.tileName]
-                                .toString()
+                            ? 5
                             : widget.tileName == "Coolant"
-                                ? globals.serviceHistory[widget.value][6]
-                                        [widget.tileName]
-                                    .toString()
+                                ? 6
                                 : widget.tileName == "Spark Plugs"
-                                    ? globals.serviceHistory[widget.value][7]
-                                            [widget.tileName]
-                                        .toString()
+                                    ? 7
                                     : widget.tileName == "Tyres"
-                                        ? globals.serviceHistory[widget.value]
-                                                [8][widget.tileName]
-                                            .toString()
+                                        ? 8
                                         : widget.tileName ==
                                                 "Transmission Fluid"
-                                            ? globals
-                                                .serviceHistory[widget.value][9]
-                                                    [widget.tileName]
-                                                .toString()
+                                            ? 9
                                             : "";
 
     return ListTile(
@@ -324,7 +318,7 @@ class _Update_Maintenance_List_TileState
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            widget.tileName,
+                            "Last Changed:" + widget.tileName,
                             style: TextStyle(
                               fontSize: 20.0,
                               color: Colors.blueGrey[800],
@@ -333,15 +327,13 @@ class _Update_Maintenance_List_TileState
                           Padding(
                             padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0.0),
                             child: TextFormField(
-                              initialValue:
-                                  initialValue,
+                              initialValue: globals.serviceHistory[widget.value]
+                                      [initialValue][widget.tileName]
+                                  .toString(),
                               decoration: InputDecoration(
                                 hintText: widget.tileName,
                                 hintStyle: TextStyle(color: Colors.black),
                               ),
-                              validator: (val) => val?.length == 0
-                                  ? "Please enter a name"
-                                  : null,
                               onChanged: (val) {
                                 setState(() {
                                   _currentValue = val;
@@ -355,8 +347,10 @@ class _Update_Maintenance_List_TileState
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {}
                                   setState(() {
-                                    globals.serviceHistory[widget.tileName] =
+                                    globals.serviceHistory[widget.value]
+                                            [initialValue][widget.tileName] =
                                         _currentValue;
+                                    updateServiceHistory(globals.serviceHistory, widget.userID);
                                   });
 
                                   Navigator.pop(context);
