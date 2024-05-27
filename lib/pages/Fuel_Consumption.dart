@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:car_management/components/globals.dart' as globals;
+import 'package:http/http.dart' as http;
 
 import 'package:car_management/components/auth.dart';
+import 'package:car_management/components/gas_price_widget.dart';
 
 class Fuel_ConsumptionPage extends StatefulWidget {
   const Fuel_ConsumptionPage({super.key});
@@ -32,14 +34,14 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
 
     List<_FuelData> chartData = [];
 
-    while (chartData.length < globals.fuelData[(data as Map?)?['index']]
-        ['Odometer Reading']
-        .length) {
+    while (chartData.length <
+        globals.fuelData[(data as Map?)?['index']]['Odometer Reading'].length) {
       chartData.add(_FuelData(
           globals.fuelData[(data as Map?)?['index']]['Timestamp']
               [chartData.length],
           globals.fuelData[(data as Map?)?['index']]['Fuel Pumped']
-              [chartData.length].toDouble()));
+                  [chartData.length]
+              .toDouble()));
     }
 
     //Controllers for the textfields
@@ -69,6 +71,18 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
               (data as Map?)?['dropdownValue'],
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.03),
+            Container(
+              //gas price widget
+              height: MediaQuery.of(context).size.height * 0.11,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+              ),
+              child: GasPriceWidget(),
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.1),
             Container(
@@ -182,24 +196,25 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                     padding: EdgeInsets.only(top: 20.0),
                                     child: ElevatedButton(
                                         onPressed: () async {
-                                          globals.fuelData[(data as Map?)?[
-                                                      'index']]
+                                          globals.fuelData[
+                                                  (data as Map?)?['index']]
                                                   ['Odometer Reading']
                                               .add(_controller.text);
 
-                                          globals.fuelData[(data as Map?)?[
-                                                      'index']]
+                                          globals.fuelData[
+                                                  (data as Map?)?['index']]
                                                   ['Fuel Pumped']
                                               .add(
                                                   int.parse(_controller1.text));
 
-                                          globals.fuelData[(data as Map?)?[
-                                                      'index']]
+                                          globals.fuelData[
+                                                  (data as Map?)?['index']]
                                                   ['Price per Litre']
                                               .add(_controller2.text);
 
-                                          globals.fuelData[(data as Map?)?[
-                                                  'index']]['Timestamp']
+                                          globals.fuelData[
+                                                  (data as Map?)?['index']]
+                                                  ['Timestamp']
                                               .add(DateTime.now()
                                                   .toString()
                                                   .split(" ")[0]);
