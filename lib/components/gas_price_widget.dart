@@ -58,8 +58,14 @@ class _GasPriceWidgetState extends State<GasPriceWidget> {
               itemBuilder: (context, index) {
                 String key = gasPrices.keys.elementAt(index);
                 return ListTile(
-                  title: Text(key),
-                  trailing: Text(gasPrices[key]!),
+                  title: Text(
+                    key,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  trailing: Text(
+                    gasPrices[key]!,
+                    style: TextStyle(fontSize: 18),
+                  ),
                 );
               },
             ),
