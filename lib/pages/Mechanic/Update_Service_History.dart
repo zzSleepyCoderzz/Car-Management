@@ -1,7 +1,34 @@
+import 'dart:io';
+
 import 'package:car_management/components/appbar.dart';
+import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/list_tile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/globals.dart' as globals;
+import 'package:image_picker/image_picker.dart';
+
+Future<void> uploadInvoice(String UserUID, String CarNumber) async {
+  final ImagePicker _picker = ImagePicker();
+  // Select image
+  final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+  if (image != null) {
+    File file = File(image.path);
+
+    // Upload to Firebase
+    try {
+      await FirebaseStorage.instance
+          .ref('invoices/${FirebaseAuth.instance.currentUser!.uid}/${UserUID}/${CarNumber}.png')
+          .putFile(file);
+    } on FirebaseException catch (e) {
+      // e.g, e.code == 'canceled'
+      print("Error: $e");
+    }
+  }
+  await Auth().userDetails();
+}
 
 class Update_Service_HistoryPage extends StatefulWidget {
   const Update_Service_HistoryPage({super.key});
@@ -56,6 +83,12 @@ class _Update_Service_HistoryPageState
             Update_Maintenance_List_Tile(
               tileName: "Transmission Fluid", value: data['Car Number'], userID: data['userID'],
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.03,
+            ),
+            ElevatedButton(onPressed: (){
+              uploadInvoice(data['userID'], data['Car Number']);
+            }, child: Text("Upload Invoice"))
           ],
         ),
       ),
