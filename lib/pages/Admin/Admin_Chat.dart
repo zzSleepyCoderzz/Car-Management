@@ -28,7 +28,8 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
     final data = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
-        appBar: DefaultAppBar(title: 'Chat with ${data as String}'),
+        appBar: AppBar(
+        title: Text('Chat with ${data as String}')),
         body: Scaffold(
             body: Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 10, 8.0, 20),

@@ -17,11 +17,14 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final AdminID = "h6xtTQ6WufSIzZb6TacklGdMx4h1";
+
 
   void _sendMessage() async {
     if (_controller.text.isNotEmpty) {
       await _chatService.sendMessage(
-          "wlmE1WgP4FWWoJBGMAuW2v2tsN53", _controller.text);
+        // Admin ID hardcoded
+          AdminID, _controller.text);
       _controller.clear();
     }
   }
@@ -29,7 +32,8 @@ class _ChatPageState extends State<ChatPage> {
   void emergency(String location) async {
     if (_controller.text.isNotEmpty) {
       await _chatService.sendMessage(
-          "wlmE1WgP4FWWoJBGMAuW2v2tsN53", location);
+        // Admin ID hardcoded
+          AdminID, location);
       _controller.clear();
     }
   }
@@ -75,7 +79,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget _buildMessagesList() {
     return StreamBuilder(
       stream: _chatService.getMessages(
-          "wlmE1WgP4FWWoJBGMAuW2v2tsN53", _auth.currentUser!.uid),
+          AdminID, _auth.currentUser!.uid),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
