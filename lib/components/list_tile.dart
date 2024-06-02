@@ -260,6 +260,7 @@ class _Update_Maintenance_List_TileState
     var user = _auth.currentUser;
     CollectionReference ref = FirebaseFirestore.instance.collection('service');
     ref.doc(userID).update(serviceHistory);
+
   }
 
   final _formKey = GlobalKey<FormState>();

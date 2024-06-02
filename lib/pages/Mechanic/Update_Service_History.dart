@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/list_tile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,8 @@ Future<void> uploadInvoice(String UserUID, String CarNumber) async {
     // Upload to Firebase
     try {
       await FirebaseStorage.instance
-          .ref('invoices/${FirebaseAuth.instance.currentUser!.uid}/${UserUID}/${CarNumber}.png')
+          .ref(
+              'invoices/${FirebaseAuth.instance.currentUser!.uid}/${UserUID}/${CarNumber}.png')
           .putFile(file);
     } on FirebaseException catch (e) {
       // e.g, e.code == 'canceled'
@@ -28,6 +30,14 @@ Future<void> uploadInvoice(String UserUID, String CarNumber) async {
     }
   }
   await Auth().userDetails();
+}
+
+//update records in firestore
+void postDetailsToFirestore(var value, String user) {
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  CollectionReference ref =
+      FirebaseFirestore.instance.collection('scheduled_service');
+  ref.doc(user).update(value);
 }
 
 class Update_Service_HistoryPage extends StatefulWidget {
@@ -40,12 +50,9 @@ class Update_Service_HistoryPage extends StatefulWidget {
 
 class _Update_Service_HistoryPageState
     extends State<Update_Service_HistoryPage> {
-  
-
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
-    print(data['userID']);
     return Scaffold(
       appBar: DefaultAppBar(
         title: 'Update Service History',
@@ -54,41 +61,78 @@ class _Update_Service_HistoryPageState
         child: Column(
           children: [
             Update_Maintenance_List_Tile(
-              tileName: "Mileage", value: data['Car Number'], userID: data['userID'],
+              tileName: "Mileage",
+              value: data['Car Number'],
+              userID: data['userID'],
             ),
             Update_Maintenance_List_Tile(
-              tileName: "Engine Oil", value: data['Car Number'], userID: data['userID'],
+              tileName: "Engine Oil",
+              value: data['Car Number'],
+              userID: data['userID'],
             ),
             Update_Maintenance_List_Tile(
-              tileName: "Break Pads", value: data['Car Number'], userID: data['userID'],
+              tileName: "Break Pads",
+              value: data['Car Number'],
+              userID: data['userID'],
             ),
             Update_Maintenance_List_Tile(
-              tileName: "Air Filter", value: data['Car Number'], userID: data['userID'],
+              tileName: "Air Filter",
+              value: data['Car Number'],
+              userID: data['userID'],
             ),
             Update_Maintenance_List_Tile(
-              tileName: "Alignment", value: data['Car Number'], userID: data['userID'],
+              tileName: "Alignment",
+              value: data['Car Number'],
+              userID: data['userID'],
             ),
             Update_Maintenance_List_Tile(
-              tileName: "Battery", value: data['Car Number'], userID: data['userID'],
+              tileName: "Battery",
+              value: data['Car Number'],
+              userID: data['userID'],
             ),
             Update_Maintenance_List_Tile(
-              tileName: "Coolant", value: data['Car Number'], userID: data['userID'],
+              tileName: "Coolant",
+              value: data['Car Number'],
+              userID: data['userID'],
             ),
             Update_Maintenance_List_Tile(
-              tileName: "Spark Plugs", value: data['Car Number'], userID: data['userID'],
+              tileName: "Spark Plugs",
+              value: data['Car Number'],
+              userID: data['userID'],
             ),
             Update_Maintenance_List_Tile(
-              tileName: "Tyres", value: data['Car Number'], userID: data['userID'],
+              tileName: "Tyres",
+              value: data['Car Number'],
+              userID: data['userID'],
             ),
             Update_Maintenance_List_Tile(
-              tileName: "Transmission Fluid", value: data['Car Number'], userID: data['userID'],
+              tileName: "Transmission Fluid",
+              value: data['Car Number'],
+              userID: data['userID'],
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
             ),
-            ElevatedButton(onPressed: (){
-              uploadInvoice(data['userID'], data['Car Number']);
-            }, child: Text("Upload Invoice"))
+            ElevatedButton(
+                onPressed: () {
+                  uploadInvoice(data['userID'], data['Car Number']);
+                  globals.scheduledService[data['Car Number']].add({
+                    'userID': data['userID'],
+                    'Car Number': data['Car Number'],
+                    'Car Model': data['Car Model'],
+                    'Date': '',
+                    'Timeslot': '',
+                    'Remarks': '',
+                    'mechanicID': '',
+                    'Invoice': '',
+                  });
+                  postDetailsToFirestore(
+                      globals.scheduledService, data['userID']);
+                  setState(() {
+                    Navigator.popAndPushNamed(context, "/mechanic");
+                  });
+                },
+                child: Text("Upload Invoice"))
           ],
         ),
       ),

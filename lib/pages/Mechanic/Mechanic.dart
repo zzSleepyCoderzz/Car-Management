@@ -1,4 +1,4 @@
-import 'dart:async';
+
 
 import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/button.dart';
@@ -17,11 +17,9 @@ class MechanicPage extends StatefulWidget {
 
 class _MechanicPageState extends State<MechanicPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  
 
   @override
   Widget build(BuildContext context) {
-
     var user = _auth.currentUser;
 
     return Scaffold(
@@ -43,7 +41,7 @@ class _MechanicPageState extends State<MechanicPage> {
 
                 for (var document in data!) {
                   for (var value in document.data().entries) {
-                    combinedData.add(value);
+                    combinedData.add(value.value.last);
                   }
                 }
 
@@ -52,32 +50,34 @@ class _MechanicPageState extends State<MechanicPage> {
                   child: ListView.builder(
                       itemCount: combinedData.length,
                       itemBuilder: (context, index) {
-                       
-                        return combinedData[index].value[0]['mechanicID'] == user?.uid ? Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/maintenance_details',
-                                  arguments: combinedData[index]);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 2,
+                        return combinedData[index]['mechanicID'] == user?.uid
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                        context, '/maintenance_details',
+                                        arguments: combinedData[index]);
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: Colors.black,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: ListTile(
+                                      title: Text(combinedData[index]
+                                                  ['Car Model'] ==
+                                              ''
+                                          ? combinedData[index]['Car Number']
+                                          : combinedData[index]['Car Model']),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              child: ListTile(
-                                title: Text(combinedData[index].value[0]
-                                            ['Car Model'] ==
-                                        ''
-                                    ? combinedData[index].key
-                                    : combinedData[index].value[0]['Car Model']),
-                              ),
-                            ),
-                          ),
-                        ) : Container();
+                              )
+                            : Container();
                       }),
                 );
               }),

@@ -28,9 +28,6 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
 
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments;
-    print(data);
-    print(
-        "Data here ${globals.scheduledService[(data as Map?)?['index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Date']}");
     var datePicked;
 
     //Text Controller

@@ -207,7 +207,7 @@ class _RegisterPageState extends State<RegisterPage>
       'Car3': {
         {
           'userID' : user.uid,
-          'Car Number' : 'Car2',
+          'Car Number' : 'Car3',
           'Car Model' : '',
           'Date': '',
           'Timeslot': '',

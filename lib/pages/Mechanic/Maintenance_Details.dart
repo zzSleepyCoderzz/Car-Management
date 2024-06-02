@@ -18,10 +18,11 @@ class _Maintenance_DetailsPageState extends State<Maintenance_DetailsPage> {
 
   Future<void> getServiceHistory(String userID) async {
     var serviceHistory;
-    final _auth = FirebaseAuth.instance;
+    var scheduledService;
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
     CollectionReference ref = firebaseFirestore.collection('service');
+    CollectionReference ref1 = firebaseFirestore.collection('scheduled_service');
 
     //adding service history to global variable
     var temp = ref.doc(userID).get();
@@ -29,14 +30,21 @@ class _Maintenance_DetailsPageState extends State<Maintenance_DetailsPage> {
       serviceHistory = snapshot.data();
       globals.serviceHistory = serviceHistory;
     });
+
+    //adding service history to global variable
+    var temp1 = ref1.doc(userID).get();
+    temp1.then((snapshot) {
+      scheduledService = snapshot.data();
+      globals.scheduledService = scheduledService;
+    });
   }
   
   @override
   Widget build(BuildContext context) {
-    final data = ModalRoute.of(context)!.settings.arguments as MapEntry;
+    final data = ModalRoute.of(context)!.settings.arguments;
 
     return FutureBuilder(
-      future: getServiceHistory(data.value[0]['userID']),
+      future: getServiceHistory((data as Map)['userID']),
       builder: (context, snapshot) {
         return Scaffold(
           appBar: AppBar(
@@ -56,7 +64,7 @@ class _Maintenance_DetailsPageState extends State<Maintenance_DetailsPage> {
                   child: Column(
                     children: [
                       Text(
-                        "DATE: ${data.value[0]['Date']}",
+                        "DATE: ${(data as Map)['Date']}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 18,
@@ -64,10 +72,10 @@ class _Maintenance_DetailsPageState extends State<Maintenance_DetailsPage> {
                         ),
                       ),
                       Text(
-                        "TIME:  ${data.value[0]['Timeslot']}",
+                        "TIME:  ${(data as Map)['Timeslot']}",
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                       ),
-                      Text("Remarks to Mechanic: \n  ${data.value[0]['Remarks']}",
+                      Text("Remarks to Mechanic: \n  ${(data as Map)['Remarks']}",
                           textAlign: TextAlign.center,
                           style:
                               TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
@@ -78,7 +86,7 @@ class _Maintenance_DetailsPageState extends State<Maintenance_DetailsPage> {
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.2,),
             MaintenanceButton(onTap: (){
-              Navigator.pushNamed(context, '/update_service_history', arguments: data.value[0]);
+              Navigator.pushNamed(context, '/update_service_history', arguments:(data as Map));
             }, text: "Complete Maintenance"),
           ]),
         );
