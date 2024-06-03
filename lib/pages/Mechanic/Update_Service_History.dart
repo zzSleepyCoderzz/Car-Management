@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/list_tile.dart';
+import 'package:car_management/pages/Mechanic/Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -134,7 +135,6 @@ class _Update_Service_HistoryPageState
                       barrierDismissible:
                           false, // Prevents the dialog from closing when tapping outside
                       builder: (BuildContext context) {
-                        
                         //Loading dialog
                         return const AlertDialog(
                           content: SizedBox(
@@ -156,8 +156,15 @@ class _Update_Service_HistoryPageState
                     );
 
                     //Wait for some time before going to next page
-                    Future.delayed(Duration(seconds: 8), () {
-                      Navigator.popAndPushNamed(context, "/mechanic");
+                    Future.delayed(Duration(seconds: 7), () {
+
+                      //Remove all other pages in the stack
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MechanicPage()), // Replace with the actual screen you want to navigate to
+                        (Route<dynamic> route) => false,
+                      );
                     });
                   });
                 },
