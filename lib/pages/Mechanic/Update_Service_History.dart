@@ -129,7 +129,36 @@ class _Update_Service_HistoryPageState
                   postDetailsToFirestore(
                       globals.scheduledService, data['userID']);
                   setState(() {
-                    Navigator.popAndPushNamed(context, "/mechanic");
+                    showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // Prevents the dialog from closing when tapping outside
+                      builder: (BuildContext context) {
+                        
+                        //Loading dialog
+                        return const AlertDialog(
+                          content: SizedBox(
+                            height: 150,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(),
+                                SizedBox(
+                                    width:
+                                        10), // Add some spacing between the CircularProgressIndicator and the text
+                                Text("Loading..."),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+
+                    //Wait for some time before going to next page
+                    Future.delayed(Duration(seconds: 8), () {
+                      Navigator.popAndPushNamed(context, "/mechanic");
+                    });
                   });
                 },
                 child: Text("Upload Invoice"))

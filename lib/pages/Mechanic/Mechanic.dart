@@ -1,5 +1,3 @@
-
-
 import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/button.dart';
 import 'package:car_management/components/globals.dart';
@@ -23,64 +21,69 @@ class _MechanicPageState extends State<MechanicPage> {
     var user = _auth.currentUser;
 
     return Scaffold(
-        appBar: DefaultAppBar(
-          title: 'Mechanic Page',
-        ),
-        body: Center(
-          child: FutureBuilder(
-              future: FirebaseFirestore.instance
-                  .collection('scheduled_service')
-                  .get(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
+      appBar: DefaultAppBar(
+        title: 'Mechanic Page',
+      ),
+      body: Center(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('scheduled_service')
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-                final combinedData = [];
-                final data = snapshot.data?.docs;
+            final combinedData = [];
+            final data = snapshot.data?.docs;
 
-                for (var document in data!) {
-                  for (var value in document.data().entries) {
-                    combinedData.add(value.value.last);
-                  }
-                }
-
-                return Container(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  child: ListView.builder(
-                      itemCount: combinedData.length,
-                      itemBuilder: (context, index) {
-                        return combinedData[index]['mechanicID'] == user?.uid
-                            ? Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, '/maintenance_details',
-                                        arguments: combinedData[index]);
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(
-                                        color: Colors.black,
-                                        width: 2,
-                                      ),
-                                    ),
-                                    child: ListTile(
-                                      title: Text(combinedData[index]
-                                                  ['Car Model'] ==
-                                              ''
-                                          ? combinedData[index]['Car Number']
-                                          : combinedData[index]['Car Model']),
-                                    ),
-                                  ),
+            for (var document in data! as List) {
+              for (var value in document.data()!.values) {
+                combinedData.add(value[value.length - 1]);
+              }
+            }
+            
+            return Container(
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: ListView.builder(
+                itemCount: combinedData.length,
+                itemBuilder: (context, index) {
+                  return combinedData[index]['mechanicID'] == user?.uid
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/maintenance_details',
+                                arguments: combinedData[index],
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 2,
                                 ),
-                              )
-                            : Container();
-                      }),
-                );
-              }),
-        ));
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                  combinedData[index]['Car Model'] == ''
+                                      ? combinedData[index]['Car Number']
+                                      : combinedData[index]['Car Model'],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container();
+                },
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }
