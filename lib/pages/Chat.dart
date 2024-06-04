@@ -17,7 +17,7 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final AdminID = "h6xtTQ6WufSIzZb6TacklGdMx4h1";
+  final AdminID = "8OpsnfUCzqeis1VmkX0xlVcR8Cz1";
 
 
   void _sendMessage() async {
