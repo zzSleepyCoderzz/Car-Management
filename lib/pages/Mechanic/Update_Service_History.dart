@@ -159,12 +159,7 @@ class _Update_Service_HistoryPageState
                     Future.delayed(Duration(seconds: 7), () {
 
                       //Remove all other pages in the stack
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                MechanicPage()), // Replace with the actual screen you want to navigate to
-                        (Route<dynamic> route) => false,
-                      );
+                      Navigator.of(context).popAndPushNamed('/mechanic');
                     });
                   });
                 },

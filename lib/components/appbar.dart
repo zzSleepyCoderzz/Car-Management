@@ -22,8 +22,10 @@ class DefaultAppBar extends PreferredSize {
           preferredSize: const Size.fromHeight(56),
           child: AppBar(
             title: Text(title),
-            actions: const [
-              IconButton(onPressed: signUserOut, icon: Icon(Icons.logout)),
+            actions:  [
+              IconButton(onPressed: (){
+                signUserOut();
+              }, icon: Icon(Icons.logout)),
             ],
           ),
         );

@@ -2,6 +2,7 @@ import 'package:car_management/components/LoginorRegister.dart';
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/pages/Add_Car.dart';
 import 'package:car_management/pages/Admin/Admin_Chat.dart';
+import 'package:car_management/pages/Admin/Set_Mechanic.dart';
 import 'package:car_management/pages/Fuel_Consumption.dart';
 import 'package:car_management/pages/Home.dart';
 import 'package:car_management/pages/Maintenance.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         '/mechanic':(context) => const MechanicPage(),
         '/maintenance_details': (context) => const Maintenance_DetailsPage(),
         '/update_service_history': (context) => const Update_Service_HistoryPage(),
+        'set_mechanicbody': (context) => const Set_MechanicBody(),
       },
       debugShowCheckedModeBanner: false,
     );
