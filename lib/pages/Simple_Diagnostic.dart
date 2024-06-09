@@ -14,7 +14,9 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
     final data = ModalRoute.of(context)!.settings.arguments;
 
     return Scaffold(
-      appBar: DefaultAppBar(title: 'Simple Diagnostics'),
+      appBar:AppBar(
+        title: Text("Simple Diagnostics"),
+      ),
       body: Center(
         child: Column(
           children: [

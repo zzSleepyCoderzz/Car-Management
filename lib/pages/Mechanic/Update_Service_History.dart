@@ -157,9 +157,10 @@ class _Update_Service_HistoryPageState
 
                     //Wait for some time before going to next page
                     Future.delayed(Duration(seconds: 7), () {
-
                       //Remove all other pages in the stack
-                      Navigator.of(context).popAndPushNamed('/mechanic');
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                      Navigator.pop(context);
                     });
                   });
                 },

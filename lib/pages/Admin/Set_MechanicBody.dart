@@ -31,8 +31,8 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
           selectedMechanic = mechanicID[0];
 
           return Scaffold(
-            appBar: DefaultAppBar(
-              title: 'Set Mechanic',
+            appBar: AppBar(
+              title: Text("Set Mechanic"),
             ),
             body: Center(
               child: Column(
@@ -53,7 +53,6 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButton(
                       onPressed: () {
-
                         //Assign snapshot to userData
                         userData = snapshot.data!.data()!;
                         userData[data[0]['Car Number']]

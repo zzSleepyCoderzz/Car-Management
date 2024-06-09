@@ -44,8 +44,8 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
     ];
 
     return Scaffold(
-      appBar: DefaultAppBar(
-        title: 'Schedule Service',
+      appBar: AppBar(
+        title: Text("Schedule Service"),
       ),
       body: Center(
         child: Column(

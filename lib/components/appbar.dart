@@ -30,3 +30,4 @@ class DefaultAppBar extends PreferredSize {
           ),
         );
 }
+

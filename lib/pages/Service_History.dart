@@ -25,7 +25,6 @@ class _Service_HistoryPageState extends State<Service_HistoryPage> {
                 Navigator.pushNamed(context, '/schedule_service',
                     arguments: data);
               }, icon: const Icon(Icons.calendar_month_rounded)),
-          const IconButton(onPressed: signUserOut, icon: Icon(Icons.logout)),
         ],
       ),
       body: Center(

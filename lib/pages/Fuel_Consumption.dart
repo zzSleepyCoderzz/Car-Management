@@ -54,8 +54,8 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
     DateTime dateOnly = DateTime(now.year, now.month, now.day);
 
     return Scaffold(
-      appBar: DefaultAppBar(
-        title: 'Fuel Consumption',
+      appBar: AppBar(
+        title: Text("Fuel Consumption"),
       ),
       body: Center(
         child: SingleChildScrollView(
