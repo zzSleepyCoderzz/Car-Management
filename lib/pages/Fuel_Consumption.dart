@@ -56,184 +56,245 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Fuel Consumption"),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-              const Text(
-                "Log your fuel consumption for: ",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: MediaQuery.of(context).size.width * 0.05),
-              Text(
-                (data as Map?)?['dropdownValue'],
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: MediaQuery.of(context).size.width * 0.03),
-              Container(
-                //gas price widget
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: GasPriceWidget(),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-              Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: SfCartesianChart(
-                        primaryXAxis: CategoryAxis(),
-                        // Chart title
-                        title: ChartTitle(text: 'Fuel Consumption / KM'),
-                        // Enable legend
-                        legend: Legend(isVisible: true),
-                        // Enable tooltip
-                        tooltipBehavior: TooltipBehavior(enable: true),
-                        series: <CartesianSeries<_FuelData, String>>[
-                          LineSeries<_FuelData, String>(
-                              dataSource: chartData,
-                              xValueMapper: (_FuelData fueldata, _) =>
-                                  fueldata.timeStamp,
-                              yValueMapper: (_FuelData fueldata, _) =>
-                                  fueldata.fuelPumped,
-                              name: 'Represents each Fuel Up',
-                              // Enable data label
-                              dataLabelSettings:
-                                  DataLabelSettings(isVisible: true))
-                        ]),
-                  )),
-              SizedBox(height: MediaQuery.of(context).size.width * 0.1),
-              MaintenanceButton(
-                  onTap: () {
-                    showModalBottomSheet<void>(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (BuildContext context) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            top: 30,
-                            bottom: MediaQuery.of(context).viewInsets.bottom,
-                          ),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.5,
-                            child: Form(
-                              key: _formKey,
-                              child: SingleChildScrollView(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.oil_barrel),
+            onPressed: () {
+              showGeneralDialog(
+                context: context,
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    AlertDialog(
+                  content: Container(
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    child: Column(
+                      children: [
+                        Text(
+                        'Current Gas Prices',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.blueGrey[800],
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                        SingleChildScrollView(
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                height: MediaQuery.of(context).size.height * 0.3,
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 20.0, left: 20.0),
-                                      child: Text(
-                                        'Add a Fuel Log Entry',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          color: Colors.blueGrey[800],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          20.0, 20, 20.0, 0.0),
-                                      child: SizedBox(
-                                        child: TextField(
-                                          controller: _controller,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: 'Odometer Reading',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          20.0, 20, 20.0, 0.0),
-                                      child: SizedBox(
-                                        child: TextField(
-                                          controller: _controller1,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: 'Fuel Pumped (Litre)',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          20.0, 20, 20.0, 0.0),
-                                      child: SizedBox(
-                                        child: TextField(
-                                          controller: _controller2,
-                                          keyboardType: TextInputType.number,
-                                          onChanged: (value) {
-                                            print(_controller2.text);
-                                          },
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(),
-                                            labelText: 'Price per Litre (RM)',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(top: 20.0),
-                                      child: ElevatedButton(
-                                          onPressed: () async {
-                                            globals.fuelData[
-                                                    (data as Map?)?['index']]
-                                                    ['Odometer Reading']
-                                                .add(_controller.text);
-
-                                            globals.fuelData[
-                                                    (data as Map?)?['index']]
-                                                    ['Fuel Pumped']
-                                                .add(int.parse(
-                                                    _controller1.text));
-
-                                            globals.fuelData[
-                                                    (data as Map?)?['index']]
-                                                    ['Price per Litre']
-                                                .add(_controller2.text);
-
-                                            globals.fuelData[
-                                                    (data as Map?)?['index']]
-                                                    ['Timestamp']
-                                                .add(DateTime.now()
-                                                    .toString()
-                                                    .split(" ")[0]);
-
-                                            postDetailsToFirestore(
-                                                globals.fuelData);
-
-                                            //Run Auth to get the updated details
-                                            await const Auth().userDetails();
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text('Upload')),
-                                    )
+                                    
+                                    GasPriceWidget(), // Assuming this is a custom widget for displaying gas prices
                                   ],
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        );
+                        ),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('Nice!'),
+                      onPressed: () {
+                        Navigator.of(context).pop(); // Dismiss the dialog
                       },
-                    );
-                  },
-                  text: 'Log'),
-            ],
+                    ),
+                  ],
+                ),
+                transitionBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: Offset(0, 1), // Start from below the screen
+                      end: Offset.zero, // End at its final position
+                    ).animate(animation),
+                    child: child,
+                  );
+                },
+                transitionDuration: const Duration(
+                    milliseconds: 300), // Adjust the duration as needed
+              );
+            },
+          ),
+        ],
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 80.0),
+            child: Column(
+              children: [
+                const Text(
+                  "Log your fuel consumption for: ",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+                Text(
+                  (data as Map?)?['dropdownValue'],
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: MediaQuery.of(context).size.width * 0.03),
+                SizedBox(height: MediaQuery.of(context).size.width * 0.1),
+                Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: SfCartesianChart(
+                          primaryXAxis: CategoryAxis(),
+                          // Chart title
+                          title: ChartTitle(text: 'Fuel Consumption / KM'),
+                          // Enable legend
+                          legend: Legend(isVisible: true),
+                          // Enable tooltip
+                          tooltipBehavior: TooltipBehavior(enable: true),
+                          series: <CartesianSeries<_FuelData, String>>[
+                            LineSeries<_FuelData, String>(
+                                dataSource: chartData,
+                                xValueMapper: (_FuelData fueldata, _) =>
+                                    fueldata.timeStamp,
+                                yValueMapper: (_FuelData fueldata, _) =>
+                                    fueldata.fuelPumped,
+                                name: 'Represents each Fuel Up',
+                                // Enable data label
+                                dataLabelSettings:
+                                    DataLabelSettings(isVisible: true))
+                          ]),
+                    )),
+                SizedBox(height: MediaQuery.of(context).size.width * 0.1),
+                MaintenanceButton(
+                    onTap: () {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        isScrollControlled: true,
+                        builder: (BuildContext context) {
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              top: 30,
+                              bottom: MediaQuery.of(context).viewInsets.bottom,
+                            ),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.5,
+                              child: Form(
+                                key: _formKey,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            right: 20.0, left: 20.0),
+                                        child: Text(
+                                          'Add a Fuel Log Entry',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 20.0,
+                                            color: Colors.blueGrey[800],
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            20.0, 20, 20.0, 0.0),
+                                        child: SizedBox(
+                                          child: TextField(
+                                            controller: _controller,
+                                            keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: 'Odometer Reading',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            20.0, 20, 20.0, 0.0),
+                                        child: SizedBox(
+                                          child: TextField(
+                                            controller: _controller1,
+                                            keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: 'Fuel Pumped (Litre)',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            20.0, 20, 20.0, 0.0),
+                                        child: SizedBox(
+                                          child: TextField(
+                                            controller: _controller2,
+                                            keyboardType: TextInputType.number,
+                                            onChanged: (value) {
+                                              print(_controller2.text);
+                                            },
+                                            decoration: InputDecoration(
+                                              border: OutlineInputBorder(),
+                                              labelText: 'Price per Litre (RM)',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 20.0),
+                                        child: ElevatedButton(
+                                            onPressed: () async {
+                                              globals.fuelData[
+                                                      (data as Map?)?['index']]
+                                                      ['Odometer Reading']
+                                                  .add(_controller.text);
+
+                                              globals.fuelData[
+                                                      (data as Map?)?['index']]
+                                                      ['Fuel Pumped']
+                                                  .add(int.parse(
+                                                      _controller1.text));
+
+                                              globals.fuelData[
+                                                      (data as Map?)?['index']]
+                                                      ['Price per Litre']
+                                                  .add(_controller2.text);
+
+                                              globals.fuelData[
+                                                      (data as Map?)?['index']]
+                                                      ['Timestamp']
+                                                  .add(DateTime.now()
+                                                      .toString()
+                                                      .split(" ")[0]);
+
+                                              postDetailsToFirestore(
+                                                  globals.fuelData);
+
+                                              //Run Auth to get the updated details
+                                              await const Auth().userDetails();
+                                              Navigator.pop(context);
+                                            },
+                                            child: const Text('Upload')),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    text: 'Log'),
+              ],
+            ),
           ),
         ),
       ),
