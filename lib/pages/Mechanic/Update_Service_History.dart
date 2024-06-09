@@ -120,7 +120,7 @@ class _Update_Service_HistoryPageState
                   globals.scheduledService[data['Car Number']].add({
                     'userID': data['userID'],
                     'Car Number': data['Car Number'],
-                    'Car Model': data['Car Model'],
+                    'Car Model': '',
                     'Date': '',
                     'Timeslot': '',
                     'Remarks': '',

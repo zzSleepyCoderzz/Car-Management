@@ -1,6 +1,4 @@
-import 'package:car_management/components/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Set_MechanicPage extends StatefulWidget {
@@ -11,6 +9,7 @@ class Set_MechanicPage extends StatefulWidget {
 }
 
 class _Set_MechanicPageState extends State<Set_MechanicPage> {
+
   var mechanicID = [];
 
   Future<void> getMechanicID() async {
@@ -18,23 +17,20 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
     CollectionReference ref = firebaseFirestore.collection('users');
 
     QuerySnapshot querySnapshot = await ref.get();
+
     querySnapshot.docs.forEach((element) {
-      if (element['user'] == 'mechanic'){
-        mechanicID.add(element.id);
-      }
-      else{
-        print("Not a Mechanic");
+      if (element['user'] == 'mechanic') {
+       mechanicID.add(element.id);
       }
     });
-
-    print(mechanicID);
   }
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    var user = _auth.currentUser;
+
+    //Get List of all Mechanics
+    getMechanicID();
 
     return Scaffold(
       body: Center(
@@ -43,9 +39,6 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
               .collection('scheduled_service')
               .snapshots(),
           builder: (context, snapshot) {
-            //Get mechanic ID before passing to next page
-            getMechanicID();
-
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
@@ -71,7 +64,7 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.pushNamed(context, 'set_mechanicbody',
-                                  arguments: {combinedData[index], mechanicID});
+                                  arguments: [combinedData[index], mechanicID]);
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -102,57 +95,4 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
   }
 }
 
-class Set_MechanicBody extends StatefulWidget {
-  const Set_MechanicBody({super.key});
 
-  @override
-  State<Set_MechanicBody> createState() => _Set_MechanicBodyState();
-}
-
-class _Set_MechanicBodyState extends State<Set_MechanicBody> {
-  var mechanicID;
-  String? selectedMechanic;
-
-  @override
-  Widget build(BuildContext context) {
-    final data = ModalRoute.of(context)!.settings.arguments as Set<dynamic>;
-
-
-    return Scaffold(
-      appBar: DefaultAppBar(
-        title: 'Set Mechanic',
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DropdownButtonFormField<String>(
-                value: mechanicID[0],
-                hint: Text('Select Mechanic'),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedMechanic = newValue;
-                  });
-                },
-                items: mechanicID.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text('Set Mechanic'),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
