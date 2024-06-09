@@ -11,6 +11,25 @@ class Set_MechanicPage extends StatefulWidget {
 }
 
 class _Set_MechanicPageState extends State<Set_MechanicPage> {
+  var mechanicID = [];
+
+  Future<void> getMechanicID() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    CollectionReference ref = firebaseFirestore.collection('users');
+
+    QuerySnapshot querySnapshot = await ref.get();
+    querySnapshot.docs.forEach((element) {
+      if (element['user'] == 'mechanic'){
+        mechanicID.add(element.id);
+      }
+      else{
+        print("Not a Mechanic");
+      }
+    });
+
+    print(mechanicID);
+  }
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -24,6 +43,9 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
               .collection('scheduled_service')
               .snapshots(),
           builder: (context, snapshot) {
+            //Get mechanic ID before passing to next page
+            getMechanicID();
+
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
@@ -42,18 +64,14 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
               child: ListView.builder(
                 itemCount: combinedData.length,
                 itemBuilder: (context, index) {
-                  print(combinedData[index]);
                   return combinedData[index]['mechanicID'] == '' &&
                           combinedData[index]['Car Model'] != ''
                       ? Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                'set_mechanicbody',
-                                arguments: combinedData[index],
-                              );
+                              Navigator.pushNamed(context, 'set_mechanicbody',
+                                  arguments: {combinedData[index], mechanicID});
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -91,71 +109,50 @@ class Set_MechanicBody extends StatefulWidget {
   State<Set_MechanicBody> createState() => _Set_MechanicBodyState();
 }
 
-Future getMechanicID() async {
-  var mechanicID = [];
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  CollectionReference ref = firebaseFirestore.collection('users');
-
-  QuerySnapshot querySnapshot = await ref.get();
-  querySnapshot.docs.forEach((element) {
-    mechanicID.add(element.id);
-  });
-  return mechanicID;
-}
-
 class _Set_MechanicBodyState extends State<Set_MechanicBody> {
-  var mechanicID = ['1', '2', '3'];
+  var mechanicID;
   String? selectedMechanic;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getMechanicID(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
+    final data = ModalRoute.of(context)!.settings.arguments as Set<dynamic>;
 
-          mechanicID = snapshot.data!.map<String>((e) => e.toString()).toList();
 
-          print(mechanicID);
-          return Scaffold(
-            appBar: DefaultAppBar(
-              title: 'Set Mechanic',
-            ),
-            body: Center(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: DropdownButtonFormField<String>(
-                      value: mechanicID[0],
-                      hint: Text('Select Mechanic'),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          selectedMechanic = newValue;
-                        });
-                      },
-                      items: mechanicID
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Set Mechanic'),
-                    ),
-                  ),
-                ],
+    return Scaffold(
+      appBar: DefaultAppBar(
+        title: 'Set Mechanic',
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: DropdownButtonFormField<String>(
+                value: mechanicID[0],
+                hint: Text('Select Mechanic'),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedMechanic = newValue;
+                  });
+                },
+                items: mechanicID.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               ),
             ),
-          );
-        });
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Set Mechanic'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
