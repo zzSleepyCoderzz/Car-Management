@@ -1,5 +1,4 @@
 import 'package:car_management/components/appbar.dart';
-import 'package:car_management/components/chat_service.dart';
 import 'package:car_management/pages/Admin/Set_Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -69,16 +68,22 @@ class AdminBody extends StatefulWidget {
 }
 
 class _AdminBodyState extends State<AdminBody> {
-  final TextEditingController _controller = TextEditingController();
-  final ChatService _chatService = ChatService();
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  @override
+  void initState() {
+    super.initState();
+    getEmergencyList();
+  }
+
+  var emergencyList;
   final user = FirebaseAuth.instance.currentUser;
 
-  void _sendMessage(String receiverID) async {
-    if (_controller.text.isNotEmpty) {
-      await _chatService.sendMessage(receiverID, _controller.text);
-      _controller.clear();
-    }
+  //get all pending emergency requests
+  Future<void> getEmergencyList() async {
+    final emergency = await FirebaseFirestore.instance
+        .collection('emergency')
+        .where('status', isEqualTo: 'Pending')
+        .get();
+    emergencyList = emergency.docs;
   }
 
   @override
@@ -91,6 +96,14 @@ class _AdminBodyState extends State<AdminBody> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             }
+
+            //converting emergencyList to readable List
+            var temp = [];
+            for (var doc in emergencyList) {
+              temp.add(doc.data()['email']);
+            }
+            emergencyList = temp;
+
             final users = snapshot.data?.docs;
             return Container(
               width: MediaQuery.of(context).size.width * 0.9,
@@ -106,6 +119,9 @@ class _AdminBodyState extends State<AdminBody> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         decoration: BoxDecoration(
+                          color: emergencyList.contains(users?[index]['email'])
+                              ? Colors.red
+                              : Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
                             color: Colors

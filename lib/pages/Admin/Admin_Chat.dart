@@ -1,4 +1,3 @@
-import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -94,7 +93,12 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
               Text(
                 data['senderEmail'],
               ),
-              Text(data['message']),
+              Text(data['message'],
+                  style: data['message'].contains("Emergency!")
+                      ? TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 18)
+                      : TextStyle(
+                          color: Colors.black,
+                        )),
             ],
           )),
     );

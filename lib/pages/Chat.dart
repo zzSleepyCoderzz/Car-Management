@@ -1,10 +1,8 @@
 import 'package:car_management/components/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/globals.dart' as globals;
-import 'package:flutter/widgets.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -14,79 +12,126 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  var emergencyList = [];
+
   final TextEditingController _controller = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final AdminID = "8OpsnfUCzqeis1VmkX0xlVcR8Cz1";
 
-
   void _sendMessage() async {
     if (_controller.text.isNotEmpty) {
       await _chatService.sendMessage(
-        // Admin ID hardcoded
-          AdminID, _controller.text);
+          // Admin ID hardcoded
+          AdminID,
+          _controller.text);
       _controller.clear();
     }
   }
 
-  void emergency(String location) async {
-    if (_controller.text.isNotEmpty) {
-      await _chatService.sendMessage(
+  void emergency() async {
+    await _chatService.sendMessage(
         // Admin ID hardcoded
-          AdminID, location);
-      _controller.clear();
-    }
+        AdminID,
+        "Emergency! Requesting immediate assistance.");
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(child: _buildMessagesList()),
-          Padding(
-              padding: EdgeInsets.only(
-                  left: 20.0, bottom: MediaQuery.of(context).size.width * 0.1),
-              child: _buildMessageInput()),
-          Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.width * 0.1),
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Text(
-                  "EMERGENCY",
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.white),
+    return FutureBuilder(
+        future: FirebaseFirestore.instance
+            .collection('emergency')
+            .where('status', isEqualTo: 'Pending')
+            .get(),
+        builder: (context, snapshot) {
+          return Scaffold(
+              body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(child: _buildMessagesList()),
+                Padding(
+                    padding: EdgeInsets.only(
+                        left: 20.0,
+                        bottom: MediaQuery.of(context).size.width * 0.03),
+                    child: _buildMessageInput()),
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).size.width * 0.1),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      for (var document in snapshot.data!.docs) {
+                        emergencyList.add(document.data()['email']);
+                      }
+                      var numOfEmergencyRequests = 0;
+                      for (var doc in emergencyList) {
+                        doc == _auth.currentUser!.email
+                            ? numOfEmergencyRequests++
+                            : null;
+                      }
+
+                      print(emergencyList);
+                      print(numOfEmergencyRequests);
+
+                      //check if the amount of emergency request is less than 3
+                      if (numOfEmergencyRequests < 1) {
+                        emergency();
+                        FirebaseFirestore.instance.collection('emergency').add({
+                          'email': _auth.currentUser!.email,
+                          'status': "Pending"
+                        });
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                "You have reached the maximum number of emergency requests."),
+                          ),
+                        );
+                      }
+
+                      //clear the emergencyList
+                      emergencyList.clear();
+                      numOfEmergencyRequests = 0;
+                      setState(() {
+                        
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text(
+                        "EMERGENCY",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.white),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
-      ),
-    ));
+          ));
+        });
   }
 
 //Build Message List
   Widget _buildMessagesList() {
     return StreamBuilder(
-      stream: _chatService.getMessages(
-          AdminID, _auth.currentUser!.uid),
+      stream: _chatService.getMessages(AdminID, _auth.currentUser!.uid),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return const Text('Something went wrong');
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text('Loading...');
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
         }
 
         return ListView(
@@ -123,7 +168,15 @@ class _ChatPageState extends State<ChatPage> {
               Text(
                 data['senderEmail'],
               ),
-              Text(data['message']),
+              Text(data['message'],
+                  style: data['message'].contains("Emergency!")
+                      ? TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)
+                      : TextStyle(
+                          color: Colors.black,
+                        )),
             ],
           )),
     );
