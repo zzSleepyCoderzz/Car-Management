@@ -23,7 +23,7 @@ class _AdminPageState extends State<AdminPage> {
         title: 'Admin Page',
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.purple[800],
+        selectedItemColor: Color(0xFF3331c6),
         unselectedItemColor: Colors.blueGrey[800],
         currentIndex: currentIndex,
         onTap: (value) {

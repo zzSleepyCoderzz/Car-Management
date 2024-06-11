@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: DefaultAppBar(title: 'Tune Up Garage',),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.purple[800],
+        selectedItemColor: Color(0xFF3331c6),
         unselectedItemColor: Colors.blueGrey[800],
         currentIndex: currentIndex,
         onTap: (value) {
