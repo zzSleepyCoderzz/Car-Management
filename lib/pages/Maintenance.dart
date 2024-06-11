@@ -43,36 +43,46 @@ class _MaintenancePageState extends State<MaintenancePage> {
                 Text('Choose a car:'),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Container(
+                  width: 120,
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   decoration: BoxDecoration(
                     border: Border.all(color: Color(0xFF3331c6), width: 2),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: const Icon(Icons.arrow_drop_down),
-                    iconSize: 24,
-                    elevation: 16,
-                    underline: Container(
-                      height:
-                          0, // Set height to 0 to effectively remove the underline
+                  child: InputDecorator(
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(left: 10),
                     ),
-                    style: const TextStyle(color: Color(0xFF3331c6)),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue = newValue!;
-                        index = dropdownItems
-                                .indexWhere((item) => item == newValue) +
-                            1;
-                      });
-                    },
-                    items: dropdownItems
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
+                    child: DropdownButton<String>(
+                      value: dropdownValue,
+                      icon: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: const Icon(Icons.arrow_drop_down),
+                      ),
+                      iconSize: 24,
+                      elevation: 16,
+                      underline: Container(
+                        height:
+                            0, // Set height to 0 to effectively remove the underline
+                      ),
+                      style: const TextStyle(color: Color(0xFF3331c6)),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownValue = newValue!;
+                          index = dropdownItems
+                                  .indexWhere((item) => item == newValue) +
+                              1;
+                        });
+                      },
+                      items: dropdownItems
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
 

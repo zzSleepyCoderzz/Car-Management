@@ -51,7 +51,10 @@ class _GasPriceWidgetState extends State<GasPriceWidget> {
   @override
   Widget build(BuildContext context) {
     return gasPrices.isEmpty
-        ? Center(child: CircularProgressIndicator())
+        ? Center(child: 
+        CircularProgressIndicator(
+          color: Color(0xFF3331c6),
+        ))
         : Expanded(
             child: ListView.builder(
               itemCount: gasPrices.length,

@@ -182,9 +182,9 @@ class _RegisterPageState extends State<RegisterPage>
     ref4.doc(user.uid).set({
       'Car1': {
         {
-          'userID' : user.uid,
-          'Car Number' : 'Car1',
-          'Car Model' : '',
+          'userID': user.uid,
+          'Car Number': 'Car1',
+          'Car Model': '',
           'Date': '',
           'Timeslot': '',
           'Remarks': '',
@@ -194,9 +194,9 @@ class _RegisterPageState extends State<RegisterPage>
       },
       'Car2': {
         {
-          'userID' : user.uid,
-          'Car Number' : 'Car2',
-          'Car Model' : '',
+          'userID': user.uid,
+          'Car Number': 'Car2',
+          'Car Model': '',
           'Date': '',
           'Timeslot': '',
           'Remarks': '',
@@ -206,9 +206,9 @@ class _RegisterPageState extends State<RegisterPage>
       },
       'Car3': {
         {
-          'userID' : user.uid,
-          'Car Number' : 'Car3',
-          'Car Model' : '',
+          'userID': user.uid,
+          'Car Number': 'Car3',
+          'Car Model': '',
           'Date': '',
           'Timeslot': '',
           'Remarks': '',
@@ -260,117 +260,109 @@ class _RegisterPageState extends State<RegisterPage>
         ? Center(
             child: FadeTransition(
               opacity: opacityAnimation,
-              child: const CircularProgressIndicator(),
+              child: const CircularProgressIndicator(
+                color: Color(0xFF3331c6),
+              ),
             ),
           )
         : Scaffold(
             backgroundColor: Colors.grey[300],
-            body: Center(
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 25),
+            body: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.white,
+                    Color(0xFF3331c6),
+                  ], // Example gradient colors
+                ),
+              ),
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 25),
 
-                    // logo
-                    const Icon(
-                      Icons.lock,
-                      size: 70,
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    // welcome back, you've been missed!
-                    Text(
-                      'Let\'s create an account for you!',
-                      style: TextStyle(
-                        color: Colors.grey[700],
-                        fontSize: 16,
+                      // logo
+                      const Icon(
+                        Icons.lock,
+                        size: 70,
                       ),
-                    ),
 
-                    const SizedBox(height: 25),
+                      const SizedBox(height: 25),
 
-                    // email textfield
-                    Textfield(
-                      controller: emailController,
-                      hintText: 'Email',
-                      obscureText: false,
-                    ),
+                      // welcome back, you've been missed!
+                      Text(
+                        'Let\'s create an account for you!',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
 
-                    const SizedBox(height: 10),
+                      const SizedBox(height: 25),
 
-                    // password textfield
-                    Textfield(
-                      controller: passwordController,
-                      hintText: 'Password',
-                      obscureText: true,
-                    ),
+                      // email textfield
+                      Textfield(
+                        controller: emailController,
+                        hintText: 'Email',
+                        obscureText: false,
+                      ),
 
-                    const SizedBox(height: 10),
+                      const SizedBox(height: 10),
 
-                    // confirm password textfield
-                    Textfield(
-                      controller: confirmedPasswordController,
-                      hintText: 'Confirm Password',
-                      obscureText: true,
-                    ),
+                      // password textfield
+                      Textfield(
+                        controller: passwordController,
+                        hintText: 'Password',
+                        obscureText: true,
+                      ),
 
-                    const SizedBox(height: 50),
+                      const SizedBox(height: 10),
 
-                    // sign in button
-                    LoginButton(
-                      text: "Sign Up",
-                      onTap: signUserUp,
-                    ),
+                      // confirm password textfield
+                      Textfield(
+                        controller: confirmedPasswordController,
+                        hintText: 'Confirm Password',
+                        obscureText: true,
+                      ),
 
-                    const SizedBox(height: 25),
+                      const SizedBox(height: 70),
 
-                    // or continue with
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                      child: Row(
+                      // sign in button
+                      LoginButton(
+                        text: "Sign Up",
+                        onTap: signUserUp,
+                      ),
+
+                      const SizedBox(height: 50),
+
+                      // not a member? register now
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey[400],
-                            ),
+                          Text(
+                            'Already have an account?',
+                            style: TextStyle(color: Colors.white),
                           ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey[400],
+                          const SizedBox(width: 4),
+                          GestureDetector(
+                            onTap: widget.onTap,
+                            child: const Text(
+                              'Sign in!',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Color.fromARGB(255, 28, 210, 255),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
-                      ),
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    // not a member? register now
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Already have an account?',
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        const SizedBox(width: 4),
-                        GestureDetector(
-                          onTap: widget.onTap,
-                          child: const Text(
-                            'Sign in!',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

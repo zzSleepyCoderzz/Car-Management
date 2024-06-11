@@ -143,7 +143,9 @@ class _Update_Service_HistoryPageState
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                CircularProgressIndicator(),
+                                CircularProgressIndicator(
+                                  color: Color(0xFF3331c6)
+                                ),
                                 SizedBox(
                                     width:
                                         10), // Add some spacing between the CircularProgressIndicator and the text

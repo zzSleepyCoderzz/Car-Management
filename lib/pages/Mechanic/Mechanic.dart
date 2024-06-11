@@ -31,7 +31,9 @@ class _MechanicPageState extends State<MechanicPage> {
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator(
+                color: Color(0xFF3331c6),
+              ));
             }
 
             final combinedData = [];

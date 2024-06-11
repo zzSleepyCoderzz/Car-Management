@@ -12,8 +12,8 @@ class LoginButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 250,
-        height: 70,
-        padding: const EdgeInsets.all(25),
+        height: MediaQuery.of(context).size.height * 0.08,
+        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
         margin: const EdgeInsets.symmetric(horizontal: 25),
         decoration: BoxDecoration(
           color: Colors.black,
