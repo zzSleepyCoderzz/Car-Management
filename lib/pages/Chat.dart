@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:car_management/components/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:car_management/components/globals.dart' as globals;
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -12,6 +13,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  var _isLoading = true;
   var emergencyList = [];
 
   final TextEditingController _controller = TextEditingController();
@@ -92,9 +94,7 @@ class _ChatPageState extends State<ChatPage> {
                       //clear the emergencyList
                       emergencyList.clear();
                       numOfEmergencyRequests = 0;
-                      setState(() {
-                        
-                      });
+                      setState(() {});
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
@@ -126,19 +126,23 @@ class _ChatPageState extends State<ChatPage> {
           return const Text('Something went wrong');
         }
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        }
+        //delay the loading indicator
+        Timer(const Duration(seconds: 2), () {
+          if (this.mounted) {
+            setState(() {
+              _isLoading = false;
+            });
+          }
+        });
+        
 
-        return ListView(
-          children: snapshot.data!.docs
-              .map((document) => _buildMessageItem(document))
-              .toList(),
-        );
+        return _isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : ListView(
+                children: snapshot.data!.docs
+                    .map((document) => _buildMessageItem(document))
+                    .toList(),
+              );
       },
     );
   }

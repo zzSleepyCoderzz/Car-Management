@@ -64,6 +64,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '837519824608',
     projectId: 'car-management-347ca',
     storageBucket: 'car-management-347ca.appspot.com',
+    androidClientId: '837519824608-2dfttgd79cqueketer94o8kok4rqard6.apps.googleusercontent.com',
+    iosClientId: '837519824608-2h288kb8vbkaegh0spa0sb2lknv6kr0g.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplication1',
   );
 
@@ -73,6 +75,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '837519824608',
     projectId: 'car-management-347ca',
     storageBucket: 'car-management-347ca.appspot.com',
+    androidClientId: '837519824608-2dfttgd79cqueketer94o8kok4rqard6.apps.googleusercontent.com',
+    iosClientId: '837519824608-2h288kb8vbkaegh0spa0sb2lknv6kr0g.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterApplication1',
   );
 

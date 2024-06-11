@@ -1,5 +1,6 @@
 import 'package:car_management/components/LoginorRegister.dart';
 import 'package:car_management/components/auth.dart';
+import 'package:car_management/components/firebase_api.dart';
 import 'package:car_management/pages/Add_Car.dart';
 import 'package:car_management/pages/Admin/Admin_Chat.dart';
 import 'package:car_management/pages/Admin/Set_MechanicBody.dart';
@@ -20,7 +21,11 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  try {
+    await FirebaseAPI().initNotif();
+  } catch (e) {
+    print("Firebase Messaging Error: $e");
+  }
   runApp(const MyApp());
 }
 
