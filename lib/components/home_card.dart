@@ -17,6 +17,7 @@ class _HomeCardState extends State<HomeCard> {
     
     return globals.carData[widget.carNumber]["Car Model"].contains("Car")
         ? InkWell(
+          borderRadius: BorderRadius.circular(20),
           onTap: (){
              Navigator.pushNamed(context, '/add_car', arguments: widget.carNumber);
           },
@@ -37,6 +38,7 @@ class _HomeCardState extends State<HomeCard> {
             ),
         )
         : InkWell(
+          borderRadius: BorderRadius.circular(20),
             onTap: (){
              Navigator.pushNamed(context, '/add_car', arguments: widget.carNumber);
           },
@@ -45,7 +47,7 @@ class _HomeCardState extends State<HomeCard> {
                 if (states.contains(MaterialState.pressed)) {
                   // Change the surface ripple color here
                   return Colors.grey
-                      .withOpacity(0.5); // Example: Grey with 50% opacity
+                      .withOpacity(0.5); 
                 }
                 // Return null to fallback to the default ripple color
                 return Colors.grey.withOpacity(0.5);

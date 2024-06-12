@@ -1,4 +1,5 @@
 import 'package:car_management/components/chat_service.dart';
+import 'package:car_management/pages/Admin/Admin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +29,13 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
 
     return Scaffold(
         appBar: AppBar(
-        title: Text('Chat with ${data as String}')),
+          title: Text('Chat with ${data as String}'),
+        ),
         body: Scaffold(
             body: Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 10, 8.0, 20),
-              child: Center(
-                        child: Column(
+          padding: const EdgeInsets.fromLTRB(8.0, 10, 8.0, 20),
+          child: Center(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(child: _buildMessagesList(data as String)),
@@ -41,9 +43,9 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
                     padding: EdgeInsets.only(left: 20.0),
                     child: _buildMessageInput(data)),
               ],
-                        ),
-                      ),
-            )));
+            ),
+          ),
+        )));
   }
 
   //Build Message List
@@ -95,7 +97,10 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
               ),
               Text(data['message'],
                   style: data['message'].contains("Emergency!")
-                      ? TextStyle(color: Colors.red, fontWeight: FontWeight.bold, fontSize: 18)
+                      ? TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18)
                       : TextStyle(
                           color: Colors.black,
                         )),

@@ -69,10 +69,7 @@ class _Add_CarPageState extends State<Add_CarPage> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MyApp()),
-              );
+              Navigator.pop(context);
             },
           ),
         ),

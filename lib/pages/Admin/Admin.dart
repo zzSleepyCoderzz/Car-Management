@@ -71,7 +71,9 @@ class _AdminBodyState extends State<AdminBody> {
   @override
   void initState() {
     super.initState();
-    getEmergencyList();
+    setState(() {
+      getEmergencyList();
+    });
   }
 
   var emergencyList;

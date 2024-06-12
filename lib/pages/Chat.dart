@@ -19,7 +19,7 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _controller = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final AdminID = "8OpsnfUCzqeis1VmkX0xlVcR8Cz1";
+  final AdminID = "1B8yq8Q1NiXhbnLLqgXSF20V2EY2";
 
   void _sendMessage() async {
     if (_controller.text.isNotEmpty) {
@@ -71,9 +71,6 @@ class _ChatPageState extends State<ChatPage> {
                             ? numOfEmergencyRequests++
                             : null;
                       }
-
-                      print(emergencyList);
-                      print(numOfEmergencyRequests);
 
                       //check if the amount of emergency request is less than 3
                       if (numOfEmergencyRequests < 1) {
@@ -137,7 +134,9 @@ class _ChatPageState extends State<ChatPage> {
         
 
         return _isLoading
-            ? const Center(child: CircularProgressIndicator())
+            ? const Center(child: CircularProgressIndicator(
+              color: Color(0xFF3331c6),
+            ))
             : ListView(
                 children: snapshot.data!.docs
                     .map((document) => _buildMessageItem(document))
