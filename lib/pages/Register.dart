@@ -44,7 +44,7 @@ class _RegisterPageState extends State<RegisterPage>
           postDetailsToFirestore();
         });
 
-        //Choose profile image
+        // Choose profile image
         // Load default image from assets
         ByteData byteData = await rootBundle.load('assets/images/profile.jpg');
         Uint8List imageData = byteData.buffer.asUint8List();
@@ -69,13 +69,17 @@ class _RegisterPageState extends State<RegisterPage>
 
       //Wrong email
       if (e.code == "user-not-found") {
-        ErrorMsg(e.code);
+        ErrorMsg("User Not Found");
       }
       //Wrong pass
       else if (e.code == "wrong-password") {
-        ErrorMsg(e.code);
-      } else {
-        ErrorMsg(e.code);
+        ErrorMsg("Incorrect Password!");
+      } 
+      //Wrong pass
+      else if (e.code == "weak-password") {
+        ErrorMsg("Password must be at least 8 characters long!");
+      }else {
+        ErrorMsg("Error has been encountered.");
       }
     }
   }
@@ -224,7 +228,9 @@ class _RegisterPageState extends State<RegisterPage>
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(msg),
+            title: Text(
+              msg,
+              style: TextStyle(fontSize: 24),  ),
           );
         });
   }

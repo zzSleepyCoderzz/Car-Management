@@ -62,7 +62,6 @@ class Auth extends StatelessWidget {
       globals.scheduledService = scheduledService;
     });
 
-
     //Ensure no error thrown when user has no profile picture
     try {
       try {

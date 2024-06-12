@@ -1,4 +1,3 @@
-import 'package:car_management/components/auth_google.dart';
 import 'package:flutter/material.dart';
 
 class SquareTile extends StatelessWidget {

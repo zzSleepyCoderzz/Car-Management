@@ -1,4 +1,3 @@
-import 'package:car_management/components/auth_google.dart';
 import 'package:car_management/pages/Home.dart';
 import 'package:car_management/pages/Mechanic/Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -52,14 +51,14 @@ class _LoginPageState extends State<LoginPage>
 
       //Wrong email
       if (e.code == "user-not-found") {
-        ErrorMsg(e.code);
+        ErrorMsg("User Not Found!");
       }
 
       //Wrong pass
       else if (e.code == "wrong-password") {
-        ErrorMsg(e.code);
+        ErrorMsg("Wrong Password!");
       } else {
-        ErrorMsg(e.code);
+        ErrorMsg("Error has been encountered.");
       }
     }
   }
@@ -70,7 +69,10 @@ class _LoginPageState extends State<LoginPage>
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(msg),
+            title: Text(
+              msg,
+              style: TextStyle(fontSize: 24),
+            ),
           );
         });
   }
@@ -130,7 +132,6 @@ class _LoginPageState extends State<LoginPage>
                   colors: [
                     Colors.white,
                     Color(0xFF3331c6),
-                    
                   ], // Example gradient colors
                 ),
               ),
@@ -255,8 +256,7 @@ class _LoginPageState extends State<LoginPage>
                               },
                               child: Text(
                                 'Forgot Password?',
-                                style: TextStyle(
-                                  color: Colors.white),
+                                style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ],
@@ -339,8 +339,7 @@ class _LoginPageState extends State<LoginPage>
                         children: [
                           Text(
                             'Not a member?',
-                            style: TextStyle(
-                                fontSize: 14, color: Colors.white),
+                            style: TextStyle(fontSize: 14, color: Colors.white),
                           ),
                           const SizedBox(width: 4),
                           GestureDetector(
