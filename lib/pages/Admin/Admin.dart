@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:car_management/components/appbar.dart';
+import 'package:car_management/pages/Admin/Emergency.dart';
 import 'package:car_management/pages/Admin/Set_Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +17,7 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   int currentIndex = 1;
-  PageController _pageController = PageController(initialPage: 2);
+  PageController _pageController = PageController(initialPage: 1);
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,10 @@ class _AdminPageState extends State<AdminPage> {
             label: 'Assign',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.alarm),
+            label: 'Emergency',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.headset_mic),
             label: 'Chat',
           ),
@@ -52,6 +59,7 @@ class _AdminPageState extends State<AdminPage> {
         },
         children: const [
           Set_MechanicPage(),
+          EmergencyPage(),
           AdminBody(),
         ],
       ),
@@ -71,7 +79,6 @@ class _AdminBodyState extends State<AdminBody> {
   @override
   void initState() {
     super.initState();
-    print('Initialized');
     setState(() {
       getEmergencyList();
     });
@@ -81,17 +88,19 @@ class _AdminBodyState extends State<AdminBody> {
 
   //get all pending emergency requests
   Future<void> getEmergencyList() async {
-    final emergency =
-        await FirebaseFirestore.instance.collection('emergency').get();
-    for (var i in emergency.docs) {
-      for (var j in i['emergency']) {
-        if (j['status'] == 'Pending') {
-          emergencyList.add(i.id);
-        }
-      }
-    }
+    final emergency = await FirebaseFirestore.instance
+        .collection('emergency')
+        .where('status', isEqualTo: 'Pending')
+        .get();
 
-    print(emergencyList);
+    if (emergency.docs.isNotEmpty) {
+      for (var i in emergency.docs) {
+        emergencyList.add(i['userID']);
+        emergencyList.add(i.id);
+      }
+    } else {
+      emergencyList = ['', ''];
+    }
   }
 
   @override
@@ -106,14 +115,14 @@ class _AdminBodyState extends State<AdminBody> {
         final users = snapshot.data?.docs;
 
         return Container(
-          width: MediaQuery.of(context).size.width * 0.9,
+          width: MediaQuery.of(context).size.width * 0.7,
           child: ListView.builder(
             itemCount: users?.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () async {
                   await Navigator.pushNamed(context, '/admin_chat',
-                          arguments: users?[index].id)
+                          arguments: [users?[index].id, emergencyList[1]])
                       .then((value) => setState(() {
                             emergencyList = [];
                             getEmergencyList();

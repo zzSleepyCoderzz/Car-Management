@@ -1,9 +1,8 @@
 import 'dart:async';
-
+import 'dart:math';
 import 'package:car_management/components/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
@@ -15,8 +14,6 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   var _isLoading = true;
-  var userEmergencyRecord;
-
   final TextEditingController _controller = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -44,7 +41,8 @@ class _ChatPageState extends State<ChatPage> {
     return FutureBuilder(
         future: FirebaseFirestore.instance
             .collection('emergency')
-            .doc(_auth.currentUser!.uid)
+            .where('userID', isEqualTo: _auth.currentUser!.uid)
+            .where('status', isEqualTo: 'Pending')
             .get(),
         builder: (context, snapshot) {
           return Scaffold(
@@ -63,55 +61,22 @@ class _ChatPageState extends State<ChatPage> {
                       bottom: MediaQuery.of(context).size.width * 0.1),
                   child: ElevatedButton(
                     onPressed: () {
-                      if (snapshot.data!.data() != null) {
-                        snapshot.data!.data()!.values.forEach((element) {
-                          userEmergencyRecord = element;
-                        });
+                      if (snapshot.data!.docs.isNotEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            margin: EdgeInsets.all(20),
+                            behavior: SnackBarBehavior.floating,
+                            content: Text(
+                                "You already have an emergency request pending.")));
+                        return;
                       } else {
-                        userEmergencyRecord = [];
-                      }
-
-                      //check the latest record if it is still pending
-                      if (userEmergencyRecord.isEmpty) {
-                        //send emergency request
                         emergency();
-                        userEmergencyRecord.add({
+                        FirebaseFirestore.instance.collection('emergency').add({
+                          'userID': _auth.currentUser!.uid,
                           'email': _auth.currentUser!.email,
-                          'status': "Pending",
-                          'timeCreated': DateTime.now().toLocal(),
-                          'timeSolved': ''
+                          'status': 'Pending',
+                          'timeCreated': DateTime.now(),
+                          'timeSolved': '',
                         });
-                        FirebaseFirestore.instance
-                            .collection('emergency')
-                            .doc(_auth.currentUser!.uid)
-                            .set({'emergency': userEmergencyRecord});
-                      } else {
-                        if (userEmergencyRecord[userEmergencyRecord.length - 1]
-                                ["status"] ==
-                            "Pending") {
-                          //display message if it is
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              margin: EdgeInsets.all(20),
-                              behavior: SnackBarBehavior.floating,
-                              content: Text(
-                                  "You have reached the maximum number of emergency requests."),
-                            ),
-                          );
-                        } else {
-                          //send emergency request
-                          emergency();
-                          userEmergencyRecord.add({
-                            'email': _auth.currentUser!.email,
-                            'status': "Pending",
-                            'timeCreated': DateTime.now().toLocal(),
-                            'timeSolved': ''
-                          });
-                          FirebaseFirestore.instance
-                              .collection('emergency')
-                              .doc(_auth.currentUser!.uid)
-                              .set({'emergency': userEmergencyRecord});
-                        }
                       }
                     },
                     style: ElevatedButton.styleFrom(

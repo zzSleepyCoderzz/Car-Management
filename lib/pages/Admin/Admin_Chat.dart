@@ -1,6 +1,8 @@
 import 'package:car_management/components/chat_service.dart';
+import 'package:car_management/components/globals.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class Admin_ChatPage extends StatefulWidget {
@@ -26,49 +28,38 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments;
 
+    var senderID = (data as List)[0];
+    var emergencyMsgID = (data as List)[1];
 
-    return FutureBuilder(
-        future: FirebaseFirestore.instance
-            .collection('emergency')
-            .doc(data as String)
-            .get(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Scaffold(); // or some other widget while waiting
-          }
-
-          return Scaffold(
-              appBar: AppBar(
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                title: Text('Chat with ${data as String}'),
-              ),
-              body: Scaffold(
-                  body: Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 10, 8.0, 20),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                          child: _buildMessagesList(
-                              data as String, snapshot.data!.data())),
-                      Padding(
-                          padding: EdgeInsets.only(left: 20.0),
-                          child: _buildMessageInput(data)),
-                    ],
-                  ),
-                ),
-              )));
-        });
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: Text('Chat with ${senderID}'),
+        ),
+        body: Scaffold(
+            body: Padding(
+          padding: const EdgeInsets.fromLTRB(8.0, 10, 8.0, 20),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(child: _buildMessagesList(senderID, emergencyMsgID)),
+                Padding(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: _buildMessageInput(senderID)),
+              ],
+            ),
+          ),
+        )));
   }
 
   //Build Message List
-  Widget _buildMessagesList(String receiverID, userEmergencyRecords) {
+  Widget _buildMessagesList(String receiverID, emergencyMsgID) {
     return StreamBuilder(
       stream: _chatService.getMessages(receiverID, _auth.currentUser!.uid),
       builder: (context, snapshot) {
@@ -82,8 +73,7 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
 
         return ListView(
           children: snapshot.data!.docs
-              .map((document) =>
-                  _buildMessageItem(document, userEmergencyRecords))
+              .map((document) => _buildMessageItem(document, emergencyMsgID))
               .toList(),
         );
       },
@@ -91,7 +81,7 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
   }
 
 //Build Message Item
-  Widget _buildMessageItem(DocumentSnapshot document, userEmergencyRecords) {
+  Widget _buildMessageItem(DocumentSnapshot document, emergencyMsgID) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
     //align user message to the right, receiver to the left
     var alignment = data['senderID'] == _auth.currentUser!.uid
@@ -117,49 +107,11 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
                     child: Row(
                       children: [
                         Text(data['senderEmail']),
-                        Spacer(),
-                        ElevatedButton(
-                          onPressed: () {
-                            try {
-                              var i = userEmergencyRecords['emergency'];
-                              i[i.length - 1]['status'] = "Solved";
-                              i[i.length - 1]['timeSolved'] = DateTime.now();
-                              FirebaseFirestore.instance
-                                  .collection('emergency')
-                                  .doc(data['senderID'])
-                                  .update({'emergency': i}).then((_) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    margin: EdgeInsets.all(20),
-                                    behavior: SnackBarBehavior.floating,
-                                    content:
-                                        Text('Emergency marked as solved!'),
-                                  ),
-                                );
-                              });
-                            } catch (e) {
-                              print(e);
-                            }
-                          },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black),
-                          ),
-                          child: const Row(
-                            children: [
-                              Text(
-                                "Solved",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Icon(Icons.check, color: Colors.green),
-                            ],
-                          ),
-                        )
                       ],
                     ),
                   ),
                   Text(data['message'],
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.bold,
                           fontSize: 18)),
