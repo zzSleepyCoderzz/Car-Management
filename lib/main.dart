@@ -2,6 +2,7 @@ import 'package:car_management/components/LoginorRegister.dart';
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/firebase_api.dart';
 import 'package:car_management/pages/Add_Car.dart';
+import 'package:car_management/pages/Admin/Admin.dart';
 import 'package:car_management/pages/Admin/Admin_Chat.dart';
 import 'package:car_management/pages/Admin/Set_MechanicBody.dart';
 import 'package:car_management/pages/Fuel_Consumption.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         '/schedule_service': (context) => const Schedule_ServicePage(),
         '/fuel_consumption': (context) => const Fuel_ConsumptionPage(),
         '/add_car': (context) => const Add_CarPage(),
+        '/admin': (context) => const AdminPage(),
         '/admin_chat': (context) => const Admin_ChatPage(),
         '/mechanic':(context) => const MechanicPage(),
         '/maintenance_details': (context) => const Maintenance_DetailsPage(),

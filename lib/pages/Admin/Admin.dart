@@ -71,82 +71,79 @@ class _AdminBodyState extends State<AdminBody> {
   @override
   void initState() {
     super.initState();
+    print('Initialized');
     setState(() {
       getEmergencyList();
     });
   }
 
-  var emergencyList;
-  final user = FirebaseAuth.instance.currentUser;
+  var emergencyList = [];
 
   //get all pending emergency requests
   Future<void> getEmergencyList() async {
-    final emergency = await FirebaseFirestore.instance
-        .collection('emergency')
-        .where('status', isEqualTo: 'Pending')
-        .get();
-    emergencyList = emergency.docs;
+    final emergency =
+        await FirebaseFirestore.instance.collection('emergency').get();
+    for (var i in emergency.docs) {
+      for (var j in i['emergency']) {
+        if (j['status'] == 'Pending') {
+          emergencyList.add(i.id);
+        }
+      }
+    }
+
+    print(emergencyList);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: FutureBuilder(
-          future: FirebaseFirestore.instance.collection('users').get(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator(
-                color: Color(0xFF3331c6),
-              ));
-            }
+    return FutureBuilder(
+      future: FirebaseFirestore.instance.collection('users').get(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold();
+        }
 
-            //converting emergencyList to readable List
-            var temp = [];
-            for (var doc in emergencyList) {
-              temp.add(doc.data()['email']);
-            }
-            emergencyList = temp;
+        final users = snapshot.data?.docs;
 
-            final users = snapshot.data?.docs;
-            return Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: ListView.builder(
-                itemCount: users?.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/admin_chat',
-                          arguments: users?[index].id);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: emergencyList.contains(users?[index]['email'])
-                              ? Colors.red
-                              : Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: Colors
-                                .black, // Change this color to change the border color
-                            width:
-                                2, // Change this value to change the border width
-                          ),
-                        ),
-                        child: ListTile(
-                          title: Text(users?[index]['Name']),
-                          subtitle: Text(users?[index]['email']),
-                        ),
+        return Container(
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: ListView.builder(
+            itemCount: users?.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () async {
+                  await Navigator.pushNamed(context, '/admin_chat',
+                          arguments: users?[index].id)
+                      .then((value) => setState(() {
+                            emergencyList = [];
+                            getEmergencyList();
+                          }));
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: emergencyList.contains(users?.elementAt(index).id)
+                          ? Colors.red
+                          : Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors
+                            .black, // Change this color to change the border color
+                        width: 2,
                       ),
                     ),
-                  );
-                },
-              ),
-            );
-          },
-        ),
-      ),
+                    child: ListTile(
+                      title: Text(users?[index]['Name']),
+                      subtitle: Text(users?[index]['email']),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

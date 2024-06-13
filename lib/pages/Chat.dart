@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:car_management/components/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   var _isLoading = true;
-  var emergencyList = [];
+  var userEmergencyRecord;
 
   final TextEditingController _controller = TextEditingController();
   final ChatService _chatService = ChatService();
@@ -43,7 +44,7 @@ class _ChatPageState extends State<ChatPage> {
     return FutureBuilder(
         future: FirebaseFirestore.instance
             .collection('emergency')
-            .where('status', isEqualTo: 'Pending')
+            .doc(_auth.currentUser!.uid)
             .get(),
         builder: (context, snapshot) {
           return Scaffold(
@@ -62,36 +63,56 @@ class _ChatPageState extends State<ChatPage> {
                       bottom: MediaQuery.of(context).size.width * 0.1),
                   child: ElevatedButton(
                     onPressed: () {
-                      for (var document in snapshot.data!.docs) {
-                        emergencyList.add(document.data()['email']);
-                      }
-                      var numOfEmergencyRequests = 0;
-                      for (var doc in emergencyList) {
-                        doc == _auth.currentUser!.email
-                            ? numOfEmergencyRequests++
-                            : null;
-                      }
-
-                      //check if the amount of emergency request is less than 3
-                      if (numOfEmergencyRequests < 1) {
-                        emergency();
-                        FirebaseFirestore.instance.collection('emergency').add({
-                          'email': _auth.currentUser!.email,
-                          'status': "Pending"
+                      if (snapshot.data!.data() != null) {
+                        snapshot.data!.data()!.values.forEach((element) {
+                          userEmergencyRecord = element;
                         });
                       } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                                "You have reached the maximum number of emergency requests."),
-                          ),
-                        );
+                        userEmergencyRecord = [];
                       }
 
-                      //clear the emergencyList
-                      emergencyList.clear();
-                      numOfEmergencyRequests = 0;
-                      setState(() {});
+                      //check the latest record if it is still pending
+                      if (userEmergencyRecord.isEmpty) {
+                        //send emergency request
+                        emergency();
+                        userEmergencyRecord.add({
+                          'email': _auth.currentUser!.email,
+                          'status': "Pending",
+                          'timeCreated': DateTime.now().toLocal(),
+                          'timeSolved': ''
+                        });
+                        FirebaseFirestore.instance
+                            .collection('emergency')
+                            .doc(_auth.currentUser!.uid)
+                            .set({'emergency': userEmergencyRecord});
+                      } else {
+                        if (userEmergencyRecord[userEmergencyRecord.length - 1]
+                                ["status"] ==
+                            "Pending") {
+                          //display message if it is
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              margin: EdgeInsets.all(20),
+                              behavior: SnackBarBehavior.floating,
+                              content: Text(
+                                  "You have reached the maximum number of emergency requests."),
+                            ),
+                          );
+                        } else {
+                          //send emergency request
+                          emergency();
+                          userEmergencyRecord.add({
+                            'email': _auth.currentUser!.email,
+                            'status': "Pending",
+                            'timeCreated': DateTime.now().toLocal(),
+                            'timeSolved': ''
+                          });
+                          FirebaseFirestore.instance
+                              .collection('emergency')
+                              .doc(_auth.currentUser!.uid)
+                              .set({'emergency': userEmergencyRecord});
+                        }
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
@@ -131,12 +152,12 @@ class _ChatPageState extends State<ChatPage> {
             });
           }
         });
-        
 
         return _isLoading
-            ? const Center(child: CircularProgressIndicator(
-              color: Color(0xFF3331c6),
-            ))
+            ? const Center(
+                child: CircularProgressIndicator(
+                color: Color(0xFF3331c6),
+              ))
             : ListView(
                 children: snapshot.data!.docs
                     .map((document) => _buildMessageItem(document))
