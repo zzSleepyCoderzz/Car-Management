@@ -11,3 +11,7 @@ var locationData =  {"Car1" : [3.056648475066696, 101.7005614], "Car2" : [3.0575
 
 //mechanic variables
 var serviceHistory = {};
+
+
+//admin variables
+int currentDocCount = 0;

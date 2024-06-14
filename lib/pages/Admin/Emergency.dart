@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:car_management/components/globals.dart' as globals;
 import 'package:flutter/material.dart';
+import 'package:vibration/vibration.dart';
+
 
 class EmergencyPage extends StatefulWidget {
   const EmergencyPage({super.key});
@@ -30,15 +32,16 @@ class _EmergencyPageState extends State<EmergencyPage> {
 
   @override
   Widget build(BuildContext context) {
-    int _currentDocCount = 0;
-
     return StreamBuilder<List>(
       stream: listenToEmergencyList(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator(
-                color: Color(0xFF3331c6),
-              ));
+          return Scaffold(
+            body: const Center(
+                child: CircularProgressIndicator(
+              color: Color(0xFF3331c6),
+            )),
+          );
         }
 
         if (snapshot.hasError) {
@@ -46,17 +49,34 @@ class _EmergencyPageState extends State<EmergencyPage> {
         }
 
         //Checking if there are any changes
-        if (snapshot.data!.length != _currentDocCount) {
-          if (snapshot.data!.length > _currentDocCount) {
-            _currentDocCount = snapshot.data!.length;
+        if (snapshot.data!.length != globals.currentDocCount) {
+          if (snapshot.data!.length > globals.currentDocCount) {
+            Vibration.vibrate(duration: 1000, amplitude: 512);
+            globals.currentDocCount = snapshot.data!.length;
             WidgetsBinding.instance.addPostFrameCallback((_) {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text("Emergency Request Alert"),
-                    content: Text(
-                        "There are current pending emergency requests. Please check the emergency page."),
+                    title: Text(
+                        textAlign: TextAlign.center, "Emergency Request Alert"),
+                    content: Container(
+                      height: MediaQuery.of(context).size.height * 0.20,
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.warning,
+                            color: Colors.red,
+                            size: 100,
+                          ),
+                          Center(
+                            child: Text(
+                                textAlign: TextAlign.center,
+                                "There are current pending emergency requests."),
+                          ),
+                        ],
+                      ),
+                    ),
                     actions: [
                       TextButton(
                         onPressed: () {
@@ -70,7 +90,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
               );
             });
           } else {
-            _currentDocCount = snapshot.data!.length;
+            globals.currentDocCount = snapshot.data!.length;
           }
         }
 
@@ -87,7 +107,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
             itemCount: snapshot.data?.length ?? 0,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,

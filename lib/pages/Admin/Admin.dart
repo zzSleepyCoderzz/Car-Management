@@ -79,9 +79,7 @@ class _AdminBodyState extends State<AdminBody> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      getEmergencyList();
-    });
+    getEmergencyList();
   }
 
   var emergencyList = [];
@@ -115,7 +113,6 @@ class _AdminBodyState extends State<AdminBody> {
         final users = snapshot.data?.docs;
 
         return Container(
-          width: MediaQuery.of(context).size.width * 0.7,
           child: ListView.builder(
             itemCount: users?.length,
             itemBuilder: (context, index) {
@@ -129,7 +126,7 @@ class _AdminBodyState extends State<AdminBody> {
                           }));
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
                   child: Container(
                     decoration: BoxDecoration(
                       color: emergencyList.contains(users?.elementAt(index).id)

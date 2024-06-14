@@ -97,9 +97,8 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
           });
         }
       } else {
-        print("Column S not found.");
         setState(() {
-          _analysisResult = "Column S not found.";
+          _analysisResult = "Data does not contain the required column.";
         });
       }
     }
