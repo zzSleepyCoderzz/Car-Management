@@ -103,12 +103,13 @@ class GeneralButton extends StatelessWidget {
               const Size(100, 50)), // Adjust as needed
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),)) // Adjust as needed
+                  borderRadius: BorderRadius.circular(25.0),)) // Adjust as needed
           ),
       onPressed: onTap,
       child: Text(
         text,
         style: const TextStyle(
+          fontWeight: FontWeight.bold,
           color: Color.fromRGBO(255, 255, 255, 1),
           fontSize: 16,
         ),

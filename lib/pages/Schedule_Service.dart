@@ -46,7 +46,7 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Schedule Service"),
+        title: const Text("Schedule Service"),
       ),
       body: Center(
         child: Column(
@@ -60,7 +60,7 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
             SizedBox(height: MediaQuery.of(context).size.width * 0.05),
             Text(
               (data as Map?)?['dropdownValue'],
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.05),
@@ -75,28 +75,28 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                 child: Column(
                   children: [
                     Text(
-                      "NEXT SERVICE ON: ${globals.scheduledService[(data as Map?)?['index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Date']}",
+                      "NEXT SERVICE ON: ${globals.scheduledService[(data)?['index']][globals.scheduledService[(data)?['index']].length - 1]['Date']}",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      "TIME: ${globals.scheduledService[(data as Map?)?['index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Timeslot']}",
+                      "TIME: ${globals.scheduledService[(data)?['index']][globals.scheduledService[(data)?['index']].length - 1]['Timeslot']}",
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                        "Remarks to Mechanic: \n ${globals.scheduledService[(data as Map?)?['index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Remarks']}",
+                        "Remarks to Mechanic: \n ${globals.scheduledService[(data)?['index']][globals.scheduledService[(data)?['index']].length - 1]['Remarks']}",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold)),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).size.width * 0.05),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.2),
             MaintenanceButton(
                 onTap: () {
                   showModalBottomSheet<void>(
@@ -112,7 +112,7 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                               top: 30,
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: Container(
+                            child: SizedBox(
                               height: MediaQuery.of(context).size.height * 0.5,
                               child: Form(
                                 key: _formKey,
@@ -130,8 +130,8 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                                     (BuildContext context) {
                                                   //Show Date Picker
                                                   return AlertDialog(
-                                                    title: Text("Select Date"),
-                                                    content: Container(
+                                                    title: const Text("Select Date"),
+                                                    content: SizedBox(
                                                       height: 300,
                                                       width: 200,
                                                       child: SfDateRangePicker(
@@ -151,18 +151,16 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                                                       ' ')[0],
                                                           setState(() {
                                                             globals
-                                                                .scheduledService[(data
-                                                                    as Map?)?[
+                                                                .scheduledService[(data)?[
                                                                 'index']][globals
-                                                                    .scheduledService[(data
-                                                                            as Map?)?[
+                                                                    .scheduledService[(data)?[
                                                                         'index']]
                                                                     .length -
                                                                 1]['Date'] = datePicked;
                                                           })
                                                         },
                                                         monthViewSettings:
-                                                            DateRangePickerMonthViewSettings(
+                                                            const DateRangePickerMonthViewSettings(
                                                                 firstDayOfWeek:
                                                                     1),
                                                       ),
@@ -173,21 +171,21 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                                           Navigator.pop(
                                                               context);
                                                         },
-                                                        child: Text("Cancel"),
+                                                        child: const Text("Cancel"),
                                                       ),
                                                       TextButton(
                                                         onPressed: () {
                                                           Navigator.pop(
                                                               context);
                                                         },
-                                                        child: Text("Confirm"),
+                                                        child: const Text("Confirm"),
                                                       ),
                                                     ],
                                                   );
                                                 });
                                           },
-                                          text: "Set Date: ${globals.scheduledService[(data as Map?)?['index']][globals.scheduledService[(data as Map?)?['index']].length - 1]['Date']}",
-                                          color: "0xFF3331c6",),
+                                          text: "Set Date: ${globals.scheduledService[(data)?['index']][globals.scheduledService[(data)?['index']].length - 1]['Date']}",
+                                          color: "0xFF000000",),
 
                                       SizedBox(
                                           height: MediaQuery.of(context)
@@ -197,7 +195,7 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
 
                                       //Show Select Time Slots
                                       Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             horizontal: 12, vertical: 4),
                                         decoration: BoxDecoration(
                                           border:
@@ -208,23 +206,20 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                         child: DropdownButton<String>(
                                           underline:
                                               Container(), //Remove the underline
-                                          hint: Text("Select a Time Slot"),
-                                          value: globals.scheduledService[(data as Map?)?['index']]
-                                                          [globals.scheduledService[(data as Map?)?['index']].length - 1]
+                                          hint: const Text("Select a Time Slot"),
+                                          value: globals.scheduledService[(data)?['index']]
+                                                          [globals.scheduledService[(data)?['index']].length - 1]
                                                       ['Timeslot'] ==
                                                   ''
                                               ? null
-                                              : globals.scheduledService[(data
-                                                  as Map?)?['index']][globals
-                                                      .scheduledService[(data as Map?)?['index']]
+                                              : globals.scheduledService[(data)?['index']][globals
+                                                      .scheduledService[(data)?['index']]
                                                       .length -
                                                   1]['Timeslot'],
                                           onChanged: (value) {
                                             setState(() {
-                                              globals.scheduledService[(data
-                                                  as Map?)?['index']][globals
-                                                      .scheduledService[(data
-                                                          as Map?)?['index']]
+                                              globals.scheduledService[(data)?['index']][globals
+                                                      .scheduledService[(data)?['index']]
                                                       .length -
                                                   1]['Timeslot'] = value!;
                                             });
@@ -241,38 +236,34 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                       ),
 
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(
+                                        padding: const EdgeInsets.fromLTRB(
                                             20.0, 20, 20.0, 0.0),
                                         child: SizedBox(
                                           child: TextField(
                                             controller: _controller,
                                             onChanged: (value) => {
-                                              globals.scheduledService[(data
-                                                  as Map?)?['index']][globals
-                                                      .scheduledService[(data
-                                                          as Map?)?['index']]
+                                              globals.scheduledService[(data)?['index']][globals
+                                                      .scheduledService[(data)?['index']]
                                                       .length -
                                                   1]['Remarks'] = value
                                             },
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                               border: OutlineInputBorder(),
                                               labelText: 'Remarks',
                                             ),
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 20,),
+                                      const SizedBox(height: 20,),
                                       GeneralButton(
                                           onTap: () {
                                             //Setting Car Model based on previous page
                                             globals.scheduledService[
-                                                    (data as Map?)?['index']][
+                                                    (data)?['index']][
                                                 globals
-                                                        .scheduledService[(data
-                                                            as Map?)?['index']]
+                                                        .scheduledService[(data)?['index']]
                                                         .length -
-                                                    1]['Car Model'] = (data
-                                                as Map?)?['dropdownValue'];
+                                                    1]['Car Model'] = (data)?['dropdownValue'];
 
                                             postDetailsToFirestore(
                                                 globals.scheduledService);
@@ -282,15 +273,15 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
                                                   title:
-                                                      Text("Service Scheduled"),
-                                                  content: Text(
+                                                      const Text("Service Scheduled"),
+                                                  content: const Text(
                                                       "Service has been scheduled successfully"),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () {
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Text("OK"),
+                                                      child: const Text("OK"),
                                                     ),
                                                   ],
                                                 );
@@ -298,7 +289,7 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                             );
                                           },
                                           text: "Submit",
-                                          color: "0x00FF00", )
+                                          color: "0xFF03AC13", )
                                     ],
                                   ),
                                 ),
