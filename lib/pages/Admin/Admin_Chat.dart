@@ -68,7 +68,15 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: Text('Loading...'));
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(
+                color: Color(0xFF2E3B62),
+                
+              ),
+            ),
+          
+          );
         }
 
         return ListView(

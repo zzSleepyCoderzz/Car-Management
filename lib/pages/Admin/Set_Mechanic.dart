@@ -34,6 +34,7 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('scheduled_service')
+              .where('mechanicID', isEqualTo: '')
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -49,13 +50,21 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
               }
             }
 
-            print("data $data");
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator(
                 color: Color(0xFF3331c6),
               );
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
+            } else if (snapshot.data?.docs.length == 0) {
+              return Container(
+                child: const Text(
+                  'No pending service requests available.',
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              );
             } else {
               return Container(
                 width: MediaQuery.of(context).size.width * 0.9,

@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:car_management/components/appbar.dart';
 import 'package:car_management/pages/Admin/Emergency.dart';
 import 'package:car_management/pages/Admin/Set_Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 //Admin Bottom Navigation Bar
@@ -41,7 +38,7 @@ class _AdminPageState extends State<AdminPage> {
             label: 'Assign',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.alarm),
+            icon: Icon(Icons.warning_rounded),
             label: 'Emergency',
           ),
           BottomNavigationBarItem(
@@ -119,11 +116,7 @@ class _AdminBodyState extends State<AdminBody> {
               return GestureDetector(
                 onTap: () async {
                   await Navigator.pushNamed(context, '/admin_chat',
-                          arguments: [users?[index].id, emergencyList[1]])
-                      .then((value) => setState(() {
-                            emergencyList = [];
-                            getEmergencyList();
-                          }));
+                          arguments: [users?[index].id, emergencyList[1]]);
                 },
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
