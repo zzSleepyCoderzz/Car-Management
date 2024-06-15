@@ -36,6 +36,7 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
             const CsvToListConverter().convert(csvString);
         setState(() {
           _dataLoadStatus = "Data loaded successfully.";
+          _analysisResult = "Checking for oil leak issue...";
         });
         analyzeData(csvTable);
       } else if (extension == 'xlsx') {
@@ -119,7 +120,7 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
             const Padding(
               padding: EdgeInsets.all(10),
               child: Text(
-                "Connect your phone to the car's OBD-II port,",
+                "Get the Report from the car's OBD-II port,",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -133,7 +134,7 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
             const Padding(
               padding: EdgeInsets.all(10),
               child: Text(
-                "then press the button below to begin the diagnostic process.",
+                "then press the button below to upload and begin the diagnostic process.",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
