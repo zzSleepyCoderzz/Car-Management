@@ -71,7 +71,7 @@ class _Maintenance_DetailsPageState extends State<Maintenance_DetailsPage> {
                           ),
                         ),
                         Text(
-                          "TIME:  ${data['Time'] == null ? '' : data['Time']} ",
+                          "TIME:  ${data['Timeslot'] == null ? '' : data['Timeslot']} ",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
