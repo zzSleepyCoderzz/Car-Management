@@ -34,7 +34,6 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
         child: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('scheduled_service')
-              .where('mechanicID', isEqualTo: '')
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
