@@ -45,9 +45,14 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
 
             for (var document in data! as List) {
               for (var value in document.data()!.values) {
-                combinedData.add(value[value.length - 1]);
+                if (value[value.length - 1]['mechanicID'] == '' &&
+                    value[value.length - 1]['Car Model'] != '') {
+                  combinedData.add(value[value.length - 1]);
+                }
               }
             }
+
+            print(combinedData);
 
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator(
@@ -55,7 +60,7 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
               );
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
-            } else if (snapshot.data?.docs.length == 0) {
+            } else if (combinedData.isEmpty) {
               return Container(
                 child: const Text(
                   'No pending service requests available.',
