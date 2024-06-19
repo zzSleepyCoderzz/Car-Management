@@ -14,6 +14,8 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
   var userData;
   List<String> mechanicID = [];
   String? selectedMechanic;
+  List<String> mechanicName = [];
+  String? selectedMechanicName;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
 
     //converting List<dynamic> to List<String>
     mechanicID = List<String>.from(data[1]);
+    mechanicName = List<String>.from(data[2]);
 
     return FutureBuilder(
         future: FirebaseFirestore.instance
@@ -29,7 +32,6 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
             .get(),
         builder: (context, snapshot) {
           selectedMechanic = mechanicID[0];
-
           return Scaffold(
             appBar: AppBar(
               title: Text("Set Mechanic"),
@@ -42,7 +44,7 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
                     items: mechanicID.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text('$mechanicName'),
                       );
                     }).toList(),
                     onChanged: (val) {

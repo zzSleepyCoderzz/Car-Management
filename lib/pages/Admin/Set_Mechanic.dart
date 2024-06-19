@@ -10,6 +10,7 @@ class Set_MechanicPage extends StatefulWidget {
 
 class _Set_MechanicPageState extends State<Set_MechanicPage> {
   var mechanicID = [];
+  List<String> mechanicName = [];
 
   Future<void> getMechanicID() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -20,6 +21,7 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
     querySnapshot.docs.forEach((element) {
       if (element['user'] == 'mechanic') {
         mechanicID.add(element.id);
+        mechanicName.add(element['Name']);
       }
     });
   }
@@ -84,7 +86,8 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
                                 Navigator.pushNamed(context, 'set_mechanicbody',
                                     arguments: [
                                       combinedData[index],
-                                      mechanicID
+                                      mechanicID,
+                                      mechanicName,
                                     ]);
                               },
                               child: Container(
