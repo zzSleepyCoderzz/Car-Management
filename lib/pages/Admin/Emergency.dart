@@ -3,7 +3,6 @@ import 'package:car_management/components/globals.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
 
-
 class EmergencyPage extends StatefulWidget {
   const EmergencyPage({super.key});
 
@@ -23,6 +22,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
       for (var doc in snapshot.docs) {
         emergencyIds.add({
           'id': doc.id,
+          'email': doc['email'],
           'userID': doc['userID'],
         });
       }
@@ -146,6 +146,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                     },
                     child: ListTile(
                       title: Text(snapshot.data![index]['userID']),
+                      subtitle: Text(snapshot.data![index]['email']),
                     ),
                   ),
                 ),
