@@ -19,6 +19,7 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
   List<dynamic>? _columnSData;
   String? _analysisResult;
   String? _dataLoadStatus;
+  bool _isAnalyzing = false;
 
   Future<void> pickAndReadFile() async {
     final result = await FilePicker.platform.pickFiles(
@@ -36,7 +37,7 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
             const CsvToListConverter().convert(csvString);
         setState(() {
           _dataLoadStatus = "Data loaded successfully.";
-          _analysisResult = "Checking for oil leak issue...";
+          _isAnalyzing = true;
         });
         analyzeData(csvTable);
       } else if (extension == 'xlsx') {
@@ -53,6 +54,8 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
         }
         setState(() {
           _data = excelTable;
+          _dataLoadStatus = "Data loaded successfully.";
+          _isAnalyzing = true;
         });
         analyzeData(excelTable);
       }
@@ -86,19 +89,19 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
           int delaySeconds = Random().nextInt(3) + 3;
 
           await Future.delayed(Duration(seconds: delaySeconds), () {
-            if (rateOfChange > 0.001515) {
-              setState(() {
+            setState(() {
+              _isAnalyzing = false;
+              if (rateOfChange > 0.001515) {
                 _analysisResult = "Potential oil leak detected.";
-              });
-            } else {
-              setState(() {
+              } else {
                 _analysisResult = "No significant oil leak detected.";
-              });
-            }
+              }
+            });
           });
         }
       } else {
         setState(() {
+          _isAnalyzing = false;
           _analysisResult = "Data does not contain the required column.";
         });
       }
@@ -144,13 +147,6 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
               text: "Start Diagnostic",
               onTap: () async {
                 pickAndReadFile();
-                await Future.delayed(
-                    Duration(seconds: 2)); // Introduce a delay of 2 seconds
-                if (_dataLoadStatus == "Data loaded successfully.") {
-                  setState(() {
-                    _analysisResult = "Checking for oil leak issue...";
-                  });
-                }
               },
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.1),
@@ -166,16 +162,31 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
                     ),
                   )
                 : Text(_dataLoadStatus ?? 'No data uploaded yet'),
-            _analysisResult != null
+            _isAnalyzing
                 ? Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      _analysisResult!,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Checking for oil leak issue...",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        LinearProgressIndicator(),
+                      ],
                     ),
                   )
-                : Container(),
+                : _analysisResult != null
+                    ? Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          _analysisResult!,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      )
+                    : Container(),
           ],
         ),
       ),
