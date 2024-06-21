@@ -240,7 +240,10 @@ class _Add_Car_ListTileState extends State<Add_Car_ListTile> {
 
 class Update_Maintenance_List_Tile extends StatefulWidget {
   const Update_Maintenance_List_Tile(
-      {super.key, required this.tileName, required this.value, required this.userID});
+      {super.key,
+      required this.tileName,
+      required this.value,
+      required this.userID});
 
   final String tileName;
   final String value;
@@ -253,14 +256,12 @@ class Update_Maintenance_List_Tile extends StatefulWidget {
 
 class _Update_Maintenance_List_TileState
     extends State<Update_Maintenance_List_Tile> {
-
   //update records in firestore
   void updateServiceHistory(var serviceHistory, var userID) {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref = FirebaseFirestore.instance.collection('service');
     ref.doc(userID).update(serviceHistory);
-
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -319,7 +320,9 @@ class _Update_Maintenance_List_TileState
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            "Last Changed:" + widget.tileName,
+                            widget.tileName == "Mileage"
+                                ? "Update: ${widget.tileName} (km)"
+                                : "Last Changed: ${widget.tileName}",
                             style: TextStyle(
                               fontSize: 20.0,
                               color: Colors.blueGrey[800],
@@ -351,7 +354,8 @@ class _Update_Maintenance_List_TileState
                                     globals.serviceHistory[widget.value]
                                             [initialValue][widget.tileName] =
                                         _currentValue;
-                                    updateServiceHistory(globals.serviceHistory, widget.userID);
+                                    updateServiceHistory(
+                                        globals.serviceHistory, widget.userID);
                                   });
 
                                   Navigator.pop(context);

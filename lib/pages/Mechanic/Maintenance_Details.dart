@@ -40,9 +40,7 @@ class _Maintenance_DetailsPageState extends State<Maintenance_DetailsPage> {
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map;
-
-    print(data);
-
+    
     return FutureBuilder(
         future: getServiceHistory(data['userID']),
         builder: (context, snapshot) {

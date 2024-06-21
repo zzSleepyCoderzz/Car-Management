@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/auth.dart';
+import 'package:car_management/components/button.dart';
 import 'package:car_management/components/list_tile.dart';
 import 'package:car_management/pages/Mechanic/Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,7 +31,7 @@ Future<void> uploadInvoice(String UserUID, String CarNumber) async {
       print("Error: $e");
     }
   }
-  await Auth().userDetails();
+  await const Auth().userDetails();
 }
 
 //update records in firestore
@@ -114,8 +115,8 @@ class _Update_Service_HistoryPageState
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
             ),
-            ElevatedButton(
-                onPressed: () {
+            GeneralButton(
+               onTap: () {
                   uploadInvoice(data['userID'], data['Car Number']);
                   globals.scheduledService[data['Car Number']].add({
                     'userID': data['userID'],
@@ -158,7 +159,7 @@ class _Update_Service_HistoryPageState
                     );
 
                     //Wait for some time before going to next page
-                    Future.delayed(Duration(seconds: 7), () {
+                    Future.delayed(const Duration(seconds: 7), () {
                       //Remove all other pages in the stack
                       Navigator.pop(context);
                       Navigator.pop(context);
@@ -166,7 +167,8 @@ class _Update_Service_HistoryPageState
                     });
                   });
                 },
-                child: Text("Upload Invoice"))
+                text: "Upload Invoice",
+                color: "0xFF3331c6",)
           ],
         ),
       ),
