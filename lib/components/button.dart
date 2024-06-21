@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:html/parser.dart';
 
 class LoginButton extends StatelessWidget {
   final Function()? onTap;
@@ -58,7 +57,7 @@ class MaintenanceButton extends StatelessWidget {
             },
           ),
           backgroundColor:
-              MaterialStateProperty.all(Color.fromRGBO(0, 0, 0, 1)),
+              MaterialStateProperty.all(const Color.fromRGBO(0, 0, 0, 1)),
           minimumSize: MaterialStateProperty.all<Size>(
               const Size(200, 50)), // Adjust as needed
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(

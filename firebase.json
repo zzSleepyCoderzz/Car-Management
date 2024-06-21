@@ -1,1 +1,38 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"car-management-347ca","appId":"1:837519824608:android:2e12cb4353739060bea285","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"car-management-347ca","configurations":{"android":"1:837519824608:android:2e12cb4353739060bea285","ios":"1:837519824608:ios:b65f011a59dfe74abea285","macos":"1:837519824608:ios:b65f011a59dfe74abea285","web":"1:837519824608:web:3a84a50c05dfd45abea285","windows":"1:837519824608:web:9328d70db09dcf57bea285"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "car-management-347ca",
+          "appId": "1:837519824608:android:2e12cb4353739060bea285",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "car-management-347ca",
+          "configurations": {
+            "android": "1:837519824608:android:2e12cb4353739060bea285",
+            "ios": "1:837519824608:ios:b65f011a59dfe74abea285",
+            "macos": "1:837519824608:ios:b65f011a59dfe74abea285",
+            "web": "1:837519824608:web:3a84a50c05dfd45abea285",
+            "windows": "1:837519824608:web:9328d70db09dcf57bea285"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ]
+}

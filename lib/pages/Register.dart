@@ -230,7 +230,7 @@ class _RegisterPageState extends State<RegisterPage>
           return AlertDialog(
             title: Text(
               msg,
-              style: TextStyle(fontSize: 24),  ),
+              style: const TextStyle(fontSize: 24),  ),
           );
         });
   }
@@ -274,7 +274,7 @@ class _RegisterPageState extends State<RegisterPage>
         : Scaffold(
             backgroundColor: Colors.grey[300],
             body: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -300,7 +300,7 @@ class _RegisterPageState extends State<RegisterPage>
                       const SizedBox(height: 25),
 
                       // welcome back, you've been missed!
-                      Text(
+                      const Text(
                         'Let\'s create an account for you!',
                         style: TextStyle(
                           color: Colors.black,
@@ -349,7 +349,7 @@ class _RegisterPageState extends State<RegisterPage>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Already have an account?',
                             style: TextStyle(color: Colors.white),
                           ),
