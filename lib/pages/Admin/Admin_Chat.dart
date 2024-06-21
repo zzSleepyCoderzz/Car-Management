@@ -1,8 +1,6 @@
 import 'package:car_management/components/chat_service.dart';
-import 'package:car_management/components/globals.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class Admin_ChatPage extends StatefulWidget {
@@ -29,7 +27,7 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
     final data = ModalRoute.of(context)!.settings.arguments;
 
     var senderID = (data as List)[0];
-    var emergencyMsgID = (data as List)[1];
+    var emergencyMsgID = (data)[1];
 
     return Scaffold(
         appBar: AppBar(
@@ -39,7 +37,7 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
               Navigator.pop(context);
             },
           ),
-          title: Text('Chat with ${senderID}'),
+          title: Text('Chat with $senderID'),
         ),
         body: Scaffold(
             body: Padding(
@@ -50,7 +48,7 @@ class _Admin_ChatPageState extends State<Admin_ChatPage> {
               children: [
                 Expanded(child: _buildMessagesList(senderID, emergencyMsgID)),
                 Padding(
-                    padding: EdgeInsets.only(left: 20.0),
+                    padding: const EdgeInsets.only(left: 20.0),
                     child: _buildMessageInput(senderID)),
               ],
             ),

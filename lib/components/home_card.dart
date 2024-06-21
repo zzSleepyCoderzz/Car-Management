@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:car_management/components/globals.dart' as globals;
 
 class HomeCard extends StatefulWidget {
@@ -73,7 +72,7 @@ class _HomeCardState extends State<HomeCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         child: Container(
                           color: Colors.black.withOpacity(0.5),
                           child: Text(

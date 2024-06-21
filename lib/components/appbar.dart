@@ -25,7 +25,7 @@ class DefaultAppBar extends PreferredSize {
             actions:  [
               IconButton(onPressed: (){
                 signUserOut();
-              }, icon: Icon(Icons.logout)),
+              }, icon: const Icon(Icons.logout)),
             ],
           ),
         );

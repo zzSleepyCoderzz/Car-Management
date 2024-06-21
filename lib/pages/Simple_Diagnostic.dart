@@ -1,7 +1,6 @@
 import 'package:car_management/components/button.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'dart:convert';
 import 'package:csv/csv.dart';
 import 'package:excel/excel.dart';
 import 'dart:io';
@@ -16,6 +15,7 @@ class Simple_DiagnosticPage extends StatefulWidget {
 
 class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
   List<List<dynamic>>? _data;
+  // ignore: unused_field
   List<dynamic>? _columnSData;
   String? _analysisResult;
   String? _dataLoadStatus;
@@ -110,11 +110,10 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
 
   @override
   Widget build(BuildContext context) {
-    final data = ModalRoute.of(context)!.settings.arguments;
-
+    
     return Scaffold(
       appBar: AppBar(
-        title: Text("Simple Diagnostics"),
+        title: const Text("Simple Diagnostics"),
       ),
       body: Center(
         child: Column(
@@ -163,8 +162,8 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
                   )
                 : Text(_dataLoadStatus ?? 'No data uploaded yet'),
             _isAnalyzing
-                ? Padding(
-                    padding: const EdgeInsets.all(16.0),
+                ? const Padding(
+                    padding: EdgeInsets.all(16.0),
                     child: Column(
                       children: [
                         Text(
@@ -182,7 +181,7 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
                           _analysisResult!,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       )

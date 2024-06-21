@@ -1,9 +1,7 @@
-import 'package:car_management/pages/Add_Car.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/globals.dart' as globals;
-import 'package:flutter/services.dart';
 
 class Profile_List_Tile extends StatefulWidget {
   const Profile_List_Tile({super.key, required this.tileName});
@@ -15,19 +13,18 @@ class Profile_List_Tile extends StatefulWidget {
 }
 
 class _Profile_List_TileState extends State<Profile_List_Tile> {
-  @override
   final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
   var _currentValue;
 
   //update records in firestore
   void postDetailsToFirestore(String key, String value) {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref = FirebaseFirestore.instance.collection('users');
     ref.doc(user!.uid).update({key: value});
   }
 
+  @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(
@@ -39,11 +36,11 @@ class _Profile_List_TileState extends State<Profile_List_Tile> {
           color: Colors.blueGrey[800]),
       title: Text(
         widget.tileName,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: Text(globals.userData[widget.tileName]),
       trailing: IconButton(
-        icon: Icon(Icons.edit),
+        icon: const Icon(Icons.edit),
         onPressed: () {
           showModalBottomSheet<void>(
             context: context,
@@ -54,7 +51,7 @@ class _Profile_List_TileState extends State<Profile_List_Tile> {
                   top: 30,
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.3,
                   child: Form(
                     key: _formKey,
@@ -70,7 +67,7 @@ class _Profile_List_TileState extends State<Profile_List_Tile> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0.0),
+                            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0.0),
                             child: TextFormField(
                               keyboardType: widget.tileName == "Age"
                                   ? TextInputType.number
@@ -78,7 +75,7 @@ class _Profile_List_TileState extends State<Profile_List_Tile> {
                               initialValue: globals.userData[widget.tileName],
                               decoration: InputDecoration(
                                 hintText: widget.tileName,
-                                hintStyle: TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
                               ),
                               validator: (val) => val?.length == 0
                                   ? "Please enter a name"
@@ -91,7 +88,7 @@ class _Profile_List_TileState extends State<Profile_List_Tile> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 20.0),
+                            padding: const EdgeInsets.only(top: 20.0),
                             child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
@@ -132,14 +129,12 @@ class Add_Car_ListTile extends StatefulWidget {
 }
 
 class _Add_Car_ListTileState extends State<Add_Car_ListTile> {
-  @override
   final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
   var _currentValue;
 
   //update records in firestore
   void postDetailsToFirestore(String key, String value) {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref = FirebaseFirestore.instance.collection('users');
     ref.doc(user!.uid).update({key: value});
@@ -147,12 +142,12 @@ class _Add_Car_ListTileState extends State<Add_Car_ListTile> {
 
   //update records in firestore
   void postCarDetailsToFirestore(data) {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref = FirebaseFirestore.instance.collection('cars');
     ref.doc(user!.uid).update({data: globals.carData[data]});
   }
 
+  @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(
@@ -160,13 +155,13 @@ class _Add_Car_ListTileState extends State<Add_Car_ListTile> {
           color: Colors.blueGrey[800]),
       title: Text(
         widget.tileName,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: widget.tileName == "Car Model"
           ? Text(globals.carData[widget.carModel]['Car Model'])
           : Text(globals.carData[widget.carModel]['Number Plate']),
       trailing: IconButton(
-        icon: Icon(Icons.edit),
+        icon: const Icon(Icons.edit),
         onPressed: () {
           showModalBottomSheet<void>(
             context: context,
@@ -177,7 +172,7 @@ class _Add_Car_ListTileState extends State<Add_Car_ListTile> {
                   top: 30,
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.3,
                   child: Form(
                     key: _formKey,
@@ -193,13 +188,14 @@ class _Add_Car_ListTileState extends State<Add_Car_ListTile> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0.0),
+                            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0.0),
                             child: TextFormField(
                               initialValue: globals.carData[widget.tileName],
                               decoration: InputDecoration(
                                 hintText: widget.tileName,
-                                hintStyle: TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
                               ),
+                              // ignore: prefer_is_empty
                               validator: (val) => val?.length == 0
                                   ? "Please enter a name"
                                   : null,
@@ -211,7 +207,7 @@ class _Add_Car_ListTileState extends State<Add_Car_ListTile> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 20.0),
+                            padding: const EdgeInsets.only(top: 20.0),
                             child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {}
@@ -258,15 +254,12 @@ class _Update_Maintenance_List_TileState
     extends State<Update_Maintenance_List_Tile> {
   //update records in firestore
   void updateServiceHistory(var serviceHistory, var userID) {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    var user = _auth.currentUser;
     CollectionReference ref = FirebaseFirestore.instance.collection('service');
     ref.doc(userID).update(serviceHistory);
   }
 
   final _formKey = GlobalKey<FormState>();
-  final _auth = FirebaseAuth.instance;
-  var _currentValue;
+  String? _currentValue;
 
   @override
   Widget build(BuildContext context) {
@@ -297,10 +290,10 @@ class _Update_Maintenance_List_TileState
       leading: Icon(Icons.car_repair, color: Colors.blueGrey[800]),
       title: Text(
         widget.tileName,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
       trailing: IconButton(
-        icon: Icon(Icons.edit),
+        icon: const Icon(Icons.edit),
         onPressed: () {
           showModalBottomSheet<void>(
             context: context,
@@ -311,7 +304,7 @@ class _Update_Maintenance_List_TileState
                   top: 30,
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                child: Container(
+                child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.3,
                   child: Form(
                     key: _formKey,
@@ -329,14 +322,14 @@ class _Update_Maintenance_List_TileState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0.0),
+                            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0.0),
                             child: TextFormField(
                               initialValue: globals.serviceHistory[widget.value]
                                       [initialValue][widget.tileName]
                                   .toString(),
                               decoration: InputDecoration(
                                 hintText: widget.tileName,
-                                hintStyle: TextStyle(color: Colors.black),
+                                hintStyle: const TextStyle(color: Colors.black),
                               ),
                               onChanged: (val) {
                                 setState(() {
@@ -346,7 +339,7 @@ class _Update_Maintenance_List_TileState
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 20.0),
+                            padding: const EdgeInsets.only(top: 20.0),
                             child: ElevatedButton(
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {}

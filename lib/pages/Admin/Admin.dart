@@ -14,7 +14,7 @@ class AdminPage extends StatefulWidget {
 
 class _AdminPageState extends State<AdminPage> {
   int currentIndex = 1;
-  PageController _pageController = PageController(initialPage: 1);
+  final PageController _pageController = PageController(initialPage: 1);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class _AdminPageState extends State<AdminPage> {
         title: 'Admin Page',
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Color(0xFF3331c6),
+        selectedItemColor: const Color(0xFF3331c6),
         unselectedItemColor: Colors.blueGrey[800],
         currentIndex: currentIndex,
         onTap: (value) {
@@ -109,38 +109,36 @@ class _AdminBodyState extends State<AdminBody> {
 
         final users = snapshot.data?.docs;
 
-        return Container(
-          child: ListView.builder(
-            itemCount: users?.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () async {
-                  await Navigator.pushNamed(context, '/admin_chat',
-                          arguments: [users?[index].id, emergencyList[1]]);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: emergencyList.contains(users?.elementAt(index).id)
-                          ? Colors.red
-                          : Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors
-                            .black, // Change this color to change the border color
-                        width: 2,
-                      ),
-                    ),
-                    child: ListTile(
-                      title: Text(users?[index]['Name']),
-                      subtitle: Text(users?[index]['email']),
+        return ListView.builder(
+          itemCount: users?.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () async {
+                await Navigator.pushNamed(context, '/admin_chat',
+                        arguments: [users?[index].id, emergencyList[1]]);
+              },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: emergencyList.contains(users?.elementAt(index).id)
+                        ? Colors.red
+                        : Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors
+                          .black, // Change this color to change the border color
+                      width: 2,
                     ),
                   ),
+                  child: ListTile(
+                    title: Text(users?[index]['Name']),
+                    subtitle: Text(users?[index]['email']),
+                  ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         );
       },
     );

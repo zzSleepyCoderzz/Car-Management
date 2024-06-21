@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:car_management/components/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -111,7 +110,7 @@ class _ChatPageState extends State<ChatPage> {
 
         //delay the loading indicator
         Timer(const Duration(seconds: 2), () {
-          if (this.mounted) {
+          if (mounted) {
             setState(() {
               _isLoading = false;
             });
@@ -159,11 +158,11 @@ class _ChatPageState extends State<ChatPage> {
               ),
               Text(data['message'],
                   style: data['message'].contains("Emergency!")
-                      ? TextStyle(
+                      ? const TextStyle(
                           color: Colors.red,
                           fontWeight: FontWeight.bold,
                           fontSize: 18)
-                      : TextStyle(
+                      : const TextStyle(
                           color: Colors.black,
                         )),
             ],

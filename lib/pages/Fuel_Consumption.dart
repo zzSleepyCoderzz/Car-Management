@@ -1,12 +1,9 @@
-import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:car_management/components/globals.dart' as globals;
-import 'package:http/http.dart' as http;
-
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/gas_price_widget.dart';
 
@@ -22,7 +19,6 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
 
   //update records in firestore
   void postDetailsToFirestore(Map value) {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref = FirebaseFirestore.instance.collection('fuel');
     ref.doc(user!.uid).update(value as Map<Object, Object?>);
@@ -37,10 +33,8 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
     while (chartData.length <
         globals.fuelData[(data as Map?)?['index']]['Odometer Reading'].length) {
       chartData.add(_FuelData(
-          globals.fuelData[(data as Map?)?['index']]['Timestamp']
-              [chartData.length],
-          globals.fuelData[(data as Map?)?['index']]['Fuel Pumped']
-                  [chartData.length]
+          globals.fuelData[(data)?['index']]['Timestamp'][chartData.length],
+          globals.fuelData[(data)?['index']]['Fuel Pumped'][chartData.length]
               .toDouble()));
     }
 
@@ -50,41 +44,37 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
     TextEditingController _controller2 = TextEditingController();
     final _formKey = GlobalKey<FormState>();
 
-    DateTime now = DateTime.now();
-    DateTime dateOnly = DateTime(now.year, now.month, now.day);
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("Fuel Consumption"),
+        title: const Text("Fuel Consumption"),
         actions: [
           IconButton(
-            icon: Icon(Icons.oil_barrel),
+            icon: const Icon(Icons.oil_barrel),
             onPressed: () {
               showGeneralDialog(
                 context: context,
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     AlertDialog(
-                  content: Container(
+                  content: SizedBox(
                     height: MediaQuery.of(context).size.height * 0.35,
                     child: Column(
                       children: [
                         Text(
-                        'Current Gas Prices',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.blueGrey[800],
-                          fontWeight: FontWeight.bold
+                          'Current Gas Prices',
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.blueGrey[800],
+                              fontWeight: FontWeight.bold),
                         ),
-                      ),
                         SingleChildScrollView(
                           child: Column(
                             children: <Widget>[
-                              Container(
-                                height: MediaQuery.of(context).size.height * 0.3,
-                                child: Column(
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                child: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    
                                     GasPriceWidget(), // Assuming this is a custom widget for displaying gas prices
                                   ],
                                 ),
@@ -97,7 +87,7 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                   ),
                   actions: <Widget>[
                     TextButton(
-                      child: Text('Nice!'),
+                      child: const Text('Nice!'),
                       onPressed: () {
                         Navigator.of(context).pop(); // Dismiss the dialog
                       },
@@ -108,7 +98,7 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                     (context, animation, secondaryAnimation, child) {
                   return SlideTransition(
                     position: Tween<Offset>(
-                      begin: Offset(0, 1), // Start from below the screen
+                      begin: const Offset(0, 1), // Start from below the screen
                       end: Offset.zero, // End at its final position
                     ).animate(animation),
                     child: child,
@@ -134,8 +124,9 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.width * 0.05),
                 Text(
-                  (data as Map?)?['dropdownValue'],
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  (data)?['dropdownValue'],
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: MediaQuery.of(context).size.width * 0.03),
@@ -149,11 +140,12 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: SfCartesianChart(
-                          primaryXAxis: CategoryAxis(),
+                          primaryXAxis: const CategoryAxis(),
                           // Chart title
-                          title: ChartTitle(text: 'Fuel Consumption / KM'),
+                          title:
+                              const ChartTitle(text: 'Fuel Consumption / KM'),
                           // Enable legend
-                          legend: Legend(isVisible: true),
+                          legend: const Legend(isVisible: true),
                           // Enable tooltip
                           tooltipBehavior: TooltipBehavior(enable: true),
                           series: <CartesianSeries<_FuelData, String>>[
@@ -166,7 +158,7 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                 name: 'Represents each Fuel Up',
                                 // Enable data label
                                 dataLabelSettings:
-                                    DataLabelSettings(isVisible: true))
+                                    const DataLabelSettings(isVisible: true))
                           ]),
                     )),
                 SizedBox(height: MediaQuery.of(context).size.width * 0.1),
@@ -181,7 +173,7 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                               top: 30,
                               bottom: MediaQuery.of(context).viewInsets.bottom,
                             ),
-                            child: Container(
+                            child: SizedBox(
                               height: MediaQuery.of(context).size.height * 0.5,
                               child: Form(
                                 key: _formKey,
@@ -203,13 +195,13 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(
+                                        padding: const EdgeInsets.fromLTRB(
                                             20.0, 20, 20.0, 0.0),
                                         child: SizedBox(
                                           child: TextField(
                                             controller: _controller,
                                             keyboardType: TextInputType.number,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                               border: OutlineInputBorder(),
                                               labelText: 'Odometer Reading',
                                             ),
@@ -217,13 +209,13 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(
+                                        padding: const EdgeInsets.fromLTRB(
                                             20.0, 20, 20.0, 0.0),
                                         child: SizedBox(
                                           child: TextField(
                                             controller: _controller1,
                                             keyboardType: TextInputType.number,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                               border: OutlineInputBorder(),
                                               labelText: 'Fuel Pumped (Litre)',
                                             ),
@@ -231,16 +223,16 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.fromLTRB(
+                                        padding: const EdgeInsets.fromLTRB(
                                             20.0, 20, 20.0, 0.0),
                                         child: SizedBox(
                                           child: TextField(
                                             controller: _controller2,
                                             keyboardType: TextInputType.number,
                                             onChanged: (value) {
-                                              print(_controller2.text);
+                                              //Do something with the user input.
                                             },
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                               border: OutlineInputBorder(),
                                               labelText: 'Price per Litre (RM)',
                                             ),
@@ -248,27 +240,24 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(top: 20.0),
+                                        padding:
+                                            const EdgeInsets.only(top: 20.0),
                                         child: ElevatedButton(
                                             onPressed: () async {
-                                              globals.fuelData[
-                                                      (data as Map?)?['index']]
+                                              globals.fuelData[(data)?['index']]
                                                       ['Odometer Reading']
                                                   .add(_controller.text);
 
-                                              globals.fuelData[
-                                                      (data as Map?)?['index']]
+                                              globals.fuelData[(data)?['index']]
                                                       ['Fuel Pumped']
                                                   .add(int.parse(
                                                       _controller1.text));
 
-                                              globals.fuelData[
-                                                      (data as Map?)?['index']]
+                                              globals.fuelData[(data)?['index']]
                                                       ['Price per Litre']
                                                   .add(_controller2.text);
 
-                                              globals.fuelData[
-                                                      (data as Map?)?['index']]
+                                              globals.fuelData[(data)?['index']]
                                                       ['Timestamp']
                                                   .add(DateTime.now()
                                                       .toString()
@@ -279,7 +268,11 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
 
                                               //Run Auth to get the updated details
                                               await const Auth().userDetails();
-                                              Navigator.pop(context);
+
+                                              //Pop if there the current page is mounted
+                                              if (context.mounted) {
+                                                Navigator.pop(context);
+                                              }
                                             },
                                             child: const Text('Upload')),
                                       )

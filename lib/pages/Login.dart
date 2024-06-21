@@ -1,12 +1,7 @@
-import 'package:car_management/pages/Home.dart';
-import 'package:car_management/pages/Mechanic/Mechanic.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/button.dart';
 import 'package:car_management/components/textfield.dart';
-import 'package:car_management/components/square_tile.dart';
-import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -71,7 +66,7 @@ class _LoginPageState extends State<LoginPage>
           return AlertDialog(
             title: Text(
               msg,
-              style: TextStyle(fontSize: 24),
+              style: const TextStyle(fontSize: 24),
             ),
           );
         });
@@ -81,14 +76,11 @@ class _LoginPageState extends State<LoginPage>
   Future forgotPassword({required String email}) async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (e) {
-      print("Error: $e");
-    } catch (err) {
-      throw Exception(err.toString());
+    } catch (e) {
+      throw Exception(e.toString());
     }
   }
 
-  @override
   late AnimationController controller;
   late Animation<double> opacityAnimation;
 
@@ -113,6 +105,7 @@ class _LoginPageState extends State<LoginPage>
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     return _isLoading == true
         ? Center(
@@ -150,7 +143,7 @@ class _LoginPageState extends State<LoginPage>
 
                       const SizedBox(height: 35),
                       RichText(
-                        text: TextSpan(
+                        text: const TextSpan(
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
@@ -170,7 +163,7 @@ class _LoginPageState extends State<LoginPage>
                           ],
                         ),
                       ),
-                      Text(
+                      const Text(
                         'Car Management System',
                         style: TextStyle(
                           color: Colors.black,
@@ -213,48 +206,50 @@ class _LoginPageState extends State<LoginPage>
                                         title: const Center(
                                             child: Text(
                                                 "A link will be sent to reset your password")),
-                                        content: Container(
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              TextField(
-                                                controller:
-                                                    forgotPasswordController,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  hintText:
-                                                      "Enter and Confirm your email",
-                                                ),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            TextField(
+                                              controller:
+                                                  forgotPasswordController,
+                                              decoration: const InputDecoration(
+                                                hintText:
+                                                    "Enter and Confirm your email",
                                               ),
-                                              TextButton(
-                                                  onPressed: () async {
-                                                    if (forgotPasswordController
-                                                        .text.isEmpty) {
-                                                      await Future.delayed(
-                                                          const Duration(
-                                                              milliseconds:
-                                                                  300));
-                                                      Navigator.pop(context);
-                                                    } else {
-                                                      forgotPassword(
-                                                          email:
-                                                              forgotPasswordController
-                                                                  .text);
-                                                      await Future.delayed(
-                                                          const Duration(
-                                                              seconds: 1));
+                                            ),
+                                            TextButton(
+                                                onPressed: () async {
+                                                  if (forgotPasswordController
+                                                      .text.isEmpty) {
+                                                    await Future.delayed(
+                                                        const Duration(
+                                                            milliseconds: 300));
+                                                    //Pop if there the current page is mounted
+                                                    if (context.mounted) {
                                                       Navigator.pop(context);
                                                     }
-                                                  },
-                                                  child: const Text(
-                                                      "Reset Password"))
-                                            ],
-                                          ),
+                                                  } else {
+                                                    forgotPassword(
+                                                        email:
+                                                            forgotPasswordController
+                                                                .text);
+                                                    await Future.delayed(
+                                                        const Duration(
+                                                            seconds: 1));
+                                                    //Pop if there the current page is mounted
+                                                    if (context.mounted) {
+                                                      Navigator.pop(context);
+                                                    }
+                                                  }
+                                                },
+                                                child: const Text(
+                                                    "Reset Password"))
+                                          ],
                                         ),
                                       );
                                     });
                               },
-                              child: Text(
+                              child: const Text(
                                 'Forgot Password?',
                                 style: TextStyle(color: Colors.white),
                               ),
@@ -337,7 +332,7 @@ class _LoginPageState extends State<LoginPage>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Not a member?',
                             style: TextStyle(fontSize: 14, color: Colors.white),
                           ),

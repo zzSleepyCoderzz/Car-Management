@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:car_management/components/appbar.dart';
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/button.dart';
 import 'package:car_management/components/list_tile.dart';
-import 'package:car_management/pages/Mechanic/Mechanic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -13,9 +11,9 @@ import 'package:car_management/components/globals.dart' as globals;
 import 'package:image_picker/image_picker.dart';
 
 Future<void> uploadInvoice(String UserUID, String CarNumber) async {
-  final ImagePicker _picker = ImagePicker();
+  final ImagePicker picker = ImagePicker();
   // Select image
-  final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+  final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
   if (image != null) {
     File file = File(image.path);
@@ -24,11 +22,10 @@ Future<void> uploadInvoice(String UserUID, String CarNumber) async {
     try {
       await FirebaseStorage.instance
           .ref(
-              'invoices/${FirebaseAuth.instance.currentUser!.uid}/${UserUID}/${CarNumber}.png')
+              'invoices/${FirebaseAuth.instance.currentUser!.uid}/$UserUID/$CarNumber.png')
           .putFile(file);
     } on FirebaseException catch (e) {
-      // e.g, e.code == 'canceled'
-      print("Error: $e");
+      throw Exception(e.toString());
     }
   }
   await const Auth().userDetails();
@@ -36,7 +33,6 @@ Future<void> uploadInvoice(String UserUID, String CarNumber) async {
 
 //update records in firestore
 void postDetailsToFirestore(var value, String user) {
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   CollectionReference ref =
       FirebaseFirestore.instance.collection('scheduled_service');
   ref.doc(user).update(value);

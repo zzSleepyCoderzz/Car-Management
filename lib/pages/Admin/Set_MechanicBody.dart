@@ -1,6 +1,4 @@
-import 'package:car_management/components/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class Set_MechanicBody extends StatefulWidget {
@@ -34,7 +32,7 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
           selectedMechanic = mechanicID[0];
           return Scaffold(
             appBar: AppBar(
-              title: Text("Set Mechanic"),
+              title: const Text("Set Mechanic"),
             ),
             body: Center(
               child: Column(

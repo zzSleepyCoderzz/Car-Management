@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:car_management/components/globals.dart' as globals;
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -20,13 +20,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser;
   int currentIndex = 2;
-  PageController _pageController = PageController(initialPage: 2);
+  final PageController _pageController = PageController(initialPage: 2);
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(title: 'Tune Up Garage',),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Color(0xFF3331c6),
+        selectedItemColor: const Color(0xFF3331c6),
         unselectedItemColor: Colors.blueGrey[800],
         currentIndex: currentIndex,
         onTap: (value) {
@@ -82,7 +83,7 @@ class _HomeBodyState extends State<HomeBody> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-      padding: EdgeInsets.only(top: 30),
+      padding: const EdgeInsets.only(top: 30),
       child: Center(
         child: Column(
           children: [
@@ -106,15 +107,15 @@ class _HomeBodyState extends State<HomeBody> {
                     ),
                   )
                 : Container(),
-            HomeCard(
+            const HomeCard(
               carNumber: "Car1",
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-            HomeCard(
+            const HomeCard(
               carNumber: "Car2",
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-            HomeCard(
+            const HomeCard(
               carNumber: "Car3",
             ),
           ],

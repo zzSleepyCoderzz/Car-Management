@@ -25,7 +25,8 @@ class Auth extends StatelessWidget {
     CollectionReference ref1 = firebaseFirestore.collection('cars');
     CollectionReference ref2 = firebaseFirestore.collection('service');
     CollectionReference ref3 = firebaseFirestore.collection('fuel');
-    CollectionReference ref4 = firebaseFirestore.collection('scheduled_service');
+    CollectionReference ref4 =
+        firebaseFirestore.collection('scheduled_service');
 
     //adding user data to global variable
     var temp = ref.doc(user!.uid).get();
@@ -64,17 +65,13 @@ class Auth extends StatelessWidget {
 
     //Ensure no error thrown when user has no profile picture
     try {
-      try {
-        final firestoreURL = FirebaseStorage.instance
-            .ref()
-            .child('users/${FirebaseAuth.instance.currentUser!.uid}.png');
-        String url = await firestoreURL.getDownloadURL();
-        globals.profilePath = url;
-      } catch (e) {
-        print("Error: $e");
-      }
+      final firestoreURL = FirebaseStorage.instance
+          .ref()
+          .child('users/${FirebaseAuth.instance.currentUser!.uid}.png');
+      String url = await firestoreURL.getDownloadURL();
+      globals.profilePath = url;
     } catch (e) {
-      print("Error: $e");
+      globals.profilePath = '';
     }
   }
 
@@ -119,7 +116,7 @@ class Auth extends StatelessWidget {
                 },
               );
             } else {
-              return LoginorRegisterPage();
+              return const LoginorRegisterPage();
             }
           }),
     );

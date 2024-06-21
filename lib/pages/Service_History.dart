@@ -1,6 +1,5 @@
 import 'package:car_management/components/service_history_container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:car_management/components/globals.dart' as globals;
 
 class Service_HistoryPage extends StatefulWidget {
@@ -17,7 +16,7 @@ class _Service_HistoryPageState extends State<Service_HistoryPage> {
     
     return Scaffold(
       appBar: AppBar(
-        title: Text("Service History"),
+        title: const Text("Service History"),
         actions: [
           IconButton(
               onPressed: () {
@@ -38,30 +37,30 @@ class _Service_HistoryPageState extends State<Service_HistoryPage> {
             SizedBox(height: MediaQuery.of(context).size.width * 0.05),
             Text(
               (data as Map?)?['dropdownValue'],
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.1),
             Service_History_Container(
                 title: "Mileage",
                 value:
-                    "Kilometers: ${globals.serviceData[(data as Map?)?['index']][0]['Mileage']}"),
+                    "Kilometers: ${globals.serviceData[(data)?['index']][0]['Mileage']}"),
             Service_History_Container(
                 title: "Engine Oil",
                 value:
-                    "Last Changed: ${globals.serviceData[(data as Map?)?['index']][1]['Engine Oil']}"),
+                    "Last Changed: ${globals.serviceData[(data)?['index']][1]['Engine Oil']}"),
             Service_History_Container(
                 title: "Break Pads",
                 value:
-                    "Last Changed: ${globals.serviceData[(data as Map?)?['index']][2]['Break Pads']}"),
+                    "Last Changed: ${globals.serviceData[(data)?['index']][2]['Break Pads']}"),
             Service_History_Container(
                 title: "Air Filter",
                 value:
-                    "Last Changed: ${globals.serviceData[(data as Map?)?['index']][3]['Air Filter']}"),
+                    "Last Changed: ${globals.serviceData[(data)?['index']][3]['Air Filter']}"),
             Service_History_Container(
                 title: "Alignment",
                 value:
-                    "Last Serviced: ${globals.serviceData[(data as Map?)?['index']][4]['Alignment']}"),
+                    "Last Serviced: ${globals.serviceData[(data)?['index']][4]['Alignment']}"),
           ],
         ),
       ),

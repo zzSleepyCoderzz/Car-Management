@@ -6,6 +6,6 @@ class FirebaseAPI{
   
   Future<void> initNotif() async {
     await _firebaseMessaging.requestPermission();
-    _firebaseMessaging.getToken().then((value) => print("Token: $value"));
+    _firebaseMessaging.getToken();
   } 
 }

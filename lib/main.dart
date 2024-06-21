@@ -25,7 +25,7 @@ void main() async {
   try {
     await FirebaseAPI().initNotif();
   } catch (e) {
-    print("Firebase Messaging Error: $e");
+    throw Exception(e.toString());
   }
   runApp(const MyApp());
 }

@@ -1,6 +1,5 @@
 import 'package:car_management/components/button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/globals.dart' as globals;
 
@@ -63,19 +62,19 @@ class _Maintenance_DetailsPageState extends State<Maintenance_DetailsPage> {
                         Text(
                           "DATE: ${data['Date']}",
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          "TIME:  ${data['Timeslot'] == null ? '' : data['Timeslot']} ",
-                          style: TextStyle(
+                          "TIME:  ${data['Timeslot'] ?? ''} ",
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text("Remarks to Mechanic: \n  ${data['Remarks']}",
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                       ],
                     ),

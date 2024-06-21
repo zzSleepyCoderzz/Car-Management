@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:car_management/components/button.dart';
 import 'package:car_management/components/textfield.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'dart:typed_data';
+
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -44,15 +42,6 @@ class _RegisterPageState extends State<RegisterPage>
           postDetailsToFirestore();
         });
 
-        // Choose profile image
-        // Load default image from assets
-        ByteData byteData = await rootBundle.load('assets/images/profile.jpg');
-        Uint8List imageData = byteData.buffer.asUint8List();
-
-        await FirebaseStorage.instance
-            .ref('users/${FirebaseAuth.instance.currentUser!.uid}.png')
-            .putData(imageData);
-
         //Throwing error
         _isLoading = false;
       } else {
@@ -74,11 +63,11 @@ class _RegisterPageState extends State<RegisterPage>
       //Wrong pass
       else if (e.code == "wrong-password") {
         ErrorMsg("Incorrect Password!");
-      } 
+      }
       //Wrong pass
       else if (e.code == "weak-password") {
         ErrorMsg("Password must be at least 8 characters long!");
-      }else {
+      } else {
         ErrorMsg("Error has been encountered.");
       }
     }
@@ -86,7 +75,6 @@ class _RegisterPageState extends State<RegisterPage>
 
   //Create record in firestore
   void postDetailsToFirestore() async {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref = FirebaseFirestore.instance.collection('users');
     ref.doc(user!.uid).set({
@@ -230,12 +218,12 @@ class _RegisterPageState extends State<RegisterPage>
           return AlertDialog(
             title: Text(
               msg,
-              style: const TextStyle(fontSize: 24),  ),
+              style: const TextStyle(fontSize: 24),
+            ),
           );
         });
   }
 
-  @override
   late AnimationController controller;
   late Animation<double> opacityAnimation;
 

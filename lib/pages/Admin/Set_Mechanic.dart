@@ -18,12 +18,12 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
 
     QuerySnapshot querySnapshot = await ref.get();
 
-    querySnapshot.docs.forEach((element) {
+    for (var element in querySnapshot.docs) {
       if (element['user'] == 'mechanic') {
         mechanicID.add(element.id);
         mechanicName.add(element['Name']);
       }
-    });
+    }
   }
 
   @override
@@ -54,8 +54,6 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
               }
             }
 
-            print(combinedData);
-
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator(
                 color: Color(0xFF3331c6),
@@ -63,16 +61,14 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (combinedData.isEmpty) {
-              return Container(
-                child: const Text(
-                  'No pending service requests available.',
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
+              return const Text(
+                'No pending service requests available.',
+                style: TextStyle(
+                  fontSize: 16,
                 ),
               );
             } else {
-              return Container(
+              return SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ListView.builder(
                   itemCount: combinedData.length,

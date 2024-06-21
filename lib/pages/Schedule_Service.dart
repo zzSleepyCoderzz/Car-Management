@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:car_management/components/button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,25 +13,24 @@ class Schedule_ServicePage extends StatefulWidget {
 }
 
 class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
-  @override
   final _auth = FirebaseAuth.instance;
 
   //update records in firestore
   void postDetailsToFirestore(Map value) {
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     var user = _auth.currentUser;
     CollectionReference ref =
         FirebaseFirestore.instance.collection('scheduled_service');
     ref.doc(user!.uid).update(value as Map<Object, Object?>);
   }
 
+  @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments;
     var datePicked;
 
     //Text Controller
-    final TextEditingController _controller = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
+    final TextEditingController controller = TextEditingController();
+    final formKey = GlobalKey<FormState>();
 
     //Timeslots
     List<String> timeSlots = [
@@ -115,7 +112,7 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height * 0.5,
                               child: Form(
-                                key: _formKey,
+                                key: formKey,
                                 child: SingleChildScrollView(
                                   child: Column(
                                     mainAxisAlignment:
@@ -240,7 +237,7 @@ class _Schedule_ServicePageState extends State<Schedule_ServicePage> {
                                             20.0, 20, 20.0, 0.0),
                                         child: SizedBox(
                                           child: TextField(
-                                            controller: _controller,
+                                            controller: controller,
                                             onChanged: (value) => {
                                               globals.scheduledService[(data)?['index']][globals
                                                       .scheduledService[(data)?['index']]

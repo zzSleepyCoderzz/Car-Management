@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' as parser;
 
 class GasPriceWidget extends StatefulWidget {
+  const GasPriceWidget({super.key});
+
   @override
   _GasPriceWidgetState createState() => _GasPriceWidgetState();
 }
@@ -34,9 +36,6 @@ class _GasPriceWidgetState extends State<GasPriceWidget> {
           prices[fuelType] = price;
         }
 
-        print('Parsed prices: $prices');
-        // print('Parsed HTML: ${document.outerHtml}');
-
         setState(() {
           gasPrices = prices;
         });
@@ -44,14 +43,14 @@ class _GasPriceWidgetState extends State<GasPriceWidget> {
         throw Exception('Failed to load the latest gas prices');
       }
     } catch (e) {
-      print('Error occurred: $e');
+      throw Exception('Failed to load the latest gas prices: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return gasPrices.isEmpty
-        ? Center(child: 
+        ? const Center(child: 
         CircularProgressIndicator(
           color: Color(0xFF3331c6),
         ))
@@ -63,11 +62,11 @@ class _GasPriceWidgetState extends State<GasPriceWidget> {
                 return ListTile(
                   title: Text(
                     key,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                   trailing: Text(
                     gasPrices[key]!,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 );
               },

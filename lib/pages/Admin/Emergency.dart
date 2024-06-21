@@ -36,8 +36,8 @@ class _EmergencyPageState extends State<EmergencyPage> {
       stream: listenToEmergencyList(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            body: const Center(
+          return const Scaffold(
+            body: Center(
                 child: CircularProgressIndicator(
               color: Color(0xFF3331c6),
             )),
@@ -58,11 +58,11 @@ class _EmergencyPageState extends State<EmergencyPage> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text(
+                    title: const Text(
                         textAlign: TextAlign.center, "Emergency Request Alert"),
-                    content: Container(
+                    content: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.20,
-                      child: Column(
+                      child: const Column(
                         children: [
                           Icon(
                             Icons.warning,
@@ -82,7 +82,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: Text("Close"),
+                        child: const Text("Close"),
                       ),
                     ],
                   );
@@ -124,7 +124,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text("Mark as Solved?"),
+                            title: const Text("Mark as Solved?"),
                             actions: [
                               TextButton(
                                 onPressed: () {
@@ -137,7 +137,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                                   });
                                   Navigator.pop(context);
                                 },
-                                child: Text("Confirm"),
+                                child: const Text("Confirm"),
                               ),
                             ],
                           );
