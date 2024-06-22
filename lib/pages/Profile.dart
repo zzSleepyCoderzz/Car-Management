@@ -39,9 +39,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: SingleChildScrollView(
-        child: Column(
+        body: SingleChildScrollView(
+          child: Center(
+                child: Column(
           children: [
             Padding(
               padding: EdgeInsets.only(
@@ -51,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: GestureDetector(
                 onTap: () async {
                   await uploadProfilePicture();
-        
+                
                   setState(() {});
                 },
                 child: Container(
@@ -84,19 +84,19 @@ class _ProfilePageState extends State<ProfilePage> {
             const Profile_List_Tile(
               tileName: "Name",
             ),
-        
+                
             //Age
             const Profile_List_Tile(
               tileName: "Age",
             ),
-        
+                
             //Age
             const Profile_List_Tile(
               tileName: "Gender",
             ),
           ],
-        ),
-      ),
-    ));
+                ),
+              ),
+        ));
   }
 }
