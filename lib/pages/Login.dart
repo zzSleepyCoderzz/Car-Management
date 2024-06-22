@@ -50,10 +50,10 @@ class _LoginPageState extends State<LoginPage>
       }
 
       //Wrong pass
-      else if (e.code == "wrong-password") {
+      else if (e.code == "invalid-credential") {
         ErrorMsg("Wrong Password!");
       } else {
-        ErrorMsg("Error has been encountered.");
+        ErrorMsg(e.code);
       }
     }
   }

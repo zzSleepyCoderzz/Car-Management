@@ -1,3 +1,4 @@
+import 'package:car_management/components/button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,7 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
             .get(),
         builder: (context, snapshot) {
           selectedMechanic = mechanicID[0];
+          print(mechanicName);
           return Scaffold(
             appBar: AppBar(
               title: const Text("Set Mechanic"),
@@ -42,17 +44,18 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
                     items: mechanicID.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text('$mechanicName'),
+                        child: Text('${mechanicName[0]}'),
                       );
                     }).toList(),
                     onChanged: (val) {
                       selectedMechanic = val;
                     },
                   ),
+                  SizedBox(height: MediaQuery.of(context).size.width * 0.1,),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {
+                    child: MaintenanceButton(
+                      onTap: () {
                         //Assign snapshot to userData
                         userData = snapshot.data!.data()!;
                         userData[data[0]['Car Number']]
@@ -69,7 +72,7 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
                           Navigator.pop(context);
                         });
                       },
-                      child: const Text('Set Mechanic'),
+                     text: "Set Mechanic",
                     ),
                   ),
                 ],

@@ -85,40 +85,42 @@ class _HomeBodyState extends State<HomeBody> {
         body: Padding(
       padding: const EdgeInsets.only(top: 30),
       child: Center(
-        child: Column(
-          children: [
-            Text(
-              'Welcome, ${globals.userData['Name']}!',
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Text(
+                'Welcome, ${globals.userData['Name']}!',
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
               ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-            globals.userData['Name'] == 'User'
-                ? const Padding(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      'Please update your profile to get started!',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 255, 0, 0),
-                        fontSize: 14,
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              globals.userData['Name'] == 'User'
+                  ? const Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: Text(
+                        'Please update your profile to get started!',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 255, 0, 0),
+                          fontSize: 14,
+                        ),
                       ),
-                    ),
-                  )
-                : Container(),
-            const HomeCard(
-              carNumber: "Car1",
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-            const HomeCard(
-              carNumber: "Car2",
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-            const HomeCard(
-              carNumber: "Car3",
-            ),
-          ],
+                    )
+                  : Container(),
+              const HomeCard(
+                carNumber: "Car1",
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              const HomeCard(
+                carNumber: "Car2",
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              const HomeCard(
+                carNumber: "Car3",
+              ),
+            ],
+          ),
         ),
       ),
     ));

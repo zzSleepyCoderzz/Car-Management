@@ -111,7 +111,7 @@ class _Update_Service_HistoryPageState
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.03,
             ),
-            GeneralButton(
+            MaintenanceButton(
                onTap: () {
                   uploadInvoice(data['userID'], data['Car Number']);
                   globals.scheduledService[data['Car Number']].add({
@@ -163,8 +163,7 @@ class _Update_Service_HistoryPageState
                     });
                   });
                 },
-                text: "Upload Invoice",
-                color: "0xFF3331c6",)
+                text: "Upload Invoice",)
           ],
         ),
       ),

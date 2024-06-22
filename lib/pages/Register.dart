@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:car_management/components/button.dart';
 import 'package:car_management/components/textfield.dart';
 
-
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
 
@@ -48,7 +47,6 @@ class _RegisterPageState extends State<RegisterPage>
         setState(() {
           _isLoading = false;
         });
-
         ErrorMsg("Passwords do not match");
       }
     } on FirebaseAuthException catch (e) {
@@ -67,8 +65,12 @@ class _RegisterPageState extends State<RegisterPage>
       //Wrong pass
       else if (e.code == "weak-password") {
         ErrorMsg("Password must be at least 8 characters long!");
+      } 
+      //Email in use
+      else if (e.code == "email-already-in-use") {
+        ErrorMsg("Email already in use.");
       } else {
-        ErrorMsg("Error has been encountered.");
+        ErrorMsg(e.code);
       }
     }
   }
@@ -91,19 +93,19 @@ class _RegisterPageState extends State<RegisterPage>
         'Car Model': 'Car1',
         'Pic':
             'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Number Plate': 'LIG 6969 MA'
+        'Number Plate': 'APU 1234'
       },
       'Car2': {
         'Car Model': 'Car2',
         'Pic':
             'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Number Plate': 'LIG 6969 MA'
+        'Number Plate': 'APU 1234'
       },
       'Car3': {
         'Car Model': 'Car3',
         'Pic':
             'https://images.unsplash.com/photo-1566008885218-90abf9200ddb?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        'Number Plate': 'LIG 6969 MA'
+        'Number Plate': 'APU 1234'
       },
     });
 

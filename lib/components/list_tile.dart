@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:car_management/components/button.dart';
 import 'package:car_management/components/globals.dart' as globals;
 
 class Profile_List_Tile extends StatefulWidget {
@@ -89,8 +90,8 @@ class _Profile_List_TileState extends State<Profile_List_Tile> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20.0),
-                            child: ElevatedButton(
-                                onPressed: () {
+                            child: GeneralButton(
+                                onTap: () {
                                   if (_formKey.currentState!.validate()) {
                                     postDetailsToFirestore(
                                         widget.tileName, _currentValue);
@@ -101,7 +102,8 @@ class _Profile_List_TileState extends State<Profile_List_Tile> {
                                         _currentValue;
                                   });
                                 },
-                                child: const Text('Update')),
+                                text: "Update",
+                                color: "0xFF3331c6",),
                           )
                         ],
                       ),
@@ -208,8 +210,8 @@ class _Add_Car_ListTileState extends State<Add_Car_ListTile> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20.0),
-                            child: ElevatedButton(
-                                onPressed: () {
+                            child: GeneralButton(
+                                onTap: () {
                                   if (_formKey.currentState!.validate()) {}
                                   setState(() {
                                     globals.carData[widget.carModel]
@@ -218,7 +220,8 @@ class _Add_Car_ListTileState extends State<Add_Car_ListTile> {
                                   postCarDetailsToFirestore(widget.carModel);
                                   Navigator.pop(context);
                                 },
-                                child: const Text('Update')),
+                               text: "Update",
+                               color: "0xFF3331c6",),
                           )
                         ],
                       ),
@@ -340,8 +343,8 @@ class _Update_Maintenance_List_TileState
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 20.0),
-                            child: ElevatedButton(
-                                onPressed: () {
+                            child: GeneralButton(
+                                onTap: () {
                                   if (_formKey.currentState!.validate()) {}
                                   setState(() {
                                     globals.serviceHistory[widget.value]
@@ -353,7 +356,8 @@ class _Update_Maintenance_List_TileState
 
                                   Navigator.pop(context);
                                 },
-                                child: const Text('Update')),
+                               text: "Update",
+                               color: "0xFF3331c6"),
                           )
                         ],
                       ),

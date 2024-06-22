@@ -6,6 +6,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:car_management/components/globals.dart' as globals;
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/gas_price_widget.dart';
+import 'package:car_management/components/button.dart';
 
 class Fuel_ConsumptionPage extends StatefulWidget {
   const Fuel_ConsumptionPage({super.key});
@@ -242,8 +243,8 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(top: 20.0),
-                                        child: ElevatedButton(
-                                            onPressed: () async {
+                                        child: GeneralButton(
+                                            onTap: () async {
                                               globals.fuelData[(data)?['index']]
                                                       ['Odometer Reading']
                                                   .add(_controller.text);
@@ -274,7 +275,8 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                                                 Navigator.pop(context);
                                               }
                                             },
-                                            child: const Text('Upload')),
+                                            text: "Upload",
+                                            color: "0xFF3331c6",),
                                       )
                                     ],
                                   ),

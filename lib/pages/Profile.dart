@@ -40,60 +40,62 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.1,
-              bottom: MediaQuery.of(context).size.height * 0.05,
-            ),
-            child: GestureDetector(
-              onTap: () async {
-                await uploadProfilePicture();
-
-                setState(() {});
-              },
-              child: Container(
-                width: 120,
-                height: 120,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xFF3331c6),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.1,
+                bottom: MediaQuery.of(context).size.height * 0.05,
+              ),
+              child: GestureDetector(
+                onTap: () async {
+                  await uploadProfilePicture();
+        
+                  setState(() {});
+                },
+                child: Container(
+                  width: 120,
+                  height: 120,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xFF3331c6),
+                  ),
+                  child: Center(
+                      child: globals.profilePath != ''
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(60),
+                              child: Image.network(
+                                globals.profilePath,
+                                width: 120,
+                                height: 120,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : const Icon(
+                              Icons.person,
+                              size: 60.0,
+                              color: Colors.white,
+                            )),
                 ),
-                child: Center(
-                    child: globals.profilePath != ''
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(60),
-                            child: Image.network(
-                              globals.profilePath,
-                              width: 120,
-                              height: 120,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : const Icon(
-                            Icons.person,
-                            size: 60.0,
-                            color: Colors.white,
-                          )),
               ),
             ),
-          ),
-          //Name
-          const Profile_List_Tile(
-            tileName: "Name",
-          ),
-
-          //Age
-          const Profile_List_Tile(
-            tileName: "Age",
-          ),
-
-          //Age
-          const Profile_List_Tile(
-            tileName: "Gender",
-          ),
-        ],
+            //Name
+            const Profile_List_Tile(
+              tileName: "Name",
+            ),
+        
+            //Age
+            const Profile_List_Tile(
+              tileName: "Age",
+            ),
+        
+            //Age
+            const Profile_List_Tile(
+              tileName: "Gender",
+            ),
+          ],
+        ),
       ),
     ));
   }
