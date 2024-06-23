@@ -6,7 +6,6 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:car_management/components/globals.dart' as globals;
 import 'package:car_management/components/auth.dart';
 import 'package:car_management/components/gas_price_widget.dart';
-import 'package:car_management/components/button.dart';
 
 class Fuel_ConsumptionPage extends StatefulWidget {
   const Fuel_ConsumptionPage({super.key});

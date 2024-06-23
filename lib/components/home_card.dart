@@ -13,15 +13,15 @@ class HomeCard extends StatefulWidget {
 class _HomeCardState extends State<HomeCard> {
   @override
   Widget build(BuildContext context) {
-    
     return globals.carData[widget.carNumber]["Car Model"].contains("Car")
         ? InkWell(
-          borderRadius: BorderRadius.circular(20),
-          onTap: (){
-             Navigator.pushNamed(context, '/add_car', arguments: widget.carNumber);
-          },
-          
-          child: Container(
+            borderRadius: BorderRadius.circular(20),
+            onTap: () {
+              Navigator.pushNamed(context, '/add_car',
+                      arguments: widget.carNumber)
+                  .then((value) => setState(() {}));
+            },
+            child: Container(
               width: MediaQuery.of(context).size.width * 0.9,
               height: MediaQuery.of(context).size.height * 0.18,
               decoration: BoxDecoration(
@@ -31,22 +31,20 @@ class _HomeCardState extends State<HomeCard> {
               child: const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text("Add a car"),
-                    Icon(Icons.add, size: 50)]),
+                  children: [Text("Add a car"), Icon(Icons.add, size: 50)]),
             ),
-        )
+          )
         : InkWell(
-          borderRadius: BorderRadius.circular(20),
-            onTap: (){
-             Navigator.pushNamed(context, '/add_car', arguments: widget.carNumber);
-          },
+            borderRadius: BorderRadius.circular(20),
+            onTap: () {
+              Navigator.pushNamed(context, '/add_car',
+                  arguments: widget.carNumber);
+            },
             overlayColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
                 if (states.contains(MaterialState.pressed)) {
                   // Change the surface ripple color here
-                  return Colors.grey
-                      .withOpacity(0.5); 
+                  return Colors.grey.withOpacity(0.5);
                 }
                 // Return null to fallback to the default ripple color
                 return Colors.grey.withOpacity(0.5);
