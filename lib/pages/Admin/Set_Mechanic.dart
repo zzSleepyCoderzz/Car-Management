@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:car_management/components/globals.dart' as globals;
 
 class Set_MechanicPage extends StatefulWidget {
   const Set_MechanicPage({super.key});
@@ -82,9 +83,11 @@ class _Set_MechanicPageState extends State<Set_MechanicPage> {
                                 Navigator.pushNamed(context, 'set_mechanicbody',
                                     arguments: [
                                       combinedData[index],
-                                      mechanicID,
-                                      mechanicName,
                                     ]);
+                                globals.mechanicList = [
+                                  mechanicID,
+                                  mechanicName
+                                ];
                               },
                               child: Container(
                                 decoration: BoxDecoration(

@@ -1,6 +1,7 @@
 import 'package:car_management/components/button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:car_management/components/globals.dart' as globals;
 
 class Set_MechanicBody extends StatefulWidget {
   const Set_MechanicBody({super.key});
@@ -11,18 +12,13 @@ class Set_MechanicBody extends StatefulWidget {
 
 class _Set_MechanicBodyState extends State<Set_MechanicBody> {
   var userData;
-  List<String> mechanicID = [];
-  String? selectedMechanic;
-  List<String> mechanicName = [];
-  String? selectedMechanicName;
+  List<String> mechanicID = List<String>.from(globals.mechanicList[0]);
+  String? selectedMechanic = globals.mechanicList[0][0];
+  List<String> mechanicName = List<String>.from(globals.mechanicList[1]);
 
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as List;
-
-    //converting List<dynamic> to List<String>
-    mechanicID = List<String>.from(data[1]);
-    mechanicName = List<String>.from(data[2]);
 
     return FutureBuilder(
         future: FirebaseFirestore.instance
@@ -31,7 +27,6 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
             .get(),
         builder: (context, snapshot) {
           selectedMechanic = mechanicID[0];
-          print(mechanicName);
           return Scaffold(
             appBar: AppBar(
               title: const Text("Set Mechanic"),
@@ -41,15 +36,18 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
                 children: [
                   DropdownButton<String>(
                     value: selectedMechanic,
-                    items: mechanicID.map((String value) {
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedMechanic = newValue!;
+                        print(selectedMechanic);
+                      });
+                    },
+                    items: mechanicID.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text('${mechanicName[0]}'),
+                        child: Text('$mechanicName'),
                       );
                     }).toList(),
-                    onChanged: (val) {
-                      selectedMechanic = val;
-                    },
                   ),
                   SizedBox(height: MediaQuery.of(context).size.width * 0.1,),
                   Padding(
