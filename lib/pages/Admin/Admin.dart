@@ -118,7 +118,7 @@ class _AdminBodyState extends State<AdminBody> {
                         arguments: [users?[index].id, emergencyList[1]]);
               },
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: Container(
                   decoration: BoxDecoration(
                     color: emergencyList.contains(users?.elementAt(index).id)

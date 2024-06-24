@@ -107,7 +107,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
             itemCount: snapshot.data?.length ?? 0,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.fromLTRB(25, 5, 25, 5),
+                padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
