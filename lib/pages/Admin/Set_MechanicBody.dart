@@ -26,7 +26,6 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
             .doc(data[0]['userID'])
             .get(),
         builder: (context, snapshot) {
-          selectedMechanic = mechanicID[0];
           return Scaffold(
             appBar: AppBar(
               title: const Text("Set Mechanic"),
@@ -45,7 +44,7 @@ class _Set_MechanicBodyState extends State<Set_MechanicBody> {
                     items: mechanicID.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text('$mechanicName'),
+                        child: Text('${mechanicName[mechanicID.indexOf(value)]}'),
                       );
                     }).toList(),
                   ),
