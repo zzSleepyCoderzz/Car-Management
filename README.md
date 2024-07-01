@@ -15,15 +15,19 @@
 
 
   
-## Getting Started
+## Application Screenshots
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+![Login](https://github.com/zzSleepyCoderzz/Car-Management/assets/67144910/51f1fcee-ec78-4612-a47a-95ec7f79cee9)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![User UI](https://github.com/zzSleepyCoderzz/Car-Management/assets/67144910/e55782fc-d255-471a-8a6a-10ef8209af79)
+
+
+![Maintenance Pages](https://github.com/zzSleepyCoderzz/Car-Management/assets/67144910/20a6e32a-2fbf-41f4-bbe5-92aef714cf40)
+
+
+![Admin UI](https://github.com/zzSleepyCoderzz/Car-Management/assets/67144910/b576d9f9-7973-4dd6-8d53-2787d72559b8)
+
+
+![Mechanic](https://github.com/zzSleepyCoderzz/Car-Management/assets/67144910/11710586-6e8e-4843-a0ab-5103d74978d7)
