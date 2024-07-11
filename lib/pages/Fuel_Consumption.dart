@@ -56,7 +56,7 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     AlertDialog(
                   content: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.35,
+                    height: MediaQuery.of(context).size.height * 0.55,
                     child: Column(
                       children: [
                         Text(
@@ -71,7 +71,7 @@ class _Fuel_ConsumptionPageState extends State<Fuel_ConsumptionPage> {
                             children: <Widget>[
                               SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.3,
+                                    MediaQuery.of(context).size.height * 0.5,
                                 child: const Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

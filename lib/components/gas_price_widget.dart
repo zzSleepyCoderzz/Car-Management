@@ -54,23 +54,16 @@ class _GasPriceWidgetState extends State<GasPriceWidget> {
         CircularProgressIndicator(
           color: Color(0xFF3331c6),
         ))
-        : Expanded(
-            child: ListView.builder(
-              itemCount: gasPrices.length,
-              itemBuilder: (context, index) {
-                String key = gasPrices.keys.elementAt(index);
-                return ListTile(
-                  title: Text(
-                    key,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  trailing: Text(
-                    gasPrices[key]!,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                );
-              },
-            ),
+        : Column(
+            children: gasPrices.entries
+                .map((entry) => SizedBox(
+                  height: 50,
+                  child: ListTile(
+                        title: Text(entry.key),
+                        subtitle: Text(entry.value),
+                      ),
+                ))
+                .toList(),
           );
   }
 }

@@ -24,7 +24,7 @@ class _Simple_DiagnosticPageState extends State<Simple_DiagnosticPage> {
   Future<void> pickAndReadFile() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['csv', 'xlsx'],
+      allowedExtensions: ['csv', 'xlsx', 'xls'],
     );
 
     if (result != null && result.files.isNotEmpty) {

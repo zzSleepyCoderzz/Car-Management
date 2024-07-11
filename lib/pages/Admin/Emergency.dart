@@ -51,7 +51,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
         //Checking if there are any changes
         if (snapshot.data!.length != globals.currentDocCount) {
           if (snapshot.data!.length > globals.currentDocCount) {
-            Vibration.vibrate(duration: 1000, amplitude: 512);
+            Vibration.vibrate(duration: 1000, amplitude: 255);
             globals.currentDocCount = snapshot.data!.length;
             WidgetsBinding.instance.addPostFrameCallback((_) {
               showDialog(
@@ -61,7 +61,7 @@ class _EmergencyPageState extends State<EmergencyPage> {
                     title: const Text(
                         textAlign: TextAlign.center, "Emergency Request Alert"),
                     content: SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.20,
+                      height: MediaQuery.of(context).size.height * 0.21,
                       child: const Column(
                         children: [
                           Icon(
