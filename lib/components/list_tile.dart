@@ -270,7 +270,7 @@ class _Update_Maintenance_List_TileState
         ? 0
         : widget.tileName == "Engine Oil"
             ? 1
-            : widget.tileName == "Break Pads"
+            : widget.tileName == "Brake Pads"
                 ? 2
                 : widget.tileName == "Air Filter"
                     ? 3

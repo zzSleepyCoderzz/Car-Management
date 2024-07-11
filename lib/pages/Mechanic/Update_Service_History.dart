@@ -70,7 +70,7 @@ class _Update_Service_HistoryPageState
                 userID: data['userID'],
               ),
               Update_Maintenance_List_Tile(
-                tileName: "Break Pads",
+                tileName: "Brake Pads",
                 value: data['Car Number'],
                 userID: data['userID'],
               ),

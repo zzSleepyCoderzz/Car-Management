@@ -114,7 +114,7 @@ class _RegisterPageState extends State<RegisterPage>
       'Car1': {
         {'Mileage': 0},
         {'Engine Oil': 0},
-        {'Break Pads': 0},
+        {'Brake Pads': 0},
         {'Air Filter': 0},
         {'Alignment': 0},
         {'Battery': 0},
@@ -126,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage>
       'Car2': {
         {'Mileage': 0},
         {'Engine Oil': 0},
-        {'Break Pads': 0},
+        {'Brake Pads': 0},
         {'Air Filter': 0},
         {'Alignment': 0},
         {'Battery': 0},
@@ -138,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage>
       'Car3': {
         {'Mileage': 0},
         {'Engine Oil': 0},
-        {'Break Pads': 0},
+        {'Brake Pads': 0},
         {'Air Filter': 0},
         {'Alignment': 0},
         {'Battery': 0},

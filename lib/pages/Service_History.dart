@@ -53,7 +53,7 @@ class _Service_HistoryPageState extends State<Service_HistoryPage> {
                   value:
                       "Last Changed: ${globals.serviceData[(data)?['index']][1]['Engine Oil']}"),
               Service_History_Container(
-                  title: "Break Pads",
+                  title: "Brake Pads",
                   value:
                       "Last Changed: ${globals.serviceData[(data)?['index']][2]['Break Pads']}"),
               Service_History_Container(
